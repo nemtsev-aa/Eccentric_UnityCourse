@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LowPolyFarm.unity
+    guid: d901bc93614a7304f8888fcc55e3ece9
   m_configObjects: {}
