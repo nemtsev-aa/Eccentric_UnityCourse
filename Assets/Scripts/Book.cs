@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 public class Book : MonoBehaviour
 {
-    [Header("Скорость перемещения")]
-    public float _rotationSpeed;
-    [Header("Текст надписи")]
+    [Header("Скорость вращения")]
+    public float RotationSpeed;
+    [Header("Текст надписи - имя книги")]
     public string LebelText = "Неделя ";
     [Header("Компанент - надпись")]
-    private TextMeshProUGUI tmpCompanent;
+    private TextMeshProUGUI _tmpCompanent;
+
+    public static event System.Action<Book> OnBookPic;
+
     private void Start()
     {
         Naming();
@@ -19,9 +22,8 @@ public class Book : MonoBehaviour
     {
         Rotation();
     }
-    /// <summary>
+
     /// Именование книги
-    /// </summary>
     private void Naming()
     {
         //Если имя книги не указано явно, оно определяется по имени префаба
@@ -45,24 +47,22 @@ public class Book : MonoBehaviour
             LebelText = "Неделя " + myNumber;
         }
 
-        tmpCompanent = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        tmpCompanent.text = LebelText;
+        _tmpCompanent = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        _tmpCompanent.text = LebelText;
     }
-    /// <summary>
+    
     /// Вращение книги
-    /// </summary>
     private void Rotation()
     {
-        transform.Rotate(0, _rotationSpeed * Time.deltaTime, 0);
+        transform.Rotate(0, RotationSpeed * Time.deltaTime, 0);
     }
-    /// <summary>
+    
     /// Столкновение с игроком
-    /// </summary>
-    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PlayerMove>())
+        if (other.GetComponent<PlayerMover>())
         {
+            OnBookPic?.Invoke(this);
             Destroy(gameObject);
         } 
     }

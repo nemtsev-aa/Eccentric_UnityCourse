@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMover : MonoBehaviour
 {
     [Header("Скорость перемещения")]
     [Range(3, 7)]
@@ -21,9 +21,8 @@ public class PlayerMove : MonoBehaviour
         Rotation();
         Compression();
     }
-    /// <summary>
+
     /// Перемещение игрока
-    /// </summary>
     private void Move()
     {
         //Смещение по горизонтильной оси
@@ -47,18 +46,14 @@ public class PlayerMove : MonoBehaviour
 
         transform.Translate(offset);
     }
-    /// <summary>
     /// Поворот игрока
-    /// </summary>
     private void Rotation()
     {
         //Смещение мыши по горизонтальной оси
         float yRotation = Input.GetAxis("Mouse X");
         transform.Rotate(0, yRotation * RotationSpeed * Time.deltaTime, 0);
     }
-    /// <summary>
-    /// Изменение масштаба
-    /// </summary>
+    /// Изменение размера игрока
     private void Compression()
     {
         if (Input.GetKey(KeyCode.LeftControl))

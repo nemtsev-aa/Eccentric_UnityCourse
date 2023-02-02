@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb60303c48129294cbe0bbef956b4707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 20
+  RotationSpeed: 150
   LebelText: "\u041D\u0435\u0434\u0435\u043B\u044F "
 --- !u!65 &1100764489648273680
 BoxCollider:
