@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - DestroyZone
+  - TradingZone
+  - Food
+  - Supplier
+  - PowerBank
+  - Consumer
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
