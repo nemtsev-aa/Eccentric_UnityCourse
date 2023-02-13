@@ -1,75 +1,75 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     [Tooltip("Источник звука")]
-    [SerializeField] private AudioSource playerAudio;
-    [Tooltip("Звук работающих двигателей")] 
-    [SerializeField] private AudioClip engineSound;
+    [SerializeField] private AudioSource _audioSource;
     [Tooltip("Звук зарядки")]
-    [SerializeField] private AudioClip chargingSound;
+    [SerializeField] private AudioClip _chargingSound;
     [Tooltip("Звук удачной доставки")]
-    [SerializeField] private AudioClip successfulSound;
+    [SerializeField] private AudioClip _successfulSound;
     [Tooltip("Звук касания поставщика")]
-    [SerializeField] private AudioClip onSupplierSound;
-    [Tooltip("Звук нулевой зарядки")]
-    [SerializeField] private AudioClip ranOutEnergySound;
+    [SerializeField] private AudioClip _onSupplierSound;
+    [Tooltip("Звук низкой зарядки")]
+    [SerializeField] private AudioClip _ranOutEnergySound;
     [Tooltip("Звук падения")]
-    [SerializeField] private AudioClip explodeSound;
-    [Tooltip("Звук окончания игры")]
-    [SerializeField] private AudioClip fallingSound;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        playerAudio = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private AudioClip _explodeSound;
+    [Tooltip("Звук неудачного окончания игры")]
+    [SerializeField] private AudioClip _fallingSound;
+    [Tooltip("Звук удачного окончания игры")]
+    [SerializeField] private AudioClip _winSound;
 
     /// Подписка на события 
     private void OnEnable()
     {
-        PlayerControllerX.OnSupplierPic += OnSupplierPic;
-        PlayerControllerX.OnPowerBankPic += OnPowerBankPic;
-        PlayerControllerX.Falling += Falling;
-        PlayerControllerX.OnSuccessfulDelivery += OnSuccessfulDelivery;
+        Dron_Controller.OnSupplierPic += OnSupplierPic;
+        Dron_Controller.OnPowerBankPic += OnPowerBankPic;
+        Dron_Controller.Falling += Falling;
+        Dron_Controller.Warning += Warning;
+        Consumer.OnSuccessfulDelivery += OnSuccessfulDelivery;
+        GameManager.OnWins += Wins;
     }
 
     /// Отписка от события 
     private void OnDisable()
     {
-        PlayerControllerX.OnSupplierPic -= OnSupplierPic;
-        PlayerControllerX.OnPowerBankPic -= OnPowerBankPic;
-        PlayerControllerX.Falling -= Falling;
-        PlayerControllerX.OnSuccessfulDelivery -= OnSuccessfulDelivery;
+        Dron_Controller.OnSupplierPic -= OnSupplierPic;
+        Dron_Controller.OnPowerBankPic -= OnPowerBankPic;
+        Dron_Controller.Falling -= Falling;
+        Dron_Controller.Warning -= Warning;
+        Consumer.OnSuccessfulDelivery -= OnSuccessfulDelivery;
+        GameManager.OnWins -= Wins;
     }
 
     ///Обработчик события "Взаимодействие игрока с поставщиком"
-    private void OnSupplierPic(PlayerControllerX player)
+    private void OnSupplierPic()
     {
-        playerAudio.PlayOneShot(onSupplierSound, 1f);
+        _audioSource.PlayOneShot(_onSupplierSound, 1f);
     }
     ///Обработчик события "Удачная доставка"
-    private void OnSuccessfulDelivery(PlayerControllerX player)
+    private void OnSuccessfulDelivery()
     {
-        playerAudio.PlayOneShot(successfulSound, 1f);
+        _audioSource.PlayOneShot(_successfulSound, 1f);
     }
     ///Обработчик события "Взаимодействие игрока с зарядным устройством"
-    private void OnPowerBankPic(PlayerControllerX player)
+    private void OnPowerBankPic()
     {
-        playerAudio.PlayOneShot(chargingSound, 1f);
+        _audioSource.PlayOneShot(_chargingSound, 1f);
     }
-    ///Обработчик события "Нулевой заряд батареи игрока"
-    private void Falling(PlayerControllerX player)
+    ///Обработчик события "Поражение"
+    private void Falling()
     {
-        playerAudio.PlayOneShot(ranOutEnergySound, 1f);
+        _audioSource.PlayOneShot(_fallingSound, 1f);
+    }
+    ///Обработчик события "Низкий заряд батареи игрока"
+    private void Warning()
+    {
+        _audioSource.PlayOneShot(_ranOutEnergySound, 1f);
+    }
+    ///Обработчик события "Победа"
+    private void Wins()
+    {
+        _audioSource.PlayOneShot(_winSound, 1f);
     }
 
 }

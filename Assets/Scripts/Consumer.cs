@@ -7,7 +7,7 @@ public class Consumer : MonoBehaviour
     [Tooltip("Âğåìÿ ñóùåñòâîâàíèÿ")]
     [SerializeField] public float LifeTime;
     [Tooltip("Ñïğàéò")]
-    [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject _canvas;
     [Tooltip("Ñèñòåìà ÷àñòèö - âûçîâ äîñòàâùèêà")]
     [SerializeField] private ParticleSystem _ñallingDeliverer;
     [Tooltip("Ñèñòåìà ÷àñòèö - äîâîëüíûé êëèåíò")]
@@ -15,21 +15,16 @@ public class Consumer : MonoBehaviour
     [Tooltip("Ñèñòåìà ÷àñòèö - çëîé êëèåíò")]
     [SerializeField] private ParticleSystem _angryÑustomer;
     
-    [SerializeField] private float _time;
+    private float _time;
+
+    /// <summary>
+    /// Óäà÷íàÿ äîñòàâêà
+    /// </summary>
+    public static event System.Action OnSuccessfulDelivery;
+
     // Start is called before the first frame update
     void Start()
     {
-
-        //_particle = GetComponent<ParticleSystem>();
-        //_particle.Stop();
-        //var particleDuration = _particle.main;
-        //particleDuration.duration = 1f;
-
-        DeactivateParticleSystem(_satisfiedÑustomer, true);
-        DeactivateParticleSystem(_angryÑustomer, true);
-
-        //_satisfiedÑustomer.Pause();
-        //_angryÑustomer.Pause();
         _ñallingDeliverer.Play();
         
         _time = LifeTime;
@@ -44,60 +39,45 @@ public class Consumer : MonoBehaviour
             _time = LifeTime;
             FailedDelivery();
         }
-
-        //else
-        //{
-        //    float proc = _time / LifeTime;
-        //    var particleDuration = _particle.main;
-        //    particleDuration.duration = 1f - proc;
-        //    Debug.Log("particleDuration" + particleDuration.duration);
-        //}   
     }
 
-    /// Ïîäïèñêà íà ñîáûòèÿ 
-    private void OnEnable()
+    private void OnTriggerEnter(Collider other)
     {
-        PlayerControllerX.OnSuccessfulDelivery += OnSuccessfulDelivery;
-    }
-
-    /// Îòïèñêà îò ñîáûòèÿ 
-    private void OnDisable()
-    {
-        PlayerControllerX.OnSuccessfulDelivery -= OnSuccessfulDelivery;
-    }
-
-    ///Îáğàáîò÷èê ñîáûòèÿ "Óäà÷íàÿ äîñòàâêà"
-    private void OnSuccessfulDelivery(PlayerControllerX player)
-    {
-        SuccessfulDelivery();
+        if (other.gameObject.CompareTag("Food"))
+        {
+            SuccessfulDelivery();
+        }  
     }
     private void SuccessfulDelivery()
     {
-        canvas.SetActive(false);
+        _canvas.SetActive(false);
         this.GetComponent<SphereCollider>().enabled = false;
+        OnSuccessfulDelivery?.Invoke();
 
-        //DeactivateParticleSystem(_ñallingDeliverer, false);
-        //DeactivateParticleSystem(_satisfiedÑustomer, true);
-        //_satisfiedÑustomer.Play(); 
+        _ñallingDeliverer.Stop();
+        //_angryÑustomer.Stop();
+        _satisfiedÑustomer.Play();
+
+        Invoke(nameof(Destroy), 2f);
     }
 
     private void FailedDelivery()
     {
-        canvas.SetActive(false);
+        _canvas.SetActive(false);
 
-        DeactivateParticleSystem(_ñallingDeliverer, true);
         _ñallingDeliverer.Stop();
+        //_satisfiedÑustomer.Stop();
 
-        DeactivateParticleSystem(_angryÑustomer, false);
         _angryÑustomer.Play();
+
         Invoke(nameof(Destroy), 2f);
     }
 
-    private void DeactivateParticleSystem(ParticleSystem particleSystem, bool status)
-    {
-        CFX_AutoDestructShuriken autoDestruct = particleSystem.GetComponent<CFX_AutoDestructShuriken>();
-        autoDestruct.OnlyDeactivate = status;
-    }
+    //private void DeactivateParticleSystem(ParticleSystem particleSystem, bool status)
+    //{
+    //    CFX_AutoDestructShuriken autoDestruct = particleSystem.GetComponent<CFX_AutoDestructShuriken>();
+    //    autoDestruct.OnlyDeactivate = status;
+    //}
     private void Destroy()
     {
         Destroy(gameObject);

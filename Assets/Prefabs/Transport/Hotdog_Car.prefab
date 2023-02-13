@@ -64,7 +64,7 @@ MonoBehaviour:
     type: 3}
   _moveStatus: 0
   _tradingStatus: 0
-  _tradingTime: 5
+  _tradingTime: 10
   _moveSpeed: 10
 --- !u!1001 &4128083536729763964
 PrefabInstance:
