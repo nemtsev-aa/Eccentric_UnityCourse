@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     {
         Dron_Controller.OnSupplierPic += OnSupplierPic;
         Dron_Controller.OnPowerBankPic += OnPowerBankPic;
-        Dron_Controller.Falling += Falling;
+        Dron_Controller.OnFalling += Falling;
         Dron_Controller.Warning += Warning;
         Consumer.OnSuccessfulDelivery += OnSuccessfulDelivery;
         GameManager.OnWins += Wins;
@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
     {
         Dron_Controller.OnSupplierPic -= OnSupplierPic;
         Dron_Controller.OnPowerBankPic -= OnPowerBankPic;
-        Dron_Controller.Falling -= Falling;
+        Dron_Controller.OnFalling -= Falling;
         Dron_Controller.Warning -= Warning;
         Consumer.OnSuccessfulDelivery -= OnSuccessfulDelivery;
         GameManager.OnWins -= Wins;

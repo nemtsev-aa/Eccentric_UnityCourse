@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _finalMessageObj;
     [Tooltip ("Запись с количеством удачных доставок")]
     [SerializeField] private TextMeshProUGUI _sucDeliveryText;
+    [Tooltip("Уровень здоровья")]
+    [SerializeField] private TextMeshProUGUI _healthValueText;
     [Tooltip("Уровень заряда")]
     [SerializeField] private TextMeshProUGUI _chargeLevelText;
     //Контейнер для финального сообщения
@@ -60,6 +62,12 @@ public class GameManager : MonoBehaviour
             {
                 _chargeLevelText.text = _chargeLevel.ToString() + "%";
             }
+            //Получаем данные о количестве здоровья
+            int _healthValue = PlayerPrefs.GetInt("healthValue");
+            if (_chargeLevel > 0)
+            {
+                _healthValueText.text = _healthValue.ToString();
+            }
         }  
     }
     
@@ -67,14 +75,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         Consumer.OnSuccessfulDelivery += SuccessfulDeliveryPic;
-        Dron_Controller.Falling += GameOver;
+        Dron_Controller.OnFalling += GameOver;
     }
 
     /// Отписка от события "Удачная доставка"
     private void OnDisable()
     {
         Consumer.OnSuccessfulDelivery -= SuccessfulDeliveryPic;
-        Dron_Controller.Falling -= GameOver;
+        Dron_Controller.OnFalling -= GameOver;
     }
 
     /// Обработчик события "Удачная доставка"

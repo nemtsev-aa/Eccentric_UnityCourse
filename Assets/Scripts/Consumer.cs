@@ -21,6 +21,10 @@ public class Consumer : MonoBehaviour
     /// Удачная доставка
     /// </summary>
     public static event System.Action OnSuccessfulDelivery;
+    /// <summary>
+    /// Удачная доставка
+    /// </summary>
+    public static event System.Action<Consumer> OnFailDelivery;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +67,13 @@ public class Consumer : MonoBehaviour
 
     private void FailedDelivery()
     {
+        //Выявляем вероятность создания ракеты, недовольным клиентом
+        float rand = Random.Range(0, 11);
+        if (rand < 4)
+        {
+            OnFailDelivery?.Invoke(this);
+        }
+
         _canvas.SetActive(false);
 
         _сallingDeliverer.Stop();

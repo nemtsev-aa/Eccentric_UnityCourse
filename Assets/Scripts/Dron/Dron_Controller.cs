@@ -10,10 +10,14 @@ public class Dron_Controller : MonoBehaviour
     [SerializeField] private GameObject[] _cargo;
     //Система частиц - повреждение
     [SerializeField] private ParticleSystem _explosionParticle;
-    [Tooltip("Mаксимальный размер заряда батареи")]
+    [Tooltip("Mаксимальное количество здоровья")]
+    [SerializeField] private int _healthMaxValue = 3;
+    [Tooltip("Mаксимальная ёмкость батареи")]
     [SerializeField] private float _chargeMaxValue = 10f;
     [Tooltip("Текущий уровень заряда батареи")]
     [SerializeField] private float _chargeLevel;
+    [Tooltip("Текущее количество здоровья")]
+    [SerializeField] private int _healthValue;
     //Загружен/пуст
     private bool _laden = false;
     //Статус игрока
@@ -30,7 +34,7 @@ public class Dron_Controller : MonoBehaviour
     /// <summary>
     /// Падение игрока на землю / Батарея разряжена
     /// </summary>
-    public static event System.Action Falling;
+    public static event System.Action OnFalling;
     /// <summary>
     /// Низкий заряд батареи
     /// </summary>
@@ -49,6 +53,7 @@ public class Dron_Controller : MonoBehaviour
     }
     void Start()
     {
+        _healthValue = _healthMaxValue;
         _chargeLevel = _chargeMaxValue;
         _cargoContainer.SetActive(false);
     }
@@ -72,7 +77,7 @@ public class Dron_Controller : MonoBehaviour
             if (_chargeLevel <= 0)
             {
                 //Батарея разряжена
-                Falling?.Invoke();
+                OnFalling?.Invoke();
             }
         }
 
@@ -85,13 +90,14 @@ public class Dron_Controller : MonoBehaviour
 
         //Записываем данные о заряде батареи
         PlayerPrefs.SetInt("chargeLevel", chargeLevelProcentage);
+
     }
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            FallingToGround();
+            Falling();
         }
         else if (other.gameObject.CompareTag("Supplier"))
         {
@@ -130,17 +136,21 @@ public class Dron_Controller : MonoBehaviour
         }
     }
     /// <summary>
-    /// Падение на землю
+    /// Падение на землю / Нулевое здоровье / Нулевой заряд батареи
     /// </summary>
-    private void FallingToGround()
+    private void Falling()
     {
+        OnFalling?.Invoke();
+
         _chargeLevel = 0;
         _explosionParticle.Play();
-        Falling?.Invoke();
+
+        Invoke(nameof(Destroy), 2f);
     }
     /// Подписка на событие "Выход поставщика из торговой зоны" 
     private void OnEnable()
     {
+        Rocket.OnDealingDamage += TakDamage;
         Transport.ExitTradingZone += DestroyCargo;
         GameManager.OnWins += Wins;
     }
@@ -161,5 +171,27 @@ public class Dron_Controller : MonoBehaviour
     private void Wins()
     {
         _activ = false;
+    }
+    ///Обработчик события "Получение урона"
+    private void TakDamage()
+    {
+        _healthValue--;
+
+        if (_healthValue == 0)
+        {
+            Falling();
+        }
+        else
+        {
+            //Записываем данные о текущем количестве здоровья
+            PlayerPrefs.SetInt("healthValue", _healthValue);
+        }   
+    }
+    /// <summary>
+    /// Уничтожение объекта
+    /// </summary>
+    private void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

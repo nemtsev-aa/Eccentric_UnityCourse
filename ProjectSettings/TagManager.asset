@@ -12,6 +12,7 @@ TagManager:
   - PowerBank
   - Consumer
   - FxTemporaire
+  - Dron
   layers:
   - Default
   - TransparentFX
