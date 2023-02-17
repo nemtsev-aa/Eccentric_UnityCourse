@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8753946604527503357}
   - component: {fileID: 6257322598900671962}
   - component: {fileID: 2883514543586661379}
+  - component: {fileID: 24457081814039062}
   m_Layer: 0
   m_Name: PowerBank
   m_TagString: Untagged
@@ -73,6 +74,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &24457081814039062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133692012088531373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677fbc94d6c427542b6777ec1fe72461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _changeParticle: {fileID: 1385014556398656443}
+  _resetTime: 5
+  _time: 0
+  _status: 1
 --- !u!1 &8116664611300053916
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFX_ElectricityBall
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -317,6 +338,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+      propertyPath: OnlyDeactivate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
       propertyPath: looping
       value: 1
@@ -357,6 +382,12 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &1385014556398656443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1385014556398624027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1385014556398749595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 77ec3c4e07a36814fb3169ecef41b50a,

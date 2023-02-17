@@ -22,23 +22,23 @@ public class AudioManager : MonoBehaviour
     /// Подписка на события 
     private void OnEnable()
     {
-        Dron_Controller.OnSupplierPic += OnSupplierPic;
-        Dron_Controller.OnPowerBankPic += OnPowerBankPic;
+        Dron_Controller.OnSupplier += OnSupplierPic;
+        Dron_Controller.OnPowerBank += OnPowerBankPic;
         Dron_Controller.OnFalling += Falling;
-        Dron_Controller.Warning += Warning;
+        Dron_Controller.OnWarning += Warning;
         Consumer.OnSuccessfulDelivery += OnSuccessfulDelivery;
-        GameManager.OnWins += Wins;
+        DeliveryCounter.OnWin += Wins;
     }
 
     /// Отписка от события 
     private void OnDisable()
     {
-        Dron_Controller.OnSupplierPic -= OnSupplierPic;
-        Dron_Controller.OnPowerBankPic -= OnPowerBankPic;
+        Dron_Controller.OnSupplier -= OnSupplierPic;
+        Dron_Controller.OnPowerBank -= OnPowerBankPic;
         Dron_Controller.OnFalling -= Falling;
-        Dron_Controller.Warning -= Warning;
+        Dron_Controller.OnWarning -= Warning;
         Consumer.OnSuccessfulDelivery -= OnSuccessfulDelivery;
-        GameManager.OnWins -= Wins;
+        DeliveryCounter.OnWin -= Wins;
     }
 
     ///Обработчик события "Взаимодействие игрока с поставщиком"
@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
         _audioSource.PlayOneShot(_onSupplierSound, 1f);
     }
     ///Обработчик события "Удачная доставка"
-    private void OnSuccessfulDelivery()
+    private void OnSuccessfulDelivery(Consumer consumer)
     {
         _audioSource.PlayOneShot(_successfulSound, 1f);
     }

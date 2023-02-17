@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifeTime: 5
-  _canvas: {fileID: 7299454693595677014}
+  _shopSprite: {fileID: 8845289388971148173}
   "_\u0441allingDeliverer": {fileID: 5775877581862730452}
   "_satisfied\u0421ustomer": {fileID: 1866971461049986154}
   "_angry\u0421ustomer": {fileID: 8178846494723236759}

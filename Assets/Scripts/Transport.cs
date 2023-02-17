@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class Transport : MonoBehaviour
 {
-    [Tooltip("Точка торговли")]
-    [SerializeField] public GameObject _tradingPoint;
-    [Tooltip ("Статус движения")]
-    [SerializeField] private bool _moveStatus;
+    [Tooltip("Префаб еды")]
+    [SerializeField] public Food _food;
     [Tooltip("Статус торговли")]
     [SerializeField] private bool _tradingStatus;
-    [Tooltip("Время торговли")]
-    [SerializeField] public float _tradingTime;
     [Tooltip("Скорость движения")]
-    [SerializeField] private float _moveSpeed = 2f;
+    [SerializeField] private float _moveSpeed = 2000f;
 
+    private Rigidbody _rb;
     /// <summary>
     /// Прибытие поставщика в Торговую зону
     /// </summary>
@@ -24,67 +21,92 @@ public class Transport : MonoBehaviour
     /// </summary>
     public static event System.Action ExitTradingZone;
     /// <summary>
+    /// Удаление поставщика со сцены
+    /// </summary>
+    public static event System.Action<Transport> DestroyTrader;
+    /// <summary>
     /// Время до окончания торговли
     /// </summary>
     private float _time;
     private void Start()
     {
-        _tradingPoint.SetActive(true);
-        _moveStatus = true;
-        _time = _tradingTime;
+        _rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update()
     {
-        Move(_moveStatus);
-        Trading(_tradingStatus);
+        Move(_tradingStatus);
     }
-    private void Move(bool moveStatus)
+    /// <summary>
+    /// Управление торговым статусом
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetTradingStatus(bool value)
     {
-        if (moveStatus)
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * _moveSpeed);
-        }
-        else
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * 0);
-        }
+        _tradingStatus = value;
+        _food.gameObject.SetActive(value);
     }
-    private void Trading(bool tradingStatus)
+
+    private void OnEnable()
+    {
+        SpawnController_Сonsumer.NoСustomers += NoСustomers;
+    }
+    private void OnDisable()
+    {
+        SpawnController_Сonsumer.NoСustomers -= NoСustomers;
+    }
+
+    /// <summary>
+    /// Отсутствие клиентов 
+    /// </summary>
+    private void NoСustomers()
+    {
+        SetTradingStatus(false);
+    }
+
+    /// <summary>
+    /// Перемещение транспорта
+    /// </summary>
+    /// <param name="tradingStatus"></param>
+    private void Move(bool tradingStatus)
     {
         if (tradingStatus)
         {
-            //Отключаем движение на время торговли
-            _moveStatus = false;
-            //Деактивируем Торговую точку
-            _tradingPoint.SetActive(false);
-            //Расчитываем время до окончания торговли
-            _time -= Time.deltaTime;
-            if (_time <= 0)
-            {
-                ExitTradingZone?.Invoke();
-                _time = _tradingTime;
-                _tradingStatus = false;
-
-                _moveStatus = true;
-            }
+            _rb.drag = 2f;
         }
         else
         {
-            _tradingPoint.SetActive(true);
+            _rb.drag = 0f;
+        }
+        _rb.AddForce(Vector3.right * Time.deltaTime * _moveSpeed);
+    }
+
+    /// <summary>
+    /// Удаление транспорта
+    /// </summary>
+    /// <param name="value"></param>
+    public void DestroyTransportStatus(bool value)
+    {
+        if (value)
+        {
+            DestroyTrader?.Invoke(this);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("TradingZone"))
+        if (other.GetComponent<TradingZone>())
         {
+            SetTradingStatus(true);
             ArriveTradingZone?.Invoke(this);
-            _tradingStatus = true;
-            Trading(_tradingStatus);
         }
-        else if (other.gameObject.CompareTag("DestroyZone"))
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<TradingZone>())
         {
-            Destroy(gameObject);
+            SetTradingStatus(false);
+
+            ExitTradingZone?.Invoke();
         }
     }
 }

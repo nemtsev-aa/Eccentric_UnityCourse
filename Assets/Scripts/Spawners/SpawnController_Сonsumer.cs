@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class SpawnController_Сonsumer : MonoBehaviour
 {
+    [Tooltip("Максимальное количество создаваемых клиентов")]
+    [SerializeField] private int _сonsumerMaxCount = 3;
     [Tooltip("Префаб клиентов")]
     [SerializeField] private Consumer _сonsumerPrefab;
     [Tooltip("Контейнер клиентов")]
     [SerializeField] private GameObject _consumerContainer;
-    [Tooltip("Клиенты")]
-    [SerializeField] private Transform[] _сonsumersTransform;
     [Tooltip("Список активных клиентов")]
-    [SerializeField] private List<GameObject> _activConsumers;
+    [SerializeField] private List<Consumer> _activeConsumers;
+    
+    /// <summary>
+    /// Массив с адресами клиентов
+    /// </summary>
+    private Transform[] _сonsumersTransform;
+    /// <summary>
+    /// Нет клиентов
+    /// </summary>
+    public static event System.Action NoСustomers;
 
     void Start()
     {
-        //Количество клиентов
+        //Количество клиентов (точек появления на карте)
         int _consumerCount = _consumerContainer.transform.childCount;
         //Инициализируем массив клиентов
         _сonsumersTransform = new Transform[_consumerCount];
@@ -28,53 +37,77 @@ public class SpawnController_Сonsumer : MonoBehaviour
     }
 
     /// <summary>
-    /// Создание потребителей
+    /// Создание клиентов
     /// </summary>
     /// <param name="count"></param>
-    private void CreateConsumers(int count, float LifeTime)
+    private void CreateConsumers(int count)
     {
-        //Cлучайные точки появления клиентов
-        Transform[] newConsumersTransform = СhoosingTransform(count);
-        //Создаём клиентов
-        for (int i = 0; i < count; i++)
+        if (_activeConsumers.Count <= 2)
         {
-            Transform newConsumerTransform = newConsumersTransform[i];
-            //Создаём клиента из префаба
-            GameObject newConsumer = Instantiate(_сonsumerPrefab.gameObject, newConsumerTransform.position, newConsumerTransform.rotation);
-            newConsumer.GetComponent<Consumer>().LifeTime = LifeTime;
-            _activConsumers.Add(newConsumer);
-        }
+            //Cлучайные точки появления клиентов
+            List<Transform> newConsumersTransform = CreateTransformArray(count);
+            //Создаём клиентов
+            for (int i = 0; i < count; i++)
+            {
+                Transform newConsumerTransform = newConsumersTransform[i];
+                //Создаём клиента из префаба
+                Consumer newConsumer = Instantiate(_сonsumerPrefab, newConsumerTransform.position, newConsumerTransform.rotation);
+                _activeConsumers.Add(newConsumer);
+            }
+        }  
     }
-    /// <summary>
-    /// Выбираем случайные точки появления потребителей
-    /// </summary>
-    /// <returns></returns>
-    private Transform[] СhoosingTransform(int count)
-    {
-        //Инициализируем массив случайных расположений потребителей
-        Transform[] consumersTransform = new Transform[count];
 
-        for (int i = 0; i < count; i++)
+    private List<Transform> CreateTransformArray(int count)
+    {
+        //Инициализируем список случайных расположений клиентов
+        List<Transform> newConsumersTransform = new List<Transform>();
+
+        do
         {
             int newConsumerIndex = Random.Range(0, _сonsumersTransform.Length);
+
             Transform newConsumerTransform = _сonsumersTransform[newConsumerIndex];
 
-            consumersTransform[i] = newConsumerTransform;
-        }
+            if (ChoosingTransform(newConsumerTransform))
+            {
+                newConsumersTransform.Add(newConsumerTransform);
+            }
 
-        return consumersTransform;
+        } while (newConsumersTransform.Count <= count);
+
+        return newConsumersTransform;
     }
-
-    /// Подписка на событиe "Прибытие поставщика"
+    /// <summary>
+    /// Проверяем случайные точки появления клиентов
+    /// </summary>
+    /// <returns></returns>
+    private bool ChoosingTransform(Transform newConsumerTransform)
+    {
+        foreach (Consumer activeConsumer in _activeConsumers)
+        {
+            Transform activeConsumerTransform = activeConsumer.transform;
+            if (newConsumerTransform == activeConsumerTransform)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /// Подписка на событий "Прибытие поставщика", "Выход поставщика из торговой зоны"
     private void OnEnable()
     {
+        Consumer.OnSuccessfulDelivery += RemoveConsumerFromList;
         Transport.ArriveTradingZone += ArrivalSupplier;
+        Transport.ExitTradingZone += ClearConsumerList;
     }
 
-    /// Отписка от события "Прибытие поставщика"
+    /// Отписка от событий "Прибытие поставщика", "Выход поставщика из торговой зоны"
     private void OnDisable()
     {
+        Consumer.OnSuccessfulDelivery -= RemoveConsumerFromList;
         Transport.ArriveTradingZone -= ArrivalSupplier;
+        Transport.ExitTradingZone -= ClearConsumerList;
     }
     /// <summary>
     /// Прибытие поставщика
@@ -82,9 +115,34 @@ public class SpawnController_Сonsumer : MonoBehaviour
     /// <param name="transport"></param>
     private void ArrivalSupplier(Transport transport)
     {
-        ///Количество потребителей
-        int consumerCount = Random.Range(1, 5);
-        float tradingTime = transport._tradingTime;
-        CreateConsumers(3, tradingTime);
+        ///Количество клиентов
+        CreateConsumers(_сonsumerMaxCount);
+    }
+    public void RemoveConsumerFromList(Consumer consumer)
+    {
+        _activeConsumers.Remove(consumer);
+        Destroy(consumer.gameObject);
+
+        if (_activeConsumers.Count == 0)
+        {
+            NoСustomers?.Invoke();
+        }
+    }
+    /// <summary>
+    /// Очищаем список клиентов на сцене
+    /// </summary>
+    public void ClearConsumerList()
+    {
+        if (_activeConsumers.Count > 0)
+        {
+            foreach (var iConsumer in _activeConsumers)
+            {
+                if (iConsumer != null)
+                {
+                    Destroy(iConsumer.gameObject);
+                }
+            }
+            _activeConsumers.Clear();
+        }
     }
 }

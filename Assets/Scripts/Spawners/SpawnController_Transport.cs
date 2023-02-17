@@ -9,59 +9,46 @@ public class SpawnController_Transport : MonoBehaviour
 
     [Tooltip ("Префабы поставщиков")]
     [SerializeField] private Transport[] _suppliers;
-
     [Tooltip("Индекс активного поставщика")]
     [SerializeField] private int _supplierIndex;
-    
     [Tooltip("Задержка перед появлением нового поставщика")]
     [SerializeField] private float _timeSpawn;
 
     //Время до появления следующего поставщика
     private float _timer;
-
-    //Статус генератора поставщиков
-    private bool _spawnActive = true;
+    //Список поставщиков на сцене
+    [SerializeField] private List<Transport> _transporterList;
     void Start()
     {
-        _timer = _timeSpawn;
+        CreateSupplier();
     }
 
     void Update()
     {
-        //Если игра не закончена
-        if (_spawnActive)
-        {
-            _timer -= Time.deltaTime;
-            if (_timer <= 0)
-            {
-                CreateSupplier();
-            }
-        }
         
+        _timer -= Time.deltaTime;
+        if (_timer <= 0)
+        {
+            CreateSupplier();
+        }
     }
-    /// Подписка на событиe "Конец игры"
-    private void OnEnable()
-    {
-        GameManager.OnGameOver += GameOver;
-    }
-
-    /// Отписка от события "Конец игры"
-    private void OnDisable()
-    {
-        GameManager.OnGameOver -= GameOver;
-    }
-
+    
     /// <summary>
     /// Создаём нового поставщика
     /// </summary>
-    private void CreateSupplier()
+    public void CreateSupplier()
     {
-        //Устанавливаем время до появления следующего постащика
-        _timer = _timeSpawn;
-        //Выбираем поставщика из массива
-        Transport nextSellerPrefab = СhoosingSupplier();
-        //Создаём поставщика из префаба
-        GameObject nextSeller = Instantiate(nextSellerPrefab.gameObject, _spawnPoint.transform.position, _spawnPoint.transform.rotation);
+        if (_transporterList.Count <= 1)
+        {
+            //Устанавливаем время до появления следующего постащика
+            _timer = _timeSpawn;
+            //Выбираем поставщика из массива
+            Transport nextSellerPrefab = СhoosingSupplier();
+            //Создаём поставщика из префаба
+            Transport nextSeller = Instantiate(nextSellerPrefab, _spawnPoint.transform.position, _spawnPoint.transform.rotation);
+            _transporterList.Add(nextSeller);
+        }
+       
     }
     /// <summary>
     /// Выбор префаба следующего поставщика
@@ -81,8 +68,38 @@ public class SpawnController_Transport : MonoBehaviour
         Transport nextSeller = _suppliers[_supplierIndex];
         return nextSeller;
     }
-    private void GameOver()
+    private void OnEnable()
     {
-        _spawnActive = false;
+        SpawnController_Сonsumer.NoСustomers += CreateSupplier;
+        Transport.DestroyTrader += RemoveTransportFromList;
+    }
+
+    private void OnDisable()
+    {
+        SpawnController_Сonsumer.NoСustomers -= CreateSupplier;
+        Transport.DestroyTrader -= RemoveTransportFromList;
+    }
+
+    private void RemoveTransportFromList(Transport transport)
+    {
+        _transporterList.Remove(transport);
+        Destroy(transport.gameObject);
+    }
+    /// <summary>
+    /// Очищаем список поставщиков находящихся на сцене
+    /// </summary>
+    public void ClearTransportList()
+    {
+        if (_transporterList.Count > 0)
+        {
+            foreach (var itransport in _transporterList)
+            {
+                if (itransport != null)
+                {
+                    Destroy(itransport.gameObject);
+                }
+            }
+            _transporterList.Clear();
+        }    
     }
 }

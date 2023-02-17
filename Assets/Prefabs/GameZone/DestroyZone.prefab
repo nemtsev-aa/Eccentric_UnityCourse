@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6344806332950026810}
   - component: {fileID: 6344806332950026811}
   - component: {fileID: 6344806332950026808}
+  - component: {fileID: 3680272435422811019}
   m_Layer: 0
-  m_Name: DestroyPoint
+  m_Name: DestroyZone
   m_TagString: DestroyZone
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -62,3 +63,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &3680272435422811019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344806332950026813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92dac4a660922847a3b230d55929ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

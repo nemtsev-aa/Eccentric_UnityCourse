@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Consumer : MonoBehaviour
 {
-    [Tooltip("Время существования")]
-    [SerializeField] public float LifeTime;
-    [Tooltip("Спрайт")]
-    [SerializeField] private GameObject _canvas;
+    [Tooltip("Спрайт - покупка")]
+    [SerializeField] private GameObject _shopSprite;
     [Tooltip("Система частиц - вызов доставщика")]
     [SerializeField] private ParticleSystem _сallingDeliverer;
     [Tooltip("Система частиц - довольный клиент")]
@@ -20,7 +18,7 @@ public class Consumer : MonoBehaviour
     /// <summary>
     /// Удачная доставка
     /// </summary>
-    public static event System.Action OnSuccessfulDelivery;
+    public static event System.Action<Consumer> OnSuccessfulDelivery;
     /// <summary>
     /// Удачная доставка
     /// </summary>
@@ -30,39 +28,37 @@ public class Consumer : MonoBehaviour
     void Start()
     {
         _сallingDeliverer.Play();
-        
-        _time = LifeTime;
     }
-
-    // Update is called once per frame
-    void Update()
+    /// Подписка на событиe "Прибытие поставщика", "Выход поставщика из торговой зоны"
+    private void OnEnable()
     {
-        _time -= Time.deltaTime;
-        if (_time <= 0)
-        {
-            _time = LifeTime;
-            FailedDelivery();
-        }
+        Transport.ExitTradingZone += FailedDelivery;
+
     }
 
+    /// Отписка от события "Прибытие поставщика", "Выход поставщика из торговой зоны"
+    private void OnDisable()
+    {
+        Transport.ExitTradingZone -= FailedDelivery;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Food"))
+        if (other.TryGetComponent(out Food food))
         {
             SuccessfulDelivery();
+            food.DestoyFood();
         }  
     }
     private void SuccessfulDelivery()
     {
-        _canvas.SetActive(false);
-        this.GetComponent<SphereCollider>().enabled = false;
-        OnSuccessfulDelivery?.Invoke();
+        _shopSprite.SetActive(false);
+        //this.GetComponent<SphereCollider>().enabled = false;
+        OnSuccessfulDelivery?.Invoke(this);
 
         _сallingDeliverer.Stop();
-        //_angryСustomer.Stop();
         _satisfiedСustomer.Play();
 
-        Invoke(nameof(Destroy), 2f);
+        Destroy(gameObject, 2f);
     }
 
     private void FailedDelivery()
@@ -74,24 +70,11 @@ public class Consumer : MonoBehaviour
             OnFailDelivery?.Invoke(this);
         }
 
-        _canvas.SetActive(false);
+        _shopSprite.SetActive(false);
 
         _сallingDeliverer.Stop();
-        //_satisfiedСustomer.Stop();
-
         _angryСustomer.Play();
 
-        Invoke(nameof(Destroy), 2f);
-    }
-
-    //private void DeactivateParticleSystem(ParticleSystem particleSystem, bool status)
-    //{
-    //    CFX_AutoDestructShuriken autoDestruct = particleSystem.GetComponent<CFX_AutoDestructShuriken>();
-    //    autoDestruct.OnlyDeactivate = status;
-    //}
-    private void Destroy()
-    {
-        Destroy(gameObject);
-    }
-    
+        Destroy(gameObject, 2f);
+    }  
 }

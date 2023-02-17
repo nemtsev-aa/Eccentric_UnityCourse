@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class SpawnController_Rocket : MonoBehaviour
 {
+    [Tooltip("Цель")]
+    [SerializeField] private Dron_Controller _target;
+
     [Tooltip("Префабы ракет")]
     [SerializeField] private Rocket[] _rockets;
 
-    [Tooltip("Индекс активной ракеты")]
-    [SerializeField] private int _rocketIndex;
+    //Индекс активной ракеты
+    private int _rocketIndex;
+
+    //Список ракет на сцене
+    [SerializeField] private List<Rocket> _rocketList;
 
     /// Подписка на событиe "Неудачная доставка"
     private void OnEnable()
     {
         Consumer.OnFailDelivery += CreateRocket;
+        Rocket.OnDetonation += RemoveRocketFromList;
     }
 
     /// Отписка от события "Неудачная доставка"
@@ -29,8 +36,12 @@ public class SpawnController_Rocket : MonoBehaviour
     {
         //Выбираем ракету из массива
         Rocket nextRocketPrefab = СhoosingSupplier();
-        //Создаём поставщика из префаба
+        //Создаём ракету из префаба
         Rocket nextRocket = Instantiate(nextRocketPrefab, consumer.transform.position, consumer.transform.rotation);
+        //Добавляем ракете цель
+        nextRocket.SetTarget(_target);
+        //Добавляем ракету в список
+        _rocketList.Add(nextRocket); 
     }
     /// <summary>
     /// Выбор префаба следующей ракеты
@@ -51,4 +62,31 @@ public class SpawnController_Rocket : MonoBehaviour
         return nextRocket;
     }
 
+    /// <summary>
+    /// Удаляем ракету из списка ракет
+    /// </summary>
+    /// <param name="rocket"></param>
+    private void RemoveRocketFromList(Rocket rocket)
+    {
+        _rocketList.Remove(rocket);
+        Destroy(rocket.gameObject);
+    }
+
+    /// <summary>
+    /// Очищаем список ракет на сцене
+    /// </summary>
+    public void ClearRocketList()
+    {
+        if (_rocketList.Count > 0)
+        {
+            foreach (var iRocket in _rocketList)
+            {
+                if (iRocket != null)
+                {
+                    Destroy(iRocket.gameObject);
+                }
+            }
+            _rocketList.Clear();
+        }    
+    }
 }
