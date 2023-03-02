@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveToTarget : MonoBehaviour
 {
-    public Transform Target;
-
+    [Tooltip("Цель")]
+    [SerializeField] private Transform _target;
+   
     void Update()
     {
-        transform.position = Target.position;
+        transform.position = _target.position;
     }
 }
