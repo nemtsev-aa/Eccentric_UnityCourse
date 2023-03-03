@@ -26,8 +26,7 @@ public class Pointer : MonoBehaviour
         Vector3 point = ray.GetPoint(distance);
         // ѕеремещаем прицел в току пересечени€ луча и плоскости
         _aim.position = point;
-
-
+        // –азворачиваем пистолет в направлении прицела
         Vector3 toAim = _aim.position - transform.position;
         transform.rotation = Quaternion.LookRotation(toAim);
     }
