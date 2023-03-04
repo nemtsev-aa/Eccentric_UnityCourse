@@ -14,7 +14,7 @@ public class BodyRotation : MonoBehaviour
     void Update()
     {
         // Поворот относительно Y
-        Quaternion yQuaternion = Quaternion.AngleAxis(_target.position.x > 0 ? -bodyYRotation : bodyYRotation, Vector3.up);
+        Quaternion yQuaternion = Quaternion.AngleAxis(_target.position.x > transform.position.x ? -bodyYRotation : bodyYRotation, Vector3.up);
         // Тернарный оператор
         transform.rotation = Quaternion.Lerp(transform.rotation, yQuaternion, Time.deltaTime * _lerpSpeed);
 
