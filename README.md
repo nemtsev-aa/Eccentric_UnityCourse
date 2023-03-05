@@ -14,7 +14,7 @@
 Физические: вес, физический материал;
 Визуальные: модель и визуальные материалы;
 
-Полученный результат: 
+Полученный результат: https://drive.google.com/drive/folders/1TlFdLqgturS7PpExnCatVQYtOPxPCo7o?usp=share_link
 
 
 

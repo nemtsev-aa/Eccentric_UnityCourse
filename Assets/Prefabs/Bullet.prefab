@@ -63,6 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 3
+  _hitParticle: {fileID: 1332399844379766, guid: d5a42f6bd9584fe4ab47d227092cebdf,
+    type: 3}
 --- !u!1 &6370402648210788104
 GameObject:
   m_ObjectHideFlags: 0

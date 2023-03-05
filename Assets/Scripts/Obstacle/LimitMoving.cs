@@ -41,11 +41,10 @@ public class LimitMoving : MonoBehaviour
         if (_status)
         {
             _time += Time.deltaTime;
-
             if (_time >= _duration)
             {
                 _time = 0;
-                _status = !_status;
+                Invoke(nameof(ResetMoving), 2f);
             }
             else
             {
@@ -65,6 +64,13 @@ public class LimitMoving : MonoBehaviour
     private void SetColor(float movingValue)
     {
         _material.color = Color.Lerp(_material1.color, _material2.color, movingValue);
+    }
+
+    private void ResetMoving()
+    {
+        SetLimitMoving(0);
+        _movingValue = 0;
+        _status = true;
     }
 
     public bool GetStatus()
