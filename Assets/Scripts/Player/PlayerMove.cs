@@ -34,13 +34,12 @@ public class PlayerMove : MonoBehaviour
             {
                 _rigidbody.AddForce(0, _jumpSpeed, 0, ForceMode.VelocityChange);
             }
-        }
-        
+        }     
     }
 
     private void SetLocalScale(float yScale)
     {
-        _transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(1f, yScale, 1f), Time.deltaTime * 15f);
+        _transform.localScale = Vector3.Lerp(_transform.localScale, new Vector3(1f, yScale, 1f), Time.deltaTime * 15f);
     }
 
     private void FixedUpdate()
@@ -50,19 +49,13 @@ public class PlayerMove : MonoBehaviour
         {
             speedMultiplier = 0.1f;
             // Ограничиваем перемещение игрока в полёте
-            // Вправо
-            if (_rigidbody.velocity.x > _maxSpeed && Input.GetAxis("Horizontal") > 0)
-            {
-                speedMultiplier = 0f;
-            }
-            // Влево
-            if (_rigidbody.velocity.x < -_maxSpeed && Input.GetAxis("Horizontal") < 0)
+            // Вправо-влево
+            if ((_rigidbody.velocity.x > _maxSpeed && Input.GetAxis("Horizontal") > 0)
+                || (_rigidbody.velocity.x < -_maxSpeed && Input.GetAxis("Horizontal") < 0))
             {
                 speedMultiplier = 0f;
             }
         }
-
-        
 
         // Перемещаем игрока при нажатии на стрелки/кнопки A,D
         _rigidbody.AddForce(Input.GetAxis("Horizontal") * _moveSpeed * speedMultiplier, 0, 0, ForceMode.VelocityChange);
