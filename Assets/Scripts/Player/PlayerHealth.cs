@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -8,9 +9,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int _health = 5;
     [SerializeField] private int _maxHealth = 8;
     [SerializeField] bool _invulnerable;
-    [SerializeField] private AudioSource _pickUpHealth;
-    [SerializeField] private AudioSource _meHit;
     [SerializeField] private Slider _healthView;
+
+    [SerializeField] private UnityEvent EventOnTakeDamage;
+    [SerializeField] private UnityEvent EventOnAddHealth;
 
     private void Start()
     {
@@ -22,8 +24,7 @@ public class PlayerHealth : MonoBehaviour
         if (!_invulnerable)
         {
             _health -= danageValue;
-            _meHit.Play();
-            ShowHealth();
+             ShowHealth();
             if (_health <= 0)
             {
                 _health = 0;
@@ -31,6 +32,7 @@ public class PlayerHealth : MonoBehaviour
             }
             _invulnerable = true;
             Invoke(nameof(StopInvulnerable), 1f);
+            EventOnTakeDamage.Invoke();
         } 
     }
 
@@ -42,12 +44,14 @@ public class PlayerHealth : MonoBehaviour
     public void AddHealth(int healthValue)
     {
         _health += healthValue;
-        _pickUpHealth.Play();
+        
         ShowHealth();
+
         if (_health > _maxHealth)
         {
             _health = _maxHealth;           
         }
+        EventOnAddHealth.Invoke();
     }
 
     private void Die()
@@ -58,7 +62,6 @@ public class PlayerHealth : MonoBehaviour
     private void ShowHealth()
     {
         float viewHealthValue = ((_health * 100) / _maxHealth) * 0.01f;
-        Debug.Log(viewHealthValue);
         _healthView.value = viewHealthValue;
     }
    
