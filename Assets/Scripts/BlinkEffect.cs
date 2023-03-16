@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BlinkEffect : MonoBehaviour
@@ -23,7 +21,6 @@ public class BlinkEffect : MonoBehaviour
                     _renderers[i].materials[m].SetColor("_EmissionColor", new Color(Mathf.Sin(30 * t) * 0.5f + 0.5f, 0, 0, 0));
                 }
             }
-            Debug.Log("EmissionColor");
             yield return null;
         } 
     }

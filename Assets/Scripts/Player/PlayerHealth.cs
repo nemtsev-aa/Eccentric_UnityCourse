@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -64,5 +62,4 @@ public class PlayerHealth : MonoBehaviour
         float viewHealthValue = ((_health * 100) / _maxHealth) * 0.01f;
         _healthView.value = viewHealthValue;
     }
-   
 }

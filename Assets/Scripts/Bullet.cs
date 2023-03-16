@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        CreateHitEffect();
         if (other.TryGetComponent<Key>(out Key key))
         {
             GameObject obstacle = key.GetTarget();
@@ -34,8 +35,13 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<EnemyHealth>())
         {
-            Instantiate(_hitParticle, transform.position, transform.rotation);
+            CreateHitEffect();
             Destroy(gameObject);
         } 
+    }
+
+    private void CreateHitEffect()
+    {
+        Instantiate(_hitParticle, transform.position, transform.rotation);
     }
 }

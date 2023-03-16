@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CarrotMove : MonoBehaviour
@@ -32,11 +30,15 @@ public class CarrotMove : MonoBehaviour
 
     public void MoveToTarget()
     {
+
         _moveStatus = true;
         _targetTransform = FindObjectOfType<PlayerMove>().transform;
-        // ≈диничный вектор от текущего положени€ до цели
-        Vector3 toTarget = (_targetTransform.position - transform.position).normalized;
-        _rigidbody.velocity = toTarget * _speed;
+        if (_targetTransform != null)
+        {
+            // ≈диничный вектор от текущего положени€ до цели
+            Vector3 toTarget = (_targetTransform.position - transform.position).normalized;
+            _rigidbody.velocity = toTarget * _speed;
+        }
     }
 
     public void MoveToCreator()
