@@ -18,7 +18,10 @@ public class BlinkEffect : MonoBehaviour
         {
             for (int i = 0; i < _renderers.Length; i++)
             {
-                _renderers[i].material.SetColor("_EmissionColor", new Color(Mathf.Sin(30 * t) * 0.5f + 0.5f, 0, 0, 0));
+                for (int m = 0; m < _renderers[i].materials.Length; m++)
+                {
+                    _renderers[i].materials[m].SetColor("_EmissionColor", new Color(Mathf.Sin(30 * t) * 0.5f + 0.5f, 0, 0, 0));
+                }
             }
             Debug.Log("EmissionColor");
             yield return null;

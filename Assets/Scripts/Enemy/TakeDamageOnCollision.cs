@@ -19,7 +19,10 @@ public class TakeDamageOnCollision : MonoBehaviour
 
         if (DieOnAnyCollision)
         {
-            EnemyHealth.TakeDamage(1000);
+            if (!collision.rigidbody || !collision.rigidbody.GetComponent<EnemyHealth>())
+            {
+                EnemyHealth.TakeDamage(1000);
+            }
         }
     }
 }
