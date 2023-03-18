@@ -19,8 +19,7 @@ public class CarrotMove : MonoBehaviour
         else
         {
             MoveToCreator();
-        }
-        
+        } 
     }
 
     public void SetCarrotCreator(Transform carrorCreatorTransform)
@@ -30,7 +29,6 @@ public class CarrotMove : MonoBehaviour
 
     public void MoveToTarget()
     {
-
         _moveStatus = true;
         _targetTransform = FindObjectOfType<PlayerMove>().transform;
         if (_targetTransform != null)
@@ -43,7 +41,14 @@ public class CarrotMove : MonoBehaviour
 
     public void MoveToCreator()
     {
-        transform.position = _creatorTransform.position;
-        _moveStatus = false;
+        if (_creatorTransform != null)
+        {
+            transform.position = _creatorTransform.position;
+            _moveStatus = false;
+        }  
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

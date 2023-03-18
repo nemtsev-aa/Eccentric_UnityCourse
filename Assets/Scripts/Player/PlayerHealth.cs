@@ -30,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
             }
             _invulnerable = true;
             Invoke(nameof(StopInvulnerable), 1f);
+            
             EventOnTakeDamage.Invoke();
         } 
     }

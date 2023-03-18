@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TakeDamageOnCollision : MonoBehaviour
@@ -13,6 +11,7 @@ public class TakeDamageOnCollision : MonoBehaviour
         {
             if (collision.rigidbody.GetComponent<Bullet>())
             {
+                HitCounter.Instance.HitCounting(1);
                 EnemyHealth.TakeDamage(1);
             }
         }

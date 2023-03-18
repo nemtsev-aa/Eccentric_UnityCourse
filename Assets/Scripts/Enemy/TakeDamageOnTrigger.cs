@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TakeDamageOnTrigger : MonoBehaviour
@@ -17,6 +15,7 @@ public class TakeDamageOnTrigger : MonoBehaviour
 
             if (other.attachedRigidbody.GetComponent<Bullet>())
             {
+                HitCounter.Instance.HitCounting(1);
                 _enemyHealth.TakeDamage(1);
                 Destroy(other.gameObject);
             }

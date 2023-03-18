@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private AudioSource _meHit;
     [SerializeField] private Slider _healthView;
     [SerializeField] private UnityEvent EventOnTakeDamage;
-
+     
     private int _health;
 
     private void Start()
@@ -16,10 +17,10 @@ public class EnemyHealth : MonoBehaviour
         _health = _maxHealth;
     }
 
-    public void TakeDamage(int danageValue)
+    public void TakeDamage(int damageValue)
     {
         EventOnTakeDamage.Invoke();
-        _health -= danageValue;
+        _health -= damageValue;
         _meHit.Play();
         
         if (_healthView != null)
