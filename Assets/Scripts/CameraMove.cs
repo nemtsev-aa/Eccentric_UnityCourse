@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
@@ -9,8 +7,17 @@ public class CameraMove : MonoBehaviour
     [Tooltip("Скорость поворота камеры к цели")]
     [SerializeField] private float _lerpSpeed;
 
+    public void SetTarget()
+    {
+        // Цель камеры - персонаж
+        _target = FindObjectOfType<PlayerMove>().transform;
+    }
+
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, _target.position, Time.deltaTime * _lerpSpeed);
+        if (_target != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, _target.position, Time.deltaTime * _lerpSpeed);
+        }
     }
 }

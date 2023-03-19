@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BlinkEffect : MonoBehaviour
 {
+    [Tooltip("Средство визуализации частей объекта")]
     [SerializeField] private Renderer[] _renderers;
 
     public void StartBlink()

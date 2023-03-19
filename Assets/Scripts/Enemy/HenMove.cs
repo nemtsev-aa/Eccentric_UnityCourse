@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HenMove : MonoBehaviour
 {
+    [Tooltip("Физическое тело курицы")]
     [SerializeField] private Rigidbody _rigidbody;
-    private Transform _targetTransform;
-
     [Tooltip("Начальная скорость")]
     [SerializeField] private float _speed = 3f;
     [Tooltip("Время для достижения цели")]
     [SerializeField] private float _timeToReachSpeed = 1f;
+    // Трансформ цели
+    private Transform _targetTransform;
 
     private void Start()
     {

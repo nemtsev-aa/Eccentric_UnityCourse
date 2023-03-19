@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MakeDamageOnTrigger : MonoBehaviour
 {
+    [Tooltip("Количество урона")]
     [SerializeField] private int _damageValue = 1;
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody)
         {
-            if (other.attachedRigidbody.GetComponent<PlayerHealth>())
+            if (other.attachedRigidbody.TryGetComponent(out PlayerHealth playerHealth))
             {
-                other.attachedRigidbody.GetComponent<PlayerHealth>().TakeDamage(_damageValue);
+                playerHealth.TakeDamage(_damageValue);
             }
         }
     }

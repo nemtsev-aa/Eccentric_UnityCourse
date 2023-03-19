@@ -11,7 +11,7 @@ public class LoseResult : MonoBehaviour
     public List<GameObject> _loseSkulls = new List<GameObject>();
     public List<GameObject> _loseIndicators = new List<GameObject>();
 
-    private float fadeTime = 1f;
+    private float fadeTime = 0.5f;
 
     public void StartLoseAnimation()
     {
@@ -27,7 +27,7 @@ public class LoseResult : MonoBehaviour
         mySequence.Append(loseTitle.DOAnchorPos(new Vector2(0f, 305f), 0.3f, false).SetEase(Ease.InOutQuint));
         mySequence.AppendCallback(ShowSkulls);
 
-        DOVirtual.DelayedCall(0.3f, () =>
+        DOVirtual.DelayedCall(1f, () =>
         {
             ShowLoseIndicators();
         });
@@ -52,7 +52,7 @@ public class LoseResult : MonoBehaviour
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 0f;
-            canvasGroup.DOFade(1, 0.2f).SetUpdate(true);
+            canvasGroup.DOFade(1, fadeTime).SetUpdate(true);
             foreach (var iSkull in _loseSkulls)
             {
                 Shake(iSkull);

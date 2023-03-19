@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class TakeDamageOnCollision : MonoBehaviour
 {
-    public EnemyHealth EnemyHealth;
+    [Tooltip("Враг получающий урон")]
+    [SerializeField] private EnemyHealth _enemyHealth;
+    [Tooltip("Погибать при любом столкновении")]
     [SerializeField] private bool DieOnAnyCollision;
 
     private void OnCollisionEnter(Collision collision)
@@ -11,17 +13,14 @@ public class TakeDamageOnCollision : MonoBehaviour
         {
             if (collision.rigidbody.GetComponent<Bullet>())
             {
-                HitCounter.Instance.HitCounting(1);
-                EnemyHealth.TakeDamage(1);
+                // Оцениваем эффект попадания для здоровья противника
+                _enemyHealth.TakeDamage(1);
             }
         }
 
         if (DieOnAnyCollision)
         {
-            if (!collision.rigidbody || !collision.rigidbody.GetComponent<EnemyHealth>())
-            {
-                EnemyHealth.TakeDamage(1000);
-            }
+            _enemyHealth.Die();
         }
     }
 }

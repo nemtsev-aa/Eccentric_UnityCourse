@@ -66,8 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 1
+  _maxHealth: 1
   _meHit: {fileID: 899027391497057724}
+  _healthView: {fileID: 0}
   EventOnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -95,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c78c6474fc9ad4598d2031241436f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHealth: {fileID: 899027391497057730}
+  _enemyHealth: {fileID: 899027391497057730}
   DieOnAnyCollision: 1
 --- !u!114 &899027391497057728
 MonoBehaviour:
@@ -266,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bac803ec3e104b4c8537bf5b83e9f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: {x: 0, y: 0, z: 600}
+  _rotationVector: {x: 0, y: 0, z: 300}
 --- !u!136 &899027392665001852
 CapsuleCollider:
   m_ObjectHideFlags: 0

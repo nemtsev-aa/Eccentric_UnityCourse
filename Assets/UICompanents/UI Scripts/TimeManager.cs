@@ -1,16 +1,14 @@
-using System;
 using UnityEngine;
-using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
-    [Tooltip("Менеджер игрового процесса")]
-    [SerializeField] private GameProcessManager _gameProcessManager;
+    
     [Tooltip("Статус таймера")]
     [SerializeField] private bool _status;
     [Tooltip("Время на уровень")]
     [SerializeField] private float _gameTime;
 
+    private GameProcessManager _gameProcessManager;
 
     public delegate void GameTimeValue(float timeValue);
     public event GameTimeValue TikGameTime;
@@ -20,30 +18,18 @@ public class TimeManager : MonoBehaviour
 
     private float _time = 0;
 
-    private void OnEnable()
+    private void Start()
     {
-        _gameProcessManager.OnPause += PauseTimer;
-        _gameProcessManager.OnResume += _gameProcessManager_OnResume;
-        _gameProcessManager.OnWin += StopTimer;
-        _gameProcessManager.OnLose += StopTimer;
+        _gameProcessManager = GameProcessManager.Instance;
     }
-
-    private void OnDisable()
-    {
-        _gameProcessManager.OnPause -= PauseTimer;
-        _gameProcessManager.OnResume -= _gameProcessManager_OnResume;
-        _gameProcessManager.OnWin -= StopTimer;
-        _gameProcessManager.OnLose -= StopTimer;
-    }
-
+    
     public void SetGameTime(float gameTime)
     {
-        Debug.Log("SetGameTime");
         _gameTime = gameTime;
         _time = gameTime;
     }
 
-    private void _gameProcessManager_OnResume()
+    public void ResumeGame()
     {
         StopTimer();
     }
@@ -74,8 +60,6 @@ public class TimeManager : MonoBehaviour
 
             if (_time < 0)
             {
-                Debug.Log("OnLose");
-
                 OnGameTimeOut?.Invoke();
                 _time = 0;
             }

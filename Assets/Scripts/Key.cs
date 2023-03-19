@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
+    [Tooltip("Объект активируемый ключём")]
     [SerializeField] private GameObject _target;
 
     public GameObject GetTarget()

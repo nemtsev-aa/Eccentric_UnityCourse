@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -77,9 +75,34 @@ public class PlayerMove : MonoBehaviour
             }         
         } 
     }
+
     private void OnCollisionExit(Collision collision)
     {
         _grounded = false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // Активируем эффект ключей при соприкосновении с игроком
+        if (other.TryGetComponent<Key>(out Key key))
+        {
+            GameObject obstacle = key.GetTarget();
+
+            if (obstacle.TryGetComponent(out LimitRotation limitRotation))
+            {
+                limitRotation.SetStatus(true);
+            }
+            else if (obstacle.TryGetComponent(out LimitMoving limitMoving))
+            {
+                limitMoving.SetStatus(true);
+            }
+
+            Destroy(key.gameObject);
+        }
+
+        if (other.GetComponent<Exit>())
+        {
+            GameProcessManager.Instance.GameWin();
+        }
+    }
 }

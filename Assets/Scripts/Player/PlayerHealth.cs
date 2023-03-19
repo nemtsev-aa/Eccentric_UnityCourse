@@ -4,12 +4,17 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int _health = 5;
-    [SerializeField] private int _maxHealth = 8;
-    [SerializeField] bool _invulnerable;
+    [Tooltip("Текущее количество здоровья персонажа")]
+    [field: SerializeField] public int Health { get; private set; }
+    [Tooltip("Максимальное количество здоровья персонажа")]
+    [field: SerializeField] public int MaxHealth { get; private set; }
+    [Tooltip("Статус неуязвимости")]
+    [SerializeField] private bool _invulnerable;
+    [Tooltip("Индикатор здоровья персонажа")]
     [SerializeField] private Slider _healthView;
-
+    [Tooltip("Событие - получение урона")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
+    [Tooltip("Событие - лечение")]
     [SerializeField] private UnityEvent EventOnAddHealth;
 
     private void Start()
@@ -21,11 +26,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!_invulnerable)
         {
-            _health -= danageValue;
+            Health -= danageValue;
              ShowHealth();
-            if (_health <= 0)
+            if (Health <= 0)
             {
-                _health = 0;
+                Health = 0;
                 Die();
             }
             _invulnerable = true;
@@ -42,25 +47,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddHealth(int healthValue)
     {
-        _health += healthValue;
+        Health += healthValue;
         
         ShowHealth();
 
-        if (_health > _maxHealth)
-        {
-            _health = _maxHealth;           
-        }
+        if (Health > MaxHealth)
+            Health = MaxHealth;
         EventOnAddHealth.Invoke();
     }
 
     private void Die()
     {
-        Debug.Log("You lose!");
+        GameProcessManager.Instance.GameLose();
     }
 
     private void ShowHealth()
     {
-        float viewHealthValue = ((_health * 100) / _maxHealth) * 0.01f;
+        float viewHealthValue = ((Health * 100) / MaxHealth) * 0.01f;
         _healthView.value = viewHealthValue;
     }
 }

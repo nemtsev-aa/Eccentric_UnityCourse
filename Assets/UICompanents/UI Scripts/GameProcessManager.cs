@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public enum GameStatus
 {
     Menu,
@@ -17,35 +16,31 @@ public enum GameStatus
 public class GameProcessManager : MonoBehaviour
 {
     public static GameProcessManager Instance;
+
     public GameStatus CurrentGameStatus;
     [Header("Game Settings")]
-    //[Tooltip("Количество собранных монет для победы")]
-    //[SerializeField] private int _coinCountToWin = 10;
     [Tooltip("Время уровня")]
-    [SerializeField] private float _gameTime = 60f;
+    [SerializeField] private int _gameTime = 180;
     private float _currentGameTime;
    
     [Header("Managers")]
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private TimeManager _timeManager;
+    [SerializeField] private SoundManager _soundManager;
+    [SerializeField] private MusicManager _musicManager;
+
+    private HitCounter _hitCounter;
+
     [SerializeField] private int _selectionLevel;
     [SerializeField] private List<GameObject> _levelObjects;
-    [SerializeField] private GameObject _allGameObject;
-    
-    public delegate void GameTime (float gameTime);
-    public event GameTime SetGameTime;
-
-    public event Action OnHome;
-    public event Action OnSettings;
-    public event Action OnLevels;
+    [SerializeField] private GameObject _allLevelObjects;
+       
+    public event Action<PageName> OnWindowShow;
+    public event Action OnGame;
+    public event Action OnPause;
+    public event Action OnResume;
     public event Action OnWin;
     public event Action OnLose;
-    public event Action OnPause;
-    public event Action OnGame;
-    public event Action OnDescription;
-    public event Action OnResume;
-    public event Action OnShop;
-    public event Action OnAuthors;
 
     private int _hitCount;
 
@@ -61,13 +56,25 @@ public class GameProcessManager : MonoBehaviour
         }
   
         OnGame += _timeManager.StartTimer;
+        OnPause += _timeManager.PauseTimer;
+        OnResume += _timeManager.ResumeGame;
         OnWin += _timeManager.StopTimer;
+        OnWin += _soundManager.OnWin;
+        OnWin += _musicManager.OnWin;
         OnLose += _timeManager.StopTimer;
+        OnLose += _soundManager.OnLose;
+        OnLose += _musicManager.OnLose;
+        OnWindowShow += _uiManager.ShowWindow;
+        OnWindowShow += _musicManager.PlayMusic;
+
+        _hitCounter = HitCounter.Instance;
+        _hitCounter.OnHitRegistration += _uiManager.ShowHitCount;
     }
+
     private void Start()
     {
         CurrentGameStatus = GameStatus.Start;
-        OnHome?.Invoke();
+        OnWindowShow?.Invoke(PageName.Home);
         HideLevel();
     }
 
@@ -90,43 +97,45 @@ public class GameProcessManager : MonoBehaviour
     {
         _timeManager.SetGameTime(_gameTime);
         RecordGameTime(_gameTime);
-        RecordHitCount(0);
-        Time.timeScale = 1f;
+        _hitCounter.ResetCounter();
         CurrentGameStatus = GameStatus.Active;
+        OnWindowShow?.Invoke(PageName.Game);
         OnGame?.Invoke();
+
+        Time.timeScale = 1f;
     }
 
     private void OnEnable()
     {
-        _timeManager.OnGameTimeOut += _timeManager_GameTimeOut;
+        _timeManager.OnGameTimeOut += GameTimeOut;
         _timeManager.TikGameTime += RecordGameTime;
-        HitCounter.Instance.OnHit += RecordHitCount;
     }
  
     private void OnDisable()
     {
-        _timeManager.OnGameTimeOut -= _timeManager_GameTimeOut;
+        _timeManager.OnGameTimeOut -= GameTimeOut;
         _timeManager.TikGameTime -= RecordGameTime;
-        HitCounter.Instance.OnHit -= RecordHitCount;
     }
 
-    private void _timeManager_GameTimeOut()
+    private void GameTimeOut()
     {
-        GameLose();
+        GameWin();
     }
 
     public void GameLose()
     {
         Time.timeScale = 1;
         CurrentGameStatus = GameStatus.Lose;
+        OnWindowShow?.Invoke(PageName.Lose);
         OnLose?.Invoke();
         HideLevel();
     }
 
     public void GameWin()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0;
         CurrentGameStatus = GameStatus.Win;
+        OnWindowShow?.Invoke(PageName.Win);
         OnWin?.Invoke();
         HideLevel();
     }
@@ -134,6 +143,7 @@ public class GameProcessManager : MonoBehaviour
     public void PauseGame()
     {
         CurrentGameStatus = GameStatus.Pause;
+        OnWindowShow?.Invoke(PageName.Pause);
         OnPause?.Invoke();
         Time.timeScale = 0;
     }
@@ -141,7 +151,7 @@ public class GameProcessManager : MonoBehaviour
     public void Return()
     {
         CurrentGameStatus = GameStatus.Start;
-        OnGame?.Invoke();
+        OnWindowShow?.Invoke(PageName.Game);
         Time.timeScale = 1;
     }
 
@@ -150,6 +160,7 @@ public class GameProcessManager : MonoBehaviour
         if (CurrentGameStatus == GameStatus.Win)
         {
             CurrentGameStatus = GameStatus.Start;
+            OnWindowShow?.Invoke(PageName.Game);
             OnResume?.Invoke();
             Time.timeScale = 1;
         }
@@ -162,39 +173,39 @@ public class GameProcessManager : MonoBehaviour
     {
         Time.timeScale = 1;
         CurrentGameStatus = GameStatus.Menu;
-        OnHome?.Invoke();
+        OnWindowShow?.Invoke(PageName.Home);
         HideLevel();
     }
 
     public void ShowSettings()
     {
         CurrentGameStatus = GameStatus.Menu;
-        OnSettings?.Invoke();
+        OnWindowShow?.Invoke(PageName.Settings);
         Time.timeScale = 0;
     }
     public void ShowDescription()
     {
         CurrentGameStatus = GameStatus.Menu;
-        OnDescription?.Invoke();
+        OnWindowShow?.Invoke(PageName.Distraction);
         Time.timeScale = 0;
     }
 
     public void ShowAuthors()
     {
         CurrentGameStatus = GameStatus.Menu;
-        OnAuthors?.Invoke();
+        OnWindowShow?.Invoke(PageName.Authors);
         Time.timeScale = 1;
     }
     public void ShowShop()
     {
         CurrentGameStatus = GameStatus.Menu;
-        OnShop?.Invoke();
+        OnWindowShow?.Invoke(PageName.Shop);
         Time.timeScale = 0;
     }
     public void ShowLevels()
     {
         CurrentGameStatus = GameStatus.Menu;
-        OnLevels?.Invoke();
+        OnWindowShow?.Invoke(PageName.Levels);
         Time.timeScale = 1;
     }
 
@@ -207,25 +218,36 @@ public class GameProcessManager : MonoBehaviour
     {
         _selectionLevel = levelIndex;
     }
+
     public void ShowLevel()
     {
-        foreach (var iLevel in _levelObjects)
-        {
-            iLevel.SetActive(false);
-        }
-        _allGameObject.SetActive(true);
+        //GameObject selectionLevelPrefab = _levelObjects[_selectionLevel - 1];
+        //GameObject newLevel = Instantiate(selectionLevelPrefab, transform.position, transform.rotation);
+        //newLevel.transform.SetParent(_allLevelObjects.transform);
+        //_allLevelObjects.SetActive(true);
+        //newLevel.SetActive(true);
+        //LevelManager levelManager = newLevel.GetComponent<LevelManager>();
+        //_gameTime = levelManager.GetLevelTime();
 
-        _levelObjects[_selectionLevel-1].SetActive(true);
+        _allLevelObjects.SetActive(true);
+        GameObject newLevel = _levelObjects[_selectionLevel - 1];
+        newLevel.SetActive(true);
+        
         StartGame();
     }
+
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void HideLevel()
     {
         foreach (var iLevel in _levelObjects)
         {
             iLevel.SetActive(false);
         }
-        _allGameObject.SetActive(false);
-
+        _allLevelObjects.SetActive(false);
     }
 
     public void RecordGameTime(float timeValue)
@@ -234,9 +256,4 @@ public class GameProcessManager : MonoBehaviour
         _uiManager.ShowGameTime(_currentGameTime, _gameTime);
     }
 
-    public void RecordHitCount(int hitCount)
-    {
-        _hitCount = hitCount;
-        _uiManager.ShowHitCount(_hitCount);
-    }
 }

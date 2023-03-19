@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeadRotation : MonoBehaviour
 {
     [Tooltip("Цель")]
     [SerializeField] private Transform _target;
-    [Tooltip("Скорость поворота к цели")]
-    [SerializeField] private float _lerpSpeed = 10f;
+    //[Tooltip("Скорость поворота к цели")]
+    //[SerializeField] private float _lerpSpeed = 10f;
     [Tooltip("Предел поворота головы вверх")]
     [SerializeField] private Vector3 _headUp = new Vector3(15, 0, 0);
     [Tooltip("Предел поворота головы вниз")]

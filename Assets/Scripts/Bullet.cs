@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -9,39 +8,48 @@ public class Bullet : MonoBehaviour
     [Tooltip("Эффект попадания")]
     [SerializeField] private GameObject _hitParticle;
 
+    public event Action HitRegistered;
+
     private void Start()
     {
+        // Подписываем счётчик попаданий на событие - попадание
+        HitRegistered += HitCounter.Instance.HitCounting;
+
+        // Уничтожаем пулю через определённое время, если она не достигла цели
         Destroy(gameObject, _lifeTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CreateHitEffect();
+        // Активируем эффект ключей при попадании в них пули
         if (other.TryGetComponent<Key>(out Key key))
         {
             GameObject obstacle = key.GetTarget();
 
-            if (obstacle.TryGetComponent<LimitRotation>(out LimitRotation limitRotation))
+            if (obstacle.TryGetComponent(out LimitRotation limitRotation))
             {
                 limitRotation.SetStatus(true);
             }
-            else if (obstacle.TryGetComponent<LimitMoving>(out LimitMoving limitMoving))
+            else if (obstacle.TryGetComponent(out LimitMoving limitMoving))
             {
                 limitMoving.SetStatus(true);
             }
         }
+        Hit();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<EnemyHealth>())
         {
-            CreateHitEffect();
-            Destroy(gameObject);
+            Hit();
         } 
     }
-
-    private void CreateHitEffect()
+    public void Hit()
     {
+        HitRegistered?.Invoke();
+        // Визуализируем попадание и уничтожаем пулю
         Instantiate(_hitParticle, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

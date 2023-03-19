@@ -2,9 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
-{
-    [Tooltip("Менеджер игрового процесса")]
-    [SerializeField] private GameProcessManager _gameProcessManager;
+{ 
     [SerializeField] private Scrollbar _musicVolumeController;
     
     [Header("Music")]
@@ -14,44 +12,30 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip _uiMusicClip;
     [Tooltip("Музыка в игре")]
     [SerializeField] private AudioClip _gameMusicClip;
-
+   
     private void Start()
     {
         _musicVolumeController.value = _musicSource.volume;
     }
 
-    /// Подписка на события 
-    private void OnEnable()
+    public void PlayMusic(PageName pageName)
     {
-        _gameProcessManager.OnHome += PlayUIMusic;
-        _gameProcessManager.OnSettings += PlayUIMusic;
-        _gameProcessManager.OnAuthors += PlayUIMusic;
-        _gameProcessManager.OnLevels += PlayUIMusic;
-        _gameProcessManager.OnPause += PlayUIMusic;
-        _gameProcessManager.OnGame += PlayGameMusic;
-        _gameProcessManager.OnWin += _gameProcessManager_OnWin;
-        _gameProcessManager.OnLose += _gameProcessManager_OnLose;
+        if (pageName == PageName.Game)
+        {
+            PlayGameMusic();
+        }
+        else
+        {
+            PlayUIMusic();
+        }
     }
 
-    /// Отписка от события 
-    private void OnDisable()
-    {
-        _gameProcessManager.OnHome -= PlayUIMusic;
-        _gameProcessManager.OnSettings -= PlayUIMusic;
-        _gameProcessManager.OnAuthors -= PlayUIMusic;
-        _gameProcessManager.OnLevels -= PlayUIMusic;
-        _gameProcessManager.OnPause -= PlayUIMusic;
-        _gameProcessManager.OnGame -= PlayGameMusic;
-        _gameProcessManager.OnWin -= _gameProcessManager_OnWin;
-        _gameProcessManager.OnLose -= _gameProcessManager_OnLose;
-    }
-
-    private void _gameProcessManager_OnWin()
+    public void OnWin()
     {
         _musicSource.Stop();
     }
 
-    private void _gameProcessManager_OnLose()
+    public void OnLose()
     {
         _musicSource.Stop();
     }

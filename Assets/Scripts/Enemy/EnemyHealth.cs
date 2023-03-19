@@ -1,15 +1,18 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Tooltip("Максимальное здоровье противника")]
     [SerializeField] private int _maxHealth = 1;
+    [Tooltip("Источник звуков противника")]
     [SerializeField] private AudioSource _meHit;
+    [Tooltip("Индикатор здоровья противника")]
     [SerializeField] private Slider _healthView;
+    [Tooltip("Событие - получение урона противником")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
-     
+    // Текущее здоровье противника
     private int _health;
 
     private void Start()
@@ -33,7 +36,7 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
-    private void Die()
+    public void Die()
     {
         Destroy(gameObject);
     }

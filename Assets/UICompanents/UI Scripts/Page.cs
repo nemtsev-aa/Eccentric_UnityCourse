@@ -36,6 +36,7 @@ public class Page : MonoBehaviour
 
     public static event Action OnDescription; 
     public static event Action OffDescription;
+
     private void Start()
     {
         if (PageName != PageName.Home)

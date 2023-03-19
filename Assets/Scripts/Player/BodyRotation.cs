@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BodyRotation : MonoBehaviour
@@ -13,9 +11,9 @@ public class BodyRotation : MonoBehaviour
 
     void Update()
     {
-        // Поворот относительно Y
-        Quaternion yQuaternion = Quaternion.AngleAxis(_target.position.x > transform.position.x ? -bodyYRotation : bodyYRotation, Vector3.up);
         // Тернарный оператор
+        Quaternion yQuaternion = Quaternion.AngleAxis(_target.position.x > transform.position.x ? -bodyYRotation : bodyYRotation, Vector3.up);
+        // Поворот относительно Y
         transform.rotation = Quaternion.Lerp(transform.rotation, yQuaternion, Time.deltaTime * _lerpSpeed);
 
         // Подробная запись
@@ -24,6 +22,5 @@ public class BodyRotation : MonoBehaviour
         //    bodyYRotation = -bodyYRotation;
         //}
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(bodyYRotation, Vector3.up), Time.deltaTime * _lerpSpeed);
-
     }
 }

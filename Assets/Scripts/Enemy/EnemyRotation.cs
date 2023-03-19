@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class EnemyRotation : MonoBehaviour
 {
-    [SerializeField] private Vector3 _rotationSpeed;
+    [Tooltip("Направление вращения")]
+    [SerializeField] private Vector3 _rotationVector;
 
     void Update()
     {
-        transform.Rotate(_rotationSpeed * Time.deltaTime);
+        transform.Rotate(_rotationVector * Time.deltaTime);
     }
 }

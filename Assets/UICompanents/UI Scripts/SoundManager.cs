@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    [Tooltip("Менеджер игрового процесса")]
-    [SerializeField] private GameProcessManager _gameProcessManager;
     [SerializeField] private Scrollbar _soundVolumeController;
     [Header("Sound Effects")]
     [Tooltip("Источник звуковых эффектов")]
@@ -20,31 +18,13 @@ public class SoundManager : MonoBehaviour
     {
         _soundVolumeController.value = _soundEffectsSourse.volume;
     }
-    /// Подписка на события 
-    private void OnEnable()
-    {
-        _gameProcessManager.OnWin += _gameProcessManager_OnWin;
-        _gameProcessManager.OnLose += _gameProcessManager_OnLose;
-    }
 
-    /// Отписка от события 
-    private void OnDisable()
-    {
-        _gameProcessManager.OnWin -= _gameProcessManager_OnWin;
-        _gameProcessManager.OnLose -= _gameProcessManager_OnLose;
-    }
-
-    private void СollectingСoins()
-    {
-        _soundEffectsSourse.PlayOneShot(_coinPicSound, 1f);
-    }
-
-    private void _gameProcessManager_OnWin()
+    public void OnWin()
     {
         _soundEffectsSourse.PlayOneShot(_winSound, 1f);
     }
 
-    private void _gameProcessManager_OnLose()
+    public void OnLose()
     {
         _soundEffectsSourse.PlayOneShot(_fallingSound, 1f);
     }

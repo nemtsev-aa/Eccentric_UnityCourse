@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MakeDamageOnCollision : MonoBehaviour
 {
+    [Tooltip("Количество урона")]
     [SerializeField] private int _damageValue = 1;
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject)
         {
-            if (collision.gameObject.GetComponent<PlayerHealth>())
+            if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
             {
-                collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(_damageValue);
+                playerHealth.TakeDamage(_damageValue);
             }
         }
     }
