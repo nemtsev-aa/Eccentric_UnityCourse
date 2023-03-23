@@ -6,6 +6,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int _levelTime;
     [Tooltip("Персонаж")]
     [SerializeField] private GameObject _player;
+    [Tooltip("Выход")]
+    [SerializeField] private GameObject _exit;
     [Tooltip("Cтартовая позиция персонажа")]
     [SerializeField] private Transform _startTransform;
 
@@ -28,5 +30,10 @@ public class LevelManager : MonoBehaviour
     public int GetLevelTime()
     {
         return _levelTime;
+    }
+
+    public void ShowExit()
+    {
+        _exit.SetActive(true);
     }
 }

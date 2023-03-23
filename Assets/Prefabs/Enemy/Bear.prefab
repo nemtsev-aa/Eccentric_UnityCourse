@@ -6658,9 +6658,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 4
   _maxHealth: 10
   _meHit: {fileID: 4547826632145139785}
   _healthView: {fileID: 7059929316730330385}
+  _invulnerable: 0
   EventOnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -6856,6 +6858,12 @@ MonoBehaviour:
   _leftEuler: {x: 0, y: 0, z: 0}
   _rightEuler: {x: 0, y: 180, z: 0}
   _rotationSpeed: 5
+  OnLeftRotation:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRightRotation:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4827877568925282224
 GameObject:
   m_ObjectHideFlags: 0

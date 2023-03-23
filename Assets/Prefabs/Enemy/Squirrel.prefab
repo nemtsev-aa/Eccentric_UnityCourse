@@ -51,9 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 3
   _maxHealth: 3
   _meHit: {fileID: 5828412990401904063}
   _healthView: {fileID: 5828412992168145505}
+  _invulnerable: 0
   EventOnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -134,8 +136,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90b3ddb67274c9c4fa476e5126d4e759, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.498
-  m_Pitch: 1
+  m_Volume: 0.06
+  m_Pitch: -2.55
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -255,7 +257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.65}
+  m_AnchoredPosition: {x: -0.15, y: 1.81}
   m_SizeDelta: {x: 988, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5828412990588098052
@@ -860,22 +862,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3a473d083a3267e449960fed6c6f75e9,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3
+      value: 1.4999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a473d083a3267e449960fed6c6f75e9,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2999998
+      value: 1.4999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a473d083a3267e449960fed6c6f75e9,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.2999998
+      value: 1.4999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a473d083a3267e449960fed6c6f75e9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a473d083a3267e449960fed6c6f75e9,
         type: 3}

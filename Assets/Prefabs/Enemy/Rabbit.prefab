@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5341586682879115113}
   - component: {fileID: 7392876087995874713}
+  - component: {fileID: 8823517046732076871}
   m_Layer: 5
   m_Name: HealthStrip
   m_TagString: Untagged
@@ -90,6 +91,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8823517046732076871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395723186359142046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd16389f4c92bd84ba0988e79ed193f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTransform: {fileID: 0}
 --- !u!1 &1664240556664835748
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 5049844451345939368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.18, y: 0.39, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4728251536672487384}
@@ -350,9 +364,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 1
   _maxHealth: 5
   _meHit: {fileID: 5049844451345939370}
   _healthView: {fileID: 7392876087995874713}
+  _invulnerable: 0
   EventOnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -408,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHealth: {fileID: 5049844451345939374}
+  DieOnAnyCollision: 0
 --- !u!114 &5049844451345939362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,9 +546,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0557bb8de481e8d4ab9d6e3d8381f59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPeriod: 5
+  _period: 7
   _animator: {fileID: 5049844451335034682}
-  _timer: 0
+  _triggerName: Attack
 --- !u!114 &4746187732325706503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +564,12 @@ MonoBehaviour:
   _leftEuler: {x: 0, y: 20, z: 0}
   _rightEuler: {x: 0, y: 160, z: 0}
   _rotationSpeed: 5
+  OnLeftRotation:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRightRotation:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5088349151103242522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,9 +1485,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b3dd40fcd50974db2750308de20102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carrotPrefab: {fileID: 899027391497057733, guid: edc5709516934aa47a16c2aa4ee808dd,
+  _ammoPrefab: {fileID: 899027391497057733, guid: edc5709516934aa47a16c2aa4ee808dd,
     type: 3}
-  _carrotSpawnPoint: {fileID: 5049844449788988954}
+  _ammoSpawnPoint: {fileID: 5049844449788988954}
 --- !u!23 &5840996246390951643 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1665142080927063784, guid: 2906e305dcad06f49b379c4f34947fc2,

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RotationToPlayer : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class RotationToPlayer : MonoBehaviour
     // Целевой угол поворота
     private Vector3 _targetEuler;
 
+    [SerializeField] private UnityEvent OnLeftRotation;
+    [SerializeField] private UnityEvent OnRightRotation;
+
     private void Start()
     {
         _rotationTarget = FindObjectOfType<PlayerMove>().transform;
@@ -23,4 +27,5 @@ public class RotationToPlayer : MonoBehaviour
         _targetEuler = (transform.position.x > _rotationTarget.position.x) ?  _rightEuler : _leftEuler;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(_targetEuler), _rotationSpeed * Time.deltaTime);
     }
+
 }

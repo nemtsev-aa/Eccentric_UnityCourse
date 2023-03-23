@@ -8,7 +8,10 @@ public class BlinkEffect : MonoBehaviour
 
     public void StartBlink()
     {
-        StartCoroutine(ShowEffect());
+        if (gameObject != null)
+        {
+            StartCoroutine(ShowEffect());
+        }
     }
 
     private IEnumerator ShowEffect()

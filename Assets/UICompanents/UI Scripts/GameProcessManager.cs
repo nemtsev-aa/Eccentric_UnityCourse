@@ -24,6 +24,7 @@ public class GameProcessManager : MonoBehaviour
     private float _currentGameTime;
    
     [Header("Managers")]
+    [SerializeField] private Enemies _enemies;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private TimeManager _timeManager;
     [SerializeField] private SoundManager _soundManager;
@@ -92,6 +93,8 @@ public class GameProcessManager : MonoBehaviour
                 PauseGame();
             }
         }
+
+        _enemies.ShowNearEnemy();
     }
 
     public void StartGame()
@@ -236,7 +239,9 @@ public class GameProcessManager : MonoBehaviour
         GameObject newLevel = _levelObjects[_selectionLevel - 1];
         newLevel.SetActive(true);
         _levelManager = newLevel.GetComponent<LevelManager>();
-
+        _enemies.CreateEnemyList();
+        _enemies.AllEnemiesDestroyed += _levelManager.ShowExit;
+        
         StartGame();
     }
 
