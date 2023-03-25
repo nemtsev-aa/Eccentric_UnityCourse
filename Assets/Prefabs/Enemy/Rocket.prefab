@@ -154,9 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyType: 0
   _maxHealth: 1
   _meHit: {fileID: 8826978110391152533}
   _healthView: {fileID: 0}
+  _invulnerable: 0
   EventOnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -172,6 +174,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _dieParticleEffect: {fileID: 0}
 --- !u!1 &8826978110391152534
 GameObject:
   m_ObjectHideFlags: 0

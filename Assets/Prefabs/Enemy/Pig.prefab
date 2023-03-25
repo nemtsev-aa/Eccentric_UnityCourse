@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyType: 5
-  _maxHealth: 3
+  _maxHealth: 2
   _meHit: {fileID: 798710833953995980}
   _healthView: {fileID: 798710835045103882}
   _invulnerable: 0
@@ -86,6 +86,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _dieParticleEffect: {fileID: 19800018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
 --- !u!114 &798710833953995968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,8 +210,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 6eecad662ecf5e54bb41a68e21acd57f, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

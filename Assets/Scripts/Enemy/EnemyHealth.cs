@@ -27,10 +27,15 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Slider _healthView;
     [Tooltip("Статус неуязвимости")]
     [SerializeField] private bool _invulnerable;
+
     public bool Invulnerable { get { return _invulnerable; }  set { _invulnerable = value; } }
             
     [Tooltip("Событие - получение урона противником")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
+
+    [Tooltip("Эффект смерти")]
+    [SerializeField] private ParticleSystem _dieParticleEffect;
+
 
     // Текущее здоровье противника
     private int _health;
@@ -89,6 +94,10 @@ public class EnemyHealth : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+        if (_dieParticleEffect != null)
+        {
+            Instantiate(_dieParticleEffect, transform.position - Vector3.down * 1.5f, transform.rotation);
+        }
     }
 
     private void ShowHealth()

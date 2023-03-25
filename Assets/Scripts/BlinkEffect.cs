@@ -16,8 +16,8 @@ public class BlinkEffect : MonoBehaviour
 
     private IEnumerator ShowEffect()
     {
-        for (float t = 0; t < 1; t += Time.deltaTime)
-        {
+        for (float t = 0; t < 1.5f; t += Time.deltaTime)
+        { 
             SetColor(new Color(Mathf.Sin(30 * t) * 0.5f + 0.5f, 0, 0, 0));
             yield return null;
         }

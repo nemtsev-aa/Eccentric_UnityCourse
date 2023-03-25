@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyType: 3
-  _maxHealth: 3
+  _maxHealth: 2
   _meHit: {fileID: 5193099491201007904}
   _healthView: {fileID: 5813399428555309575}
   _invulnerable: 0
@@ -1040,6 +1040,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _dieParticleEffect: {fileID: 19800018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
 --- !u!114 &5193099491201007916
 MonoBehaviour:
   m_ObjectHideFlags: 0

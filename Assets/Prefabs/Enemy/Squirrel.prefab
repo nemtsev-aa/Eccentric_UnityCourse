@@ -83,6 +83,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _dieParticleEffect: {fileID: 19800018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
 --- !u!114 &5828412990401904061
 MonoBehaviour:
   m_ObjectHideFlags: 0
