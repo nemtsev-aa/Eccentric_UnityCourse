@@ -12,8 +12,8 @@ public class Enemies : MonoBehaviour
     [SerializeField] float _distanceToPlayer;
 
     public event Action AllEnemiesDestroyed;
-
     private Transform _playerTransform;
+
     private void Start()
     {
         // Цель моркови - персонаж

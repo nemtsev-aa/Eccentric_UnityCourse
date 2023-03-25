@@ -67,10 +67,13 @@ public class LeftToRightMove : MonoBehaviour
             }
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(_rayStart.position, Vector3.down, out hit))
+        if (_rayStart != null)
         {
-            transform.position = hit.point;
+            RaycastHit hit;
+            if (Physics.Raycast(_rayStart.position, Vector3.down, out hit))
+            {
+                transform.position = hit.point;
+            }
         }
     }
 

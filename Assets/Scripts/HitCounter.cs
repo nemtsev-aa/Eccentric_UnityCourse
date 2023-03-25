@@ -8,6 +8,7 @@ public class HitCounter : MonoBehaviour
     private int _hitCount;
 
     public event Action<int> OnHitRegistration;
+    public event Action OnHit;
 
     private void Awake()
     {
@@ -24,10 +25,17 @@ public class HitCounter : MonoBehaviour
     /// <summary>
     /// Подсчёт количества попаданий во врагов
     /// </summary>
-    public void HitCounting()
+    public void HitCounting(GameObject hitTarget)
     {
         _hitCount++;
         OnHitRegistration?.Invoke(_hitCount);
+        if (hitTarget.TryGetComponent(out EnemyHealth enemyHealth))
+        {
+            if (enemyHealth.EnemyType == EnemyType.Bear)
+            {
+                OnHit?.Invoke();
+            }   
+        } 
     }
 
     public void ResetCounter()

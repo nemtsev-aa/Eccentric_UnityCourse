@@ -9882,7 +9882,7 @@ MonoBehaviour:
     type: 3}
   _bulletCreator: {fileID: 2616458526241566620}
   _bulletSpeed: 25
-  _shotPeriod: 0.2
+  _shotPeriod: 0.5
   _flash: {fileID: 8454740707215404446}
   _shotSound: {fileID: 1596839558734248525}
 --- !u!82 &1596839558734248525
@@ -11311,7 +11311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyParent: {fileID: 1596839559332001618}
   _enemyies: []
-  _distanceToPlayer: 50
+  _distanceToPlayer: 150
 --- !u!33 &1596839559359978700
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -28570,11 +28570,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear
       objectReference: {fileID: 0}
-    - target: {fileID: 4710646347751385464, guid: c73e4272ccd035649993129d80a19010,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6f4d8086eac5ff04d9e411aa16a15eea, type: 2}
     - target: {fileID: 7059929316739270871, guid: c73e4272ccd035649993129d80a19010,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -28585,16 +28580,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7977673015802345123, guid: c73e4272ccd035649993129d80a19010,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7977673015802345123, guid: c73e4272ccd035649993129d80a19010,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6f4d8086eac5ff04d9e411aa16a15eea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c73e4272ccd035649993129d80a19010, type: 3}
 --- !u!1 &7121546084073608767

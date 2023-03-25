@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     [Tooltip("Эффект попадания")]
     [SerializeField] private GameObject _hitParticle;
 
-    public event Action HitRegistered;
+    public event Action<GameObject> HitRegistered;
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.attachedRigidbody && other.attachedRigidbody.GetComponent<EnemyHealth>())
-            Hit();
+            Hit(other.gameObject);
         // Активируем эффект ключей при попадании в них пули
         else if (other.TryGetComponent(out Key key))
         {
@@ -36,18 +36,18 @@ public class Bullet : MonoBehaviour
             {
                 limitMoving.SetStatus(true);
             }
-            Hit();
+            Hit(other.gameObject);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<EnemyHealth>())
-            Hit();
+            Hit(collision.gameObject);
     }
-    public void Hit()
+    public void Hit(GameObject collisionGameObject)
     {
-        HitRegistered?.Invoke();
+        HitRegistered?.Invoke(collisionGameObject);
         // Визуализируем попадание и уничтожаем пулю
         Instantiate(_hitParticle, transform.position, transform.rotation);
         Destroy(gameObject);

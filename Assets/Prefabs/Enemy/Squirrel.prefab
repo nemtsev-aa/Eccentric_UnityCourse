@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyType: 3
+  EnemyType: 6
   _maxHealth: 3
   _meHit: {fileID: 5828412990401904063}
   _healthView: {fileID: 5828412992168145505}

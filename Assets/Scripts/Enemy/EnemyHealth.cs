@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-enum EnemyType
+public enum EnemyType
 {
+    Rocket,
+    Carrot,
+    Acorn,
     Hen,
     Rabbit,
     Pig,
@@ -14,7 +18,7 @@ enum EnemyType
 public class EnemyHealth : MonoBehaviour
 {
     [Tooltip("Тип противника")]
-    [SerializeField] private EnemyType _enemyType;
+    [SerializeField] public EnemyType EnemyType;
     [Tooltip("Максимальное здоровье противника")]
     [SerializeField] private int _maxHealth = 1;
     [Tooltip("Источник звуков противника")]
@@ -23,8 +27,11 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Slider _healthView;
     [Tooltip("Статус неуязвимости")]
     [SerializeField] private bool _invulnerable;
+    public bool Invulnerable { get { return _invulnerable; }  set { _invulnerable = value; } }
+            
     [Tooltip("Событие - получение урона противником")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
+
     // Текущее здоровье противника
     private int _health;
 
@@ -38,6 +45,7 @@ public class EnemyHealth : MonoBehaviour
         if (!_invulnerable)
         {
             EventOnTakeDamage.Invoke();
+            
             _health -= damageValue;
             _meHit.Play();
 
@@ -50,7 +58,7 @@ public class EnemyHealth : MonoBehaviour
             _invulnerable = true;
 
             // Время неуязвимости противников в зависимости от типа
-            switch (_enemyType)
+            switch (EnemyType)
             {
                 case EnemyType.Hen:
                     Invoke(nameof(StopInvulnerable), 1f);
@@ -73,7 +81,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void StopInvulnerable()
+    public void StopInvulnerable()
     {
         _invulnerable = false;
     }
@@ -88,4 +96,10 @@ public class EnemyHealth : MonoBehaviour
         float viewHealthValue = ((_health * 100) / _maxHealth) * 0.01f;
         _healthView.value = viewHealthValue;
     }
+
+    public bool GetInvulnerable()
+    {
+        return _invulnerable;
+    }
+
 }
