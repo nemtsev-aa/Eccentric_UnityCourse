@@ -68,7 +68,7 @@ public class GameProcessManager : MonoBehaviour
         OnLose += _musicManager.OnLose;
         OnWindowShow += _uiManager.ShowWindow;
         OnWindowShow += _musicManager.PlayMusic;
-
+        
         _hitCounter = HitCounter.Instance;
         _hitCounter.OnHitRegistration += _uiManager.ShowHitCount;
     }
@@ -115,6 +115,7 @@ public class GameProcessManager : MonoBehaviour
     {
         _timeManager.OnGameTimeOut += GameTimeOut;
         _timeManager.TikGameTime += RecordGameTime;
+
     }
  
     private void OnDisable()
@@ -240,8 +241,9 @@ public class GameProcessManager : MonoBehaviour
         newLevel.SetActive(true);
         _levelManager = newLevel.GetComponent<LevelManager>();
         _enemies.CreateEnemyList();
+        _enemies.BossKilled += _levelManager.ShowExit;
         _enemies.AllEnemiesDestroyed += _levelManager.ShowExit;
-        
+
         StartGame();
     }
 

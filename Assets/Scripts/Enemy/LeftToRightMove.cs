@@ -4,15 +4,17 @@ using UnityEngine.Events;
 public enum Direction
 {
     Left,
-    Right
+    Right,
+    Down,
+    Top
 }
 
 public class LeftToRightMove : MonoBehaviour
 {
     [Tooltip("Крайнее левое положение")]
-    [SerializeField] private Transform _leftPoint;
+    [SerializeField] private Transform _topPoint;
     [Tooltip("Крайнее правое положение")]
-    [SerializeField] private Transform _rightPoint;
+    [SerializeField] private Transform _downPoint;
     [Tooltip("Скорость движения")]
     [SerializeField] private float _moveSpeed;
     [Tooltip("Время остановки в конечной точке")]
@@ -33,8 +35,8 @@ public class LeftToRightMove : MonoBehaviour
     private void Start()
     {
         // Открепляем ограничивающие движение точки от модели
-        _leftPoint.parent = null;
-        _rightPoint.parent = null;
+        _topPoint.parent = null;
+        _downPoint.parent = null;
     }
 
     private void Update()
@@ -47,7 +49,7 @@ public class LeftToRightMove : MonoBehaviour
         if (_currentDirection == Direction.Left)
         {
             transform.position -= new Vector3(Time.deltaTime * _moveSpeed, 0f, 0f);
-            if (transform.position.x <= _leftPoint.position.x)
+            if (transform.position.x <= _topPoint.position.x)
             {
                 _currentDirection = Direction.Right;
                 _isStopped = true;
@@ -58,7 +60,7 @@ public class LeftToRightMove : MonoBehaviour
         else
         {
             transform.position += new Vector3(Time.deltaTime * _moveSpeed, 0f, 0f);
-            if (transform.position.x >= _rightPoint.position.x)
+            if (transform.position.x >= _downPoint.position.x)
             {
                 _currentDirection = Direction.Left;
                 _isStopped = true;

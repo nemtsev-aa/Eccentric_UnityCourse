@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Enemy.Bear
 {
@@ -11,31 +10,21 @@ namespace Assets.Scripts.Enemy.Bear
         }
 
         private EnemyBehaviorsManager _enemy;
-        private EnemyHealth _currentEnemyHealth;
-
-        // Время с прошлого переключения
-        private float _timer;
 
         public void Enter()
         {
-            _currentEnemyHealth = _enemy.EnemyHealth;
-            Debug.Log("Enter EnemyBehaviorDistanceAttack"); 
+            Debug.Log("DistanceAttack Enter");
+            _enemy.Animator.SetTrigger("DistanceAttack");
         }
 
         public void Exit()
         {
-            Debug.Log("Exit EnemyBehaviorDistanceAttack");
+            Debug.Log("DistanceAttack Exit");
         }
 
         public void Play()
         {
-            _timer += Time.deltaTime;
-            if (_timer > _enemy.AttackPeriod)
-            {
-                _timer = 0;
-                _enemy.Animator.SetTrigger("DistanceAttack");
-                _currentEnemyHealth.StopInvulnerable();
-            }
+            Debug.Log("DistanceAttack Play");
         }
     }
 }

@@ -4,7 +4,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Tooltip("Физическое тело персонажа")]
     [SerializeField] private Rigidbody _rigidbody;
-    [Tooltip("Тело персонажа")]
+    [Tooltip("Расположение персонажа")]
     [SerializeField] private Transform _transform;
     [Tooltip("Скорость перемещения")]
     [SerializeField] private float _moveSpeed;
@@ -16,6 +16,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _friction;
     [Tooltip("Статус нахождения на земле")]
     [SerializeField] private bool _grounded;
+    [Tooltip("Источник луча PhysicRaycast")]
+    [SerializeField] private Transform _rayStart;
 
     private void Update()
     {
@@ -32,7 +34,8 @@ public class PlayerMove : MonoBehaviour
             {
                 _rigidbody.AddForce(0, _jumpSpeed, 0, ForceMode.VelocityChange);
             }
-        }     
+        }
+
     }
 
     private void SetLocalScale(float yScale)
@@ -64,6 +67,18 @@ public class PlayerMove : MonoBehaviour
             _rigidbody.AddForce(-_rigidbody.velocity.x * _friction, 0, 0, ForceMode.VelocityChange);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Selectable selectable = collision.gameObject.GetComponent<Selectable>();
+        if (selectable)
+        {
+            _grounded = true;
+            selectable.Show(true);
+        }
+    }
+
+
     private void OnCollisionStay(Collision collision)
     {
         for (int i = 0; i < collision.contactCount; i++)
@@ -73,12 +88,26 @@ public class PlayerMove : MonoBehaviour
             {
                 _grounded = true;
             }         
-        } 
+        }
+
+        DownToTopMoving moving = collision.gameObject.GetComponent<DownToTopMoving>();
+        if (moving)
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                moving.ContinueMove();
+            }
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         _grounded = false;
+        Selectable selectable = collision.gameObject.GetComponent<Selectable>();
+        if (selectable)
+        {
+            selectable.Show(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,9 +121,9 @@ public class PlayerMove : MonoBehaviour
             {
                 limitRotation.SetStatus(true);
             }
-            else if (obstacle.TryGetComponent(out LimitMoving limitMoving))
+            else if (obstacle.TryGetComponent(out DownToTopMoving downToTopMoving))
             {
-                limitMoving.SetStatus(true);
+                downToTopMoving.enabled = true;
             }
 
             Destroy(key.gameObject);

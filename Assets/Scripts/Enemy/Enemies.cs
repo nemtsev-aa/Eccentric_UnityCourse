@@ -11,7 +11,11 @@ public class Enemies : MonoBehaviour
     [Tooltip("Расстояние до игрока")]
     [SerializeField] float _distanceToPlayer;
 
+    // Событие - убийство босса
+    public event Action BossKilled;
+    // Событие - убийство всех врагов
     public event Action AllEnemiesDestroyed;
+
     private Transform _playerTransform;
 
     private void Start()
@@ -25,6 +29,7 @@ public class Enemies : MonoBehaviour
         foreach (Transform iEnemy in _enemyParent.transform)
         {
             _enemyies.Add(iEnemy.gameObject);
+            iEnemy.GetComponent<EnemyHealth>().EnemyKilled += RemoveEnemy;
         }
     }
 
@@ -46,19 +51,21 @@ public class Enemies : MonoBehaviour
                 bool visible = (currentDistanceValue <= minDistance) ? true : false;
                 currentEnemy.SetActive(visible);
             } 
-            else
-            {
-                RemoveEnemy(i);
-            }
         }
     }
 
-    public void RemoveEnemy(int enemyIndex)
+    public void RemoveEnemy(EnemyHealth enemyHealth)
     {
-        _enemyies.RemoveAt(enemyIndex);
-        if (_enemyies.Count == 0)
+        enemyHealth.EnemyKilled -= RemoveEnemy;
+
+        _enemyies.Remove(enemyHealth.gameObject);
+
+        if (enemyHealth.EnemyType == EnemyType.Bear)
         {
-            AllEnemiesDestroyed?.Invoke();
+            BossKilled?.Invoke();
         }
+        if (_enemyies.Count == 0)
+            AllEnemiesDestroyed?.Invoke();
+
     }
 }

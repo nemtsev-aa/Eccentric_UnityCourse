@@ -26,19 +26,18 @@ public class EnemyHealth : MonoBehaviour
     [Tooltip("»ндикатор здоровь€ противника")]
     [SerializeField] private Slider _healthView;
     [Tooltip("—татус неу€звимости")]
-    [SerializeField] private bool _invulnerable;
-
-    public bool Invulnerable { get { return _invulnerable; }  set { _invulnerable = value; } }
-            
+    public bool Invulnerable;       
     [Tooltip("—обытие - получение урона противником")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
-
     [Tooltip("Ёффект смерти")]
     [SerializeField] private ParticleSystem _dieParticleEffect;
 
 
     // “екущее здоровье противника
     private int _health;
+
+    // —обытие - убийство врага
+    public event Action<EnemyHealth> EnemyKilled;
 
     private void Start()
     {
@@ -47,7 +46,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damageValue)
     {
-        if (!_invulnerable)
+        if (!Invulnerable)
         {
             EventOnTakeDamage.Invoke();
             
@@ -60,44 +59,28 @@ public class EnemyHealth : MonoBehaviour
             if (_health <= 0)
                 Die();
 
-            _invulnerable = true;
-
-            // ¬рем€ неу€звимости противников в зависимости от типа
-            switch (EnemyType)
-            {
-                case EnemyType.Hen:
-                    Invoke(nameof(StopInvulnerable), 1f);
-                    break;
-                case EnemyType.Rabbit:
-                    Invoke(nameof(StopInvulnerable), 1.2f);
-                    break;
-                case EnemyType.Pig:
-                    Invoke(nameof(StopInvulnerable), 2f);
-                    break;
-                case EnemyType.Squirrel:
-                    Invoke(nameof(StopInvulnerable), 2.5f);
-                    break;
-                case EnemyType.Bear:
-                    Invoke(nameof(StopInvulnerable), 3f);
-                    break;
-                default:
-                    break;
-            }
+            Invulnerable = true;
+            // ¬рем€ неу€звимости противников
+            Invoke(nameof(StopInvulnerable), 1f); 
         }
     }
 
     public void StopInvulnerable()
     {
-        _invulnerable = false;
+        Invulnerable = false;
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        EnemyHealth killedEnemy = gameObject.GetComponent<EnemyHealth>();
+        EnemyKilled?.Invoke(killedEnemy);
+
         if (_dieParticleEffect != null)
         {
-            Instantiate(_dieParticleEffect, transform.position - Vector3.down * 1.5f, transform.rotation);
+            ParticleSystem dieParticle = Instantiate(_dieParticleEffect, transform.position - Vector3.down * 1.5f, transform.rotation);
         }
+
+        Destroy(gameObject);
     }
 
     private void ShowHealth()
@@ -108,7 +91,7 @@ public class EnemyHealth : MonoBehaviour
 
     public bool GetInvulnerable()
     {
-        return _invulnerable;
+        return Invulnerable;
     }
 
 }

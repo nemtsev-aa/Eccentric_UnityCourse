@@ -9,6 +9,7 @@ public class TakeDamageOnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.attachedRigidbody)
         {
             if (other.attachedRigidbody.GetComponent<Bullet>())

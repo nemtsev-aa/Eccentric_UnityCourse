@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Enemy.Bear
 {
@@ -14,17 +13,17 @@ namespace Assets.Scripts.Enemy.Bear
 
         public void Enter()
         {
-           
+            Debug.Log("Idle Enter");
         }
 
         public void Exit()
         {
-
+            Debug.Log("Idle Exit");
         }
 
         public void Play()
         {
-            
+            Debug.Log("Idle Play");
         }
     }
 }

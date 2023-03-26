@@ -1,6 +1,5 @@
 using Assets.Scripts.Enemy.Bear;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,36 +7,41 @@ public class EnemyBehaviorsManager : MonoBehaviour
 {
     [Tooltip("Аниматор")]
     public Animator Animator;
-
     [Tooltip("Дальность атаки")]
-    [field: SerializeField] public float AttackRange { get; } = 70f;
+    public float AttackRange = 70f;
     [Tooltip("Период атаки")]
-    [field: SerializeField] public float AttackPeriod { get; } = 2f;
-
+    public float AttackPeriod = 2f;
     public BlinkEffect Blink;
-
-    private EnemyHealth _enemyHealth;
-
-    public EnemyHealth EnemyHealth { get { return _enemyHealth; } private set {_enemyHealth = value;} }
-
+    public EnemyHealth EnemyHealth;
     // Карта состояний объекта
     private Dictionary<Type, IEnemyBehavior> _behaviorsMap;
     // Текущее состояние
     private IEnemyBehavior _behaviorCurrent;
     // Положение игрока
-    private Transform _playerTransform;
-    public Transform PlayerTransform { get { return _playerTransform; } }
+    public Transform PlayerTransform;
+
+    // Время с прошлого переключения
+    private float _timer;
 
     private void Start()
     {
         InitBehaviors();
         SetBehaviorByDefault();
-
-        _playerTransform = FindObjectOfType<PlayerMove>().transform;
-        EnemyHealth = gameObject.GetComponent<EnemyHealth>();
-        Debug.Log(EnemyHealth.EnemyType);
     }
 
+    public void Update()
+    {
+        if (_behaviorCurrent != null)
+        {
+            _behaviorCurrent.Play();
+            
+            _timer += Time.deltaTime;
+            if (_timer >= AttackPeriod)
+            {
+                DistanceToPlayer();
+            } 
+        }
+    }
     /// <summary>
     /// Инициализация карты состояний объекта
     /// </summary>
@@ -51,19 +55,20 @@ public class EnemyBehaviorsManager : MonoBehaviour
         _behaviorsMap[typeof(EnemyBehaviorDistanceAttack)] = new EnemyBehaviorDistanceAttack(this);
         _behaviorsMap[typeof(EnemyBehaviorMeleeAttack)] = new EnemyBehaviorMeleeAttack(this);
         _behaviorsMap[typeof(EnemyBehaviorTakeDamage)] = new EnemyBehaviorTakeDamage(this);
+        _behaviorsMap[typeof(EnemyBehaviorInvulnerable)] = new EnemyBehaviorInvulnerable(this);
     }
 
     private void OnEnable()
     {
         if (HitCounter.Instance != null)
         {
-            HitCounter.Instance.OnHit += SetBehaviorTakeDamage;
+            HitCounter.Instance.OnHitRegistration += SetBehaviorTakeDamage;
         }
     }
 
     private void OnDisable()
     {
-        HitCounter.Instance.OnHit -= SetBehaviorTakeDamage;
+        HitCounter.Instance.OnHitRegistration -= SetBehaviorTakeDamage;
     }
 
     /// <summary>
@@ -93,15 +98,6 @@ public class EnemyBehaviorsManager : MonoBehaviour
     {
         var type = typeof(T);
         return _behaviorsMap[type];
-    }
-
-    private void Update()
-    {
-        if (_behaviorCurrent != null)
-        {
-            _behaviorCurrent.Play();
-            DistanceToPlayer();
-        }
     }
 
     /// <summary>
@@ -134,35 +130,57 @@ public class EnemyBehaviorsManager : MonoBehaviour
     /// <summary>
     /// Переключение в режим "Получение урона"
     /// </summary>
-    public void SetBehaviorTakeDamage()
+    public void SetBehaviorTakeDamage(int damageValue)
     {
-        var newBehavior = GetBehavior<EnemyBehaviorTakeDamage>();
-        if (!_enemyHealth.GetInvulnerable())
+        if (!EnemyHealth.Invulnerable)
         {
+            Debug.Log("Hit");
+            var newBehavior = GetBehavior<EnemyBehaviorTakeDamage>();
             SetBehavior(newBehavior);
         }
     }
 
-    private void DistanceToPlayer()
+    /// <summary>
+    /// Переключение в режим "Неуязвимость"
+    /// </summary>
+    public void SetInvulnerable()
+    {
+        var newBehavior = GetBehavior<EnemyBehaviorInvulnerable>();
+        SetBehavior(newBehavior);
+    }
+
+    /// <summary>
+    /// Временная неуязвимость
+    /// </summary>
+    public void SetTemporaryInvulnerability(bool invulnerabilityStatus, bool moveStatus)
+    {
+        EnemyHealth.Invulnerable = invulnerabilityStatus;
+        gameObject.GetComponent<LeftToRightMove>().enabled = moveStatus;
+    }
+
+    public void DistanceToPlayer()
     {
         // Вектор от игрока до врага
-        Vector3 currentDistance = PlayerTransform.position - transform.position;
-        // Модуль вектора
-        float currentDistanceValue = currentDistance.sqrMagnitude;
-        
-        if (currentDistanceValue <= 20f)
+        if (PlayerTransform != null)
         {
-            if (_behaviorCurrent != GetBehavior<EnemyBehaviorMeleeAttack>()) 
-                 SetBehaviorMeleeAttack();
-        }
-        else if (currentDistanceValue >= 20f && currentDistanceValue < 100f)
-        {
-            if (_behaviorCurrent != GetBehavior<EnemyBehaviorDistanceAttack>())
-                SetBehaviorDistanceAttack();
-        }
-        else
-        {
-            SetBehaviorIdle();
-        }
+            Vector3 currentDistance = PlayerTransform.position - transform.position;
+            // Модуль вектора
+            float currentDistanceValue = currentDistance.sqrMagnitude;
+
+            if (currentDistanceValue <= 20f)
+            {
+                if (_behaviorCurrent != GetBehavior<EnemyBehaviorMeleeAttack>())
+                    SetBehaviorMeleeAttack();
+            }
+            else if (currentDistanceValue >= 20f && currentDistanceValue < 100f)
+            {
+                if (_behaviorCurrent != GetBehavior<EnemyBehaviorDistanceAttack>())
+                    SetBehaviorDistanceAttack();
+            }
+            else
+            {
+                SetBehaviorIdle();
+            }
+        } 
     }
 }

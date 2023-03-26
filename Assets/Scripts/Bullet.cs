@@ -32,9 +32,9 @@ public class Bullet : MonoBehaviour
             {
                 limitRotation.SetStatus(true);
             }
-            else if (obstacle.TryGetComponent(out LimitMoving limitMoving))
+            else if (obstacle.TryGetComponent(out DownToTopMoving downToTopMoving))
             {
-                limitMoving.SetStatus(true);
+                downToTopMoving.enabled = true;
             }
             Hit(other.gameObject);
         }

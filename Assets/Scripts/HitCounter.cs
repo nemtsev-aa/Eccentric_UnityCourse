@@ -8,7 +8,6 @@ public class HitCounter : MonoBehaviour
     private int _hitCount;
 
     public event Action<int> OnHitRegistration;
-    public event Action OnHit;
 
     private void Awake()
     {
@@ -27,15 +26,12 @@ public class HitCounter : MonoBehaviour
     /// </summary>
     public void HitCounting(GameObject hitTarget)
     {
-        _hitCount++;
-        OnHitRegistration?.Invoke(_hitCount);
-        if (hitTarget.TryGetComponent(out EnemyHealth enemyHealth))
+        EnemyHealth enemyHealth = hitTarget.GetComponentInParent<EnemyHealth>();
+        if (enemyHealth)
         {
-            if (enemyHealth.EnemyType == EnemyType.Bear)
-            {
-                OnHit?.Invoke();
-            }   
-        } 
+            _hitCount++;
+            OnHitRegistration?.Invoke(_hitCount);
+        }
     }
 
     public void ResetCounter()

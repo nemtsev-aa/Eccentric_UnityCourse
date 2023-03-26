@@ -27,5 +27,15 @@ public class Pointer : MonoBehaviour
         // –азворачиваем пистолет в направлении прицела
         Vector3 toAim = _aim.position - transform.position;
         transform.rotation = Quaternion.LookRotation(toAim);
+
+        //RaycastHit hit;
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    Selectable selectable = hit.transform.GetComponentInParent<Selectable>();
+        //    if (selectable)
+        //    {
+        //        selectable.Show();
+        //    } 
+        //}
     }
 }

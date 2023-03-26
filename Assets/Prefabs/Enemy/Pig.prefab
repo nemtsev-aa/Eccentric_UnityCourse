@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f779977a2da03a4b97779f7f540f7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftPoint: {fileID: 798710835449417644}
-  _rightPoint: {fileID: 798710834914907588}
+  _topPoint: {fileID: 798710835449417644}
+  _downPoint: {fileID: 798710834914907588}
   _moveSpeed: 3
   _stopTime: 0.5
   _currentDirection: 0
@@ -212,8 +212,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6eecad662ecf5e54bb41a68e21acd57f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.25
+  m_Pitch: -1.44
   Loop: 0
   Mute: 0
   Spatialize: 0

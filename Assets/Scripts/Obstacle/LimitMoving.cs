@@ -34,7 +34,7 @@ public class LimitMoving : MonoBehaviour
         SetLimitMoving(0);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         SetLimitMoving(_movingValue);
 

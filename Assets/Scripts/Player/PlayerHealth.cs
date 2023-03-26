@@ -11,7 +11,9 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Статус неуязвимости")]
     [SerializeField] private bool _invulnerable;
     [Tooltip("Индикатор здоровья персонажа")]
-    [SerializeField] private Slider _healthView;
+    [SerializeField] private Image _healthView;
+    [Tooltip("Градиент здоровья персонажа")]
+    [SerializeField] private Gradient _healthGradient;
     [Tooltip("Событие - получение урона")]
     [SerializeField] private UnityEvent EventOnTakeDamage;
     [Tooltip("Событие - лечение")]
@@ -64,7 +66,8 @@ public class PlayerHealth : MonoBehaviour
     private void ShowHealth()
     {
         float viewHealthValue = ((Health * 100) / MaxHealth) * 0.01f;
-        _healthView.value = viewHealthValue;
+        _healthView.fillAmount= viewHealthValue;
+        _healthView.color = _healthGradient.Evaluate(viewHealthValue);
     }
 
     public void ResetHealth()

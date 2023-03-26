@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
@@ -16,37 +12,21 @@ namespace Assets.Scripts.Enemy.Bear
         }
 
         private EnemyBehaviorsManager _enemy;
-        private EnemyHealth _currentEnemyHealth;
-        // Время с прошлого переключения
-        private float _timer;
-        private LeftToRightMove _move;
         
         public void Enter()
         {
-            Debug.Log("Enter EnemyBehaviorMeleeAttack");
-            _currentEnemyHealth = _enemy.EnemyHealth;
-            _move = _enemy.EnemyHealth.gameObject.GetComponent<LeftToRightMove>();
-            _move.enabled = false;
-
+            Debug.Log("MeleeAttack Enter");
+            MeleeAttack(); 
         }
 
         public void Exit()
         {
-            Debug.Log("Exit EnemyBehaviorMeleeAttack");
-            _move.enabled = true;
-            
+            Debug.Log("MeleeAttack Exit");
         }
 
         public void Play()
         {
-            _timer += Time.deltaTime;
-            if (_timer > _enemy.AttackPeriod)
-            {
-                _timer = 0;
-                MeleeAttack();
-                _enemy.Animator.SetTrigger("MeleeAttack");
-                _currentEnemyHealth.StopInvulnerable();
-            }
+            Debug.Log("MeleeAttack Play");
         }
 
         private void MeleeAttack()
