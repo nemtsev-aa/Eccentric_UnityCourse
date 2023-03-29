@@ -33,4 +33,9 @@ public class SoundManager : MonoBehaviour
     {
         _soundVolumeController.interactable = !_soundEffectsSourse.mute;
     }
+
+    public void SetVolume(float value)
+    {
+        AudioListener.volume = value;
+    }
 }

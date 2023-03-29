@@ -10,6 +10,8 @@ public class ScreenEffect : MonoBehaviour
     [SerializeField] private Color _healColor;
     [Tooltip("Цвет эффекта - урон")]
     [SerializeField] private Color _damageColor;
+    [Tooltip("Цвет эффекта - замедление времени")]
+    [SerializeField] private Color _timeScaleColor;
 
     // Корутина реализующая эффект получения урона
     private Coroutine _animationEffect;
@@ -32,6 +34,16 @@ public class ScreenEffect : MonoBehaviour
             StartCoroutine(ShowEffect(_healColor));
         }
         _animationEffect = StartCoroutine(ShowEffect(_healColor));
+    }
+
+    public void StartTimeScale()
+    {
+        // Избавляемся от дублирования корутины
+        if (_animationEffect != null)
+        {
+            StartCoroutine(ShowEffect(_timeScaleColor));
+        }
+        _animationEffect = StartCoroutine(ShowEffect(_timeScaleColor));
     }
 
     public IEnumerator ShowEffect(Color _colorEffect)

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject _hitParticle;
 
     public event Action<GameObject> HitRegistered;
+    private int _ricochet;
 
     private void Start()
     {
@@ -44,12 +45,21 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<EnemyHealth>())
             Hit(collision.gameObject);
+        else
+            Ricochet();
     }
-    public void Hit(GameObject collisionGameObject)
+    public virtual void Hit(GameObject collisionGameObject)
     {
+        _ricochet = 0;
         HitRegistered?.Invoke(collisionGameObject);
         // Визуализируем попадание и уничтожаем пулю
         Instantiate(_hitParticle, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    public virtual void Ricochet()
+    {
+        _ricochet += 1;
+        Debug.Log("Ricochet x" + _ricochet);
     }
 }

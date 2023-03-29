@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Gun : MonoBehaviour
 {
@@ -16,13 +17,16 @@ public class Gun : MonoBehaviour
     [SerializeField] private AudioSource _shotSound;
 
     private float _timer;
+    internal bool _isOverUI;
 
     void Update()
     {
         _timer += Time.unscaledDeltaTime;
+        _isOverUI = EventSystem.current.IsPointerOverGameObject();
+
         if (_timer > _shotPeriod)
         {
-            if ((Input.GetMouseButton(0)))
+            if (Input.GetMouseButton(0) && !_isOverUI)
             {
                 _timer = 0;
                 Shot();

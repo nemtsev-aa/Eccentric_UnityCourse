@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5990495815694584215}
   - component: {fileID: 5990495815694584209}
   - component: {fileID: 5990495815694584208}
-  - component: {fileID: 5990495815694584211}
   - component: {fileID: 5990495815694584210}
   m_Layer: 0
   m_Name: Heal
@@ -62,19 +61,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lootValue: 1
---- !u!114 &5990495815694584211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5990495815694584212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335c0ea568136034aac3d99e80a2e677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healImage: {fileID: 0}
 --- !u!114 &5990495815694584210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bac803ec3e104b4c8537bf5b83e9f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationVector: {x: 0, y: 0, z: 100}
+  _rotationVector: {x: 0, y: 100, z: 0}
 --- !u!1001 &5990495815822466684
 PrefabInstance:
   m_ObjectHideFlags: 0

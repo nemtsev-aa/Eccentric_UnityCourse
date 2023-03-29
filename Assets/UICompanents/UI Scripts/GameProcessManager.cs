@@ -29,13 +29,16 @@ public class GameProcessManager : MonoBehaviour
     [SerializeField] private TimeManager _timeManager;
     [SerializeField] private SoundManager _soundManager;
     [SerializeField] private MusicManager _musicManager;
-
-    private HitCounter _hitCounter;
-
+    
+    [Header("Levels")]
+    [SerializeField] private GameObject _allLevelObjects;
     [SerializeField] private int _selectionLevel;
     [SerializeField] private List<GameObject> _levelObjects;
-    [SerializeField] private GameObject _allLevelObjects;
-       
+
+    [Header("MonoBehaviours")]
+    [Tooltip("Скрипты отключаемые во время паузы")]
+    [SerializeField] private MonoBehaviour[] ComponentsToDisable;
+
     public event Action<PageName> OnWindowShow;
     public event Action OnGame;
     public event Action OnPause;
@@ -44,6 +47,7 @@ public class GameProcessManager : MonoBehaviour
     public event Action OnLose;
 
     private LevelManager _levelManager;
+    private HitCounter _hitCounter;
     private int _hitCount;
 
     private void Awake()
@@ -104,6 +108,7 @@ public class GameProcessManager : MonoBehaviour
 
         _hitCounter.ResetCounter();
         _levelManager.ResetLevel();
+
         CurrentGameStatus = GameStatus.Active;
         OnWindowShow?.Invoke(PageName.Game);
         OnGame?.Invoke();
@@ -152,14 +157,18 @@ public class GameProcessManager : MonoBehaviour
         CurrentGameStatus = GameStatus.Pause;
         OnWindowShow?.Invoke(PageName.Pause);
         OnPause?.Invoke();
-        Time.timeScale = 0;
+        Time.timeScale = 0; 
+
+        SetStatusComponentsToDisable(false);
     }
 
     public void Return()
     {
         CurrentGameStatus = GameStatus.Start;
         OnWindowShow?.Invoke(PageName.Game);
+
         Time.timeScale = 1;
+        _timeManager.StartTimer();
     }
 
     public void Resume()
@@ -173,9 +182,11 @@ public class GameProcessManager : MonoBehaviour
         }
         else
         {
-            StartGame();
+            SetStatusComponentsToDisable(true);
+            Return();
         }
     }
+
     public void ShowHome()
     {
         Time.timeScale = 1;
@@ -228,14 +239,6 @@ public class GameProcessManager : MonoBehaviour
 
     public void ShowLevel()
     {
-        //GameObject selectionLevelPrefab = _levelObjects[_selectionLevel - 1];
-        //GameObject newLevel = Instantiate(selectionLevelPrefab, transform.position, transform.rotation);
-        //newLevel.transform.SetParent(_allLevelObjects.transform);
-        //_allLevelObjects.SetActive(true);
-        //newLevel.SetActive(true);
-        //LevelManager levelManager = newLevel.GetComponent<LevelManager>();
-        //_gameTime = levelManager.GetLevelTime();
-
         _allLevelObjects.SetActive(true);
         GameObject newLevel = _levelObjects[_selectionLevel - 1];
         newLevel.SetActive(true);
@@ -248,7 +251,7 @@ public class GameProcessManager : MonoBehaviour
 
     public void ResetScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void HideLevel()
@@ -266,4 +269,11 @@ public class GameProcessManager : MonoBehaviour
         _uiManager.ShowGameTime(_currentGameTime, _gameTime);
     }
 
+    private void SetStatusComponentsToDisable(bool value)
+    {
+        for (int i = 0; i < ComponentsToDisable.Length; i++)
+        {
+            ComponentsToDisable[i].enabled = value;
+        }
+    }
 }

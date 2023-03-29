@@ -8,10 +8,7 @@ public class BlinkEffect : MonoBehaviour
 
     public void StartBlink()
     {
-        if (gameObject != null)
-        {
-            StartCoroutine(ShowEffect());
-        }
+        StartCoroutine(ShowEffect());
     }
 
     private IEnumerator ShowEffect()
@@ -26,12 +23,15 @@ public class BlinkEffect : MonoBehaviour
 
     private void SetColor(Color newColor)
     {
-        for (int i = 0; i < _renderers.Length; i++)
+        if (gameObject != null)
         {
-            for (int m = 0; m < _renderers[i].materials.Length; m++)
+            for (int i = 0; i < _renderers.Length; i++)
             {
-                _renderers[i].materials[m].SetColor("_EmissionColor", newColor);
+                for (int m = 0; m < _renderers[i].materials.Length; m++)
+                {
+                    _renderers[i].materials[m].SetColor("_EmissionColor", newColor);
+                }
             }
-        }
+        }   
     }
 }

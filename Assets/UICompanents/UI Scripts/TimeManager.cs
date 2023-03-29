@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimeManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class TimeManager : MonoBehaviour
 
     public delegate void GameTimeOut();
     public event GameTimeOut OnGameTimeOut;
+
+    public UnityEvent OnTimeScale;
 
     private float _time = 0;
     // Время просчёта физики
@@ -59,6 +62,7 @@ public class TimeManager : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Time.timeScale = TimeScale;
+            OnTimeScale?.Invoke();
         }
         else
         {
