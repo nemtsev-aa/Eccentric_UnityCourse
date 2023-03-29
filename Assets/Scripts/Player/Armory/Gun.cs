@@ -25,12 +25,17 @@ public class Gun : MonoBehaviour
             if ((Input.GetMouseButton(0)))
             {
                 _timer = 0;
-                GameObject newBullet = Instantiate(_bulletPrafab, _bulletCreator.position, _bulletCreator.rotation);
-                newBullet.GetComponent<Rigidbody>().velocity = _bulletCreator.forward * _bulletSpeed;
-
-                ShowShotEffects();
+                Shot();
             }
         }     
+    }
+
+    public virtual void Shot()
+    {
+        GameObject newBullet = Instantiate(_bulletPrafab, _bulletCreator.position, _bulletCreator.rotation);
+        newBullet.GetComponent<Rigidbody>().velocity = _bulletCreator.forward * _bulletSpeed;
+
+        ShowShotEffects();
     }
 
     private void HideFlash()
@@ -45,4 +50,20 @@ public class Gun : MonoBehaviour
         _flash.SetActive(true);
         Invoke(nameof(HideFlash), 0.1f);
     }
+
+    public virtual void Activate()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public virtual void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public virtual void AddBullets(int numberOfBullets)
+    {
+        
+    }
+
 } 
