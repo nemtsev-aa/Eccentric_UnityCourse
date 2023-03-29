@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    
+    [Tooltip("Значение времени при его замедлении")]
+    public float TimeScale = 0.2f;
     [Tooltip("Статус таймера")]
     [SerializeField] private bool _status;
     [Tooltip("Время на уровень")]
@@ -17,10 +18,13 @@ public class TimeManager : MonoBehaviour
     public event GameTimeOut OnGameTimeOut;
 
     private float _time = 0;
+    // Время просчёта физики
+    private float _startFixedDeltaTime;
 
     private void Start()
     {
         _gameProcessManager = GameProcessManager.Instance;
+        _startFixedDeltaTime = Time.fixedDeltaTime;
     }
     
     public void SetGameTime(float gameTime)
@@ -51,6 +55,22 @@ public class TimeManager : MonoBehaviour
     }
 
     void Update()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            Time.timeScale = TimeScale;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        Time.fixedDeltaTime = _startFixedDeltaTime * Time.timeScale;
+
+        CheckLevelTime();
+
+    }
+
+    private void CheckLevelTime()
     {
         if (_status)
         {
