@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
     [Tooltip("Время жизни пули")]
     [SerializeField] private float _lifeTime = 3f;
     [Tooltip("Эффект попадания")]
-    [SerializeField] private GameObject _hitParticle;
+    public GameObject HitParticle;
 
     public event Action<GameObject> HitRegistered;
     private int _ricochet;
@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
         _ricochet = 0;
         HitRegistered?.Invoke(collisionGameObject);
         // Визуализируем попадание и уничтожаем пулю
-        Instantiate(_hitParticle, transform.position, transform.rotation);
+        Instantiate(HitParticle, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

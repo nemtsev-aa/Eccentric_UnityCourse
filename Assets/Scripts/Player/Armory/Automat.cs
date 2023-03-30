@@ -10,7 +10,6 @@ public class Automat : Gun
     public TextMeshProUGUI BulletsText;
 
     public PlayerArmory PlayerArmory;
-    //public event Action BulletsAreOut;
 
     private void Start()
     {
@@ -19,13 +18,14 @@ public class Automat : Gun
 
     public override void Shot()
     {
-        base.Shot();
-        NumberOfBullets -= 1;
-        UpdateText(NumberOfBullets.ToString());
-        
-        if (NumberOfBullets == 0)
+        if (NumberOfBullets > 0)
         {
-            //BulletsAreOut?.Invoke();
+            base.Shot();
+            NumberOfBullets -= 1;
+            UpdateText(NumberOfBullets.ToString());
+        }
+        else
+        {
             PlayerArmory.TakeGunByIndex(0);
         }
     }
@@ -39,7 +39,6 @@ public class Automat : Gun
     public override void Deactivate()
     {
         base.Deactivate();
-        UpdateText("9999");
     }
 
     private void UpdateText(string text)

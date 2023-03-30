@@ -36,7 +36,7 @@ public class PlayerArmory : MonoBehaviour
                 CurrentGunIndex++;
             //GunsIcon[CurrentGunIndex].isOn = true;
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < -0.1f)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             if (CurrentGunIndex == 0)
                 CurrentGunIndex = Guns.Length - 1;

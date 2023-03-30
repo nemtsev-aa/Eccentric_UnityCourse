@@ -9,7 +9,7 @@ public class JumpGun : MonoBehaviour
     [Tooltip("Источник")]
     public Transform Spawn;
     [Tooltip("Оружее")]
-    public RocketLauncher RocketLauncher;
+    public PlayerArmory PlayerArmory;
     [Tooltip("Максимальный заряд")]
     public float MaxChange = 3f;
     [Tooltip("Текущее значение заряда")]
@@ -25,7 +25,7 @@ public class JumpGun : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 PlayerRigidbody.AddForce(-Spawn.forward * Speed, ForceMode.VelocityChange);
-                RocketLauncher.Shot();
+                PlayerArmory.Guns[PlayerArmory.CurrentGunIndex].Shot();
                 _currentChange = 0f;
                 _isChanged = false;
                 ChargeIcon.StartCharge();

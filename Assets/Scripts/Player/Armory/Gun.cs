@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
     [Tooltip("—корость пули")]
     [SerializeField] private float _bulletSpeed = 10f;
     [Tooltip("—корострельность")]
-    [SerializeField] private float _shotPeriod = 0.2f;
+    public float ShotPeriod = 0.2f;
     [Tooltip("Ёффект выстрела")]
     [SerializeField] private GameObject _flash;
     [Tooltip("«вук выстрела")]
@@ -24,7 +24,7 @@ public class Gun : MonoBehaviour
         _timer += Time.unscaledDeltaTime;
         _isOverUI = EventSystem.current.IsPointerOverGameObject();
 
-        if (_timer > _shotPeriod)
+        if (_timer > ShotPeriod)
         {
             if (Input.GetMouseButton(0) && !_isOverUI)
             {
@@ -57,6 +57,7 @@ public class Gun : MonoBehaviour
 
     public virtual void Activate()
     {
+        
         gameObject.SetActive(true);
     }
 

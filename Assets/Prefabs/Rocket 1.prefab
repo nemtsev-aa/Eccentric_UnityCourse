@@ -73,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 8826978108654192336}
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: -13.67, y: 4.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9076161379943729415}
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 3
-  _hitParticle: {fileID: 0}
-  hitParticle: {fileID: 19800004, guid: f95ff734540a0d749be6571b6cb5b37f, type: 3}
+  HitParticle: {fileID: 1295152798636446, guid: 36ce92b00d043ba4c859539c4698af88,
+    type: 3}
 --- !u!1 &8826978110391152534
 GameObject:
   m_ObjectHideFlags: 0
