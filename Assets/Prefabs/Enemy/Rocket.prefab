@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHealth: {fileID: 8826978108654197035}
-  DieOnAnyCollision: 0
+  DieOnAnyCollision: 1
 --- !u!114 &8826978108473770260
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -79,7 +79,6 @@ public class PlayerMove : MonoBehaviour
         DownToTopMoving platform = collision.gameObject.GetComponent<DownToTopMoving>();
         if (platform)
             _platform = platform;
-            _grounded = true;
     }
 
     private void OnCollisionExit(Collision collision)
