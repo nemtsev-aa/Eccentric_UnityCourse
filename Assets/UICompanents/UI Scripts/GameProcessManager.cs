@@ -141,6 +141,8 @@ public class GameProcessManager : MonoBehaviour
         OnWindowShow?.Invoke(PageName.Lose);
         OnLose?.Invoke();
         HideLevel();
+
+        SetStatusComponentsToDisable(false);
     }
 
     public void GameWin()
@@ -150,6 +152,7 @@ public class GameProcessManager : MonoBehaviour
         OnWindowShow?.Invoke(PageName.Win);
         OnWin?.Invoke();
         HideLevel();
+        SetStatusComponentsToDisable(false);
     }
     
     public void PauseGame()

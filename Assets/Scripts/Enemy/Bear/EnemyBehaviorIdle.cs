@@ -25,5 +25,6 @@ namespace Assets.Scripts.Enemy.Bear
         {
             Debug.Log("Idle Play");
         }
+
     }
 }

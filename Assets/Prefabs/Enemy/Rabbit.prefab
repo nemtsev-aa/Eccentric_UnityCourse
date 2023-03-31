@@ -560,7 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0557bb8de481e8d4ab9d6e3d8381f59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _period: 7
+  _period: 2
   _animator: {fileID: 5049844451335034682}
   _triggerName: Attack
 --- !u!114 &4746187732325706503
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980a30db8860f514993c0afe8da13fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceToActivate: 7.5
+  _distanceToActivate: 6.7
   IsActive: 1
 --- !u!1 &5088349151103242522
 GameObject:
@@ -711,8 +711,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.102}
-  m_SizeDelta: {x: 988, y: 512}
+  m_AnchoredPosition: {x: 0, y: 2.1}
+  m_SizeDelta: {x: 1.2543, y: 0.2061}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2133195504030824926
 Canvas:

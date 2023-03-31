@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: 3489468171964364684}
   - component: {fileID: 3485440143406345938}
   - component: {fileID: 7923110251612087471}
+  - component: {fileID: 265785190696592166}
   m_Layer: 0
   m_Name: Key_White
   m_TagString: Untagged
@@ -386,6 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+  _cameraMove: {fileID: 0}
 --- !u!82 &3485440143406345938
 AudioSource:
   m_ObjectHideFlags: 0
@@ -495,3 +497,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.78
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &265785190696592166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986321242071196450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bac803ec3e104b4c8537bf5b83e9f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationVector: {x: 0, y: 50, z: 0}

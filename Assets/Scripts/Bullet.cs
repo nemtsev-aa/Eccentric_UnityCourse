@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Tooltip("Урон пули")]
+    public int DamageValue = 1;
     [Tooltip("Время жизни пули")]
     [SerializeField] private float _lifeTime = 3f;
     [Tooltip("Эффект попадания")]
     public GameObject HitParticle;
 
-    public event Action<GameObject> HitRegistered;
-    private int _ricochet;
+    public event Action<GameObject, Bullet> HitRegistered;
+    private int _ricochet = 1;
 
     private void Start()
     {
@@ -28,7 +30,6 @@ public class Bullet : MonoBehaviour
         else if (other.TryGetComponent(out Key key))
         {
             GameObject obstacle = key.GetTarget();
-
             if (obstacle.TryGetComponent(out LimitRotation limitRotation))
             {
                 limitRotation.SetStatus(true);
@@ -48,10 +49,10 @@ public class Bullet : MonoBehaviour
         else
             Ricochet();
     }
-    public virtual void Hit(GameObject collisionGameObject)
+
+    public void Hit(GameObject collisionGameObject)
     {
-        _ricochet = 0;
-        HitRegistered?.Invoke(collisionGameObject);
+        HitRegistered?.Invoke(collisionGameObject, this);
         // Визуализируем попадание и уничтожаем пулю
         Instantiate(HitParticle, transform.position, transform.rotation);
         Destroy(gameObject);
@@ -59,7 +60,12 @@ public class Bullet : MonoBehaviour
 
     public virtual void Ricochet()
     {
-        _ricochet += 1;
-        Debug.Log("Ricochet x" + _ricochet);
+        _ricochet ++;
     }
+
+    public virtual int GetRicochetCount()
+    {
+        return _ricochet;
+    }
+
 }

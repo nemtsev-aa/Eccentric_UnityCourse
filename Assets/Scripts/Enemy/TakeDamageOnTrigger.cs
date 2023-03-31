@@ -9,15 +9,20 @@ public class TakeDamageOnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.attachedRigidbody)
         {
-            if (other.attachedRigidbody.GetComponent<Bullet>())
+            Bullet bullet = other.attachedRigidbody.GetComponent<Bullet>();
+            if (bullet)
             {
                 // ќцениваем эффект попадани€ дл€ здоровь€ противника
-                _enemyHealth.TakeDamage(1);
+                _enemyHealth.TakeDamage(bullet.DamageValue);
                 // ”ничтожаем пулю, попавшую в противника
                 Destroy(other.gameObject);
+            }
+            PlayerHealth playerHealth = other.attachedRigidbody.GetComponent<PlayerHealth>();
+            if (playerHealth)
+            {
+                _enemyHealth.Die();
             }
         }
 

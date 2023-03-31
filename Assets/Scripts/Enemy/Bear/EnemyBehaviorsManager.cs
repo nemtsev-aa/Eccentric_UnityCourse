@@ -10,7 +10,10 @@ public class EnemyBehaviorsManager : MonoBehaviour
     [Tooltip("Дальность атаки")]
     public float AttackRange = 70f;
     [Tooltip("Период атаки")]
-    public float AttackPeriod = 2f;
+    public float AttackPeriod = 0.1f;
+    [Tooltip("Период неуязвимости")]
+    public float InvulnerablePeriod = 1f;
+    public bool IsInvulnerable;
     public BlinkEffect Blink;
     public EnemyHealth EnemyHealth;
     // Карта состояний объекта
@@ -19,8 +22,12 @@ public class EnemyBehaviorsManager : MonoBehaviour
     private IEnemyBehavior _behaviorCurrent;
     // Положение игрока
     public Transform PlayerTransform;
+    // Якорь для щита
+    public Transform AncorForShield;
+    // Щит
+    public GameObject Shield;
 
-    // Время с прошлого переключения
+    // Время с прошлого переключения атаки
     private float _timer;
 
     private void Start()
@@ -33,15 +40,22 @@ public class EnemyBehaviorsManager : MonoBehaviour
     {
         if (_behaviorCurrent != null)
         {
-            _behaviorCurrent.Play();
-            
-            _timer += Time.deltaTime;
-            if (_timer >= AttackPeriod)
+            if (IsInvulnerable)
             {
-                DistanceToPlayer();
-            } 
+                _behaviorCurrent.Play();
+            }
+            else
+            {
+                _timer += Time.deltaTime;
+                if (_timer >= AttackPeriod)
+                {
+                    DistanceToPlayer();
+                    _timer = 0;
+                }
+            }
         }
     }
+
     /// <summary>
     /// Инициализация карты состояний объекта
     /// </summary>
@@ -61,14 +75,12 @@ public class EnemyBehaviorsManager : MonoBehaviour
     private void OnEnable()
     {
         if (HitCounter.Instance != null)
-        {
-            HitCounter.Instance.OnHitRegistration += SetBehaviorTakeDamage;
-        }
+            HitCounter.Instance.OnHitBearRegistration += SetBehaviorTakeDamage;
     }
 
     private void OnDisable()
     {
-        HitCounter.Instance.OnHitRegistration -= SetBehaviorTakeDamage;
+        HitCounter.Instance.OnHitBearRegistration -= SetBehaviorTakeDamage;
     }
 
     /// <summary>
@@ -132,11 +144,15 @@ public class EnemyBehaviorsManager : MonoBehaviour
     /// </summary>
     public void SetBehaviorTakeDamage(int damageValue)
     {
-        if (!EnemyHealth.Invulnerable)
+        if (!IsInvulnerable)
         {
-            Debug.Log("Hit");
+            SetBehaviorDistanceAttack();
+
+            EnemyHealth.TakeDamage(damageValue);
             var newBehavior = GetBehavior<EnemyBehaviorTakeDamage>();
             SetBehavior(newBehavior);
+           
+            SetInvulnerable();
         }
     }
 
@@ -163,24 +179,28 @@ public class EnemyBehaviorsManager : MonoBehaviour
         // Вектор от игрока до врага
         if (PlayerTransform != null)
         {
-            Vector3 currentDistance = PlayerTransform.position - transform.position;
             // Модуль вектора
-            float currentDistanceValue = currentDistance.sqrMagnitude;
-
-            if (currentDistanceValue <= 20f)
+            float currentDistanceValue = Vector3.Distance(PlayerTransform.position,transform.position);
+            Debug.Log(currentDistanceValue);
+            if (currentDistanceValue < 5f)
             {
                 if (_behaviorCurrent != GetBehavior<EnemyBehaviorMeleeAttack>())
                     SetBehaviorMeleeAttack();
+                else
+                    _behaviorCurrent.Enter();
+
             }
-            else if (currentDistanceValue >= 20f && currentDistanceValue < 100f)
+            else if (currentDistanceValue >= 6f && currentDistanceValue < 20f)
             {
                 if (_behaviorCurrent != GetBehavior<EnemyBehaviorDistanceAttack>())
                     SetBehaviorDistanceAttack();
+                else
+                    _behaviorCurrent.Enter();
             }
-            else
-            {
-                SetBehaviorIdle();
-            }
+            //else
+            //{
+            //    SetBehaviorIdle();
+            //}
         } 
     }
 }

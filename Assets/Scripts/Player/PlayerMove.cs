@@ -16,26 +16,22 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _friction;
     [Tooltip("Статус нахождения на земле")]
     [SerializeField] private bool _grounded;
-    [Tooltip("Источник луча PhysicRaycast")]
-    [SerializeField] private Transform _rayStart;
+    // Платформа
+    private DownToTopMoving _platform;
 
     private void Update()
     {
         float yScale = 1f;
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.S) || !_grounded )
-        {
             yScale = 0.7f;
-        }
+
         SetLocalScale(yScale);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (_grounded)
-            {
                 _rigidbody.AddForce(0, _jumpSpeed, 0, ForceMode.VelocityChange);
-            }
         }
-
     }
 
     private void SetLocalScale(float yScale)
@@ -53,19 +49,22 @@ public class PlayerMove : MonoBehaviour
             // Вправо-влево
             if ((_rigidbody.velocity.x > _maxSpeed && Input.GetAxis("Horizontal") > 0)
                 || (_rigidbody.velocity.x < -_maxSpeed && Input.GetAxis("Horizontal") < 0))
-            {
                 speedMultiplier = 0f;
-            }
         }
 
         // Перемещаем игрока при нажатии на стрелки/кнопки A,D
         _rigidbody.AddForce(Input.GetAxis("Horizontal") * _moveSpeed * speedMultiplier, 0, 0, ForceMode.VelocityChange);
-        
-        if (_grounded)
+
+        Vector3 relativeVelocity = _rigidbody.velocity;
+        if (_platform)
         {
+            relativeVelocity = _rigidbody.velocity - _platform.Rigidbody.velocity;
+            _rigidbody.AddForce(0, -relativeVelocity.y * _friction, 0, ForceMode.VelocityChange);
+        }
+
+        if (_grounded)
             // Ограничиваем перемещение игрока с помощью сопротивления
             _rigidbody.AddForce(-_rigidbody.velocity.x * _friction, 0, 0, ForceMode.VelocityChange);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -76,28 +75,11 @@ public class PlayerMove : MonoBehaviour
             _grounded = true;
             selectable.Show(true);
         }
-    }
 
-
-    private void OnCollisionStay(Collision collision)
-    {
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            float angle = Vector3.Angle(collision.contacts[i].normal, Vector3.up);
-            if (angle < 45f)
-            {
-                _grounded = true;
-            }         
-        }
-
-        DownToTopMoving moving = collision.gameObject.GetComponent<DownToTopMoving>();
-        if (moving)
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
-                moving.ContinueMove();
-            }
-        }
+        DownToTopMoving platform = collision.gameObject.GetComponent<DownToTopMoving>();
+        if (platform)
+            _platform = platform;
+            _grounded = true;
     }
 
     private void OnCollisionExit(Collision collision)
@@ -105,8 +87,26 @@ public class PlayerMove : MonoBehaviour
         _grounded = false;
         Selectable selectable = collision.gameObject.GetComponent<Selectable>();
         if (selectable)
-        {
             selectable.Show(false);
+        
+        if (_platform)
+            _platform = null;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            float angle = Vector3.Angle(collision.contacts[i].normal, Vector3.up);
+            if (angle < 45f)
+                _grounded = true;       
+        }
+
+        DownToTopMoving moving = collision.gameObject.GetComponent<DownToTopMoving>();
+        if (moving)
+        {
+            if (Input.GetKey(KeyCode.E))
+                moving.ContinueMove();
         }
     }
 
@@ -118,20 +118,14 @@ public class PlayerMove : MonoBehaviour
             GameObject obstacle = key.GetTarget();
 
             if (obstacle.TryGetComponent(out LimitRotation limitRotation))
-            {
                 limitRotation.SetStatus(true);
-            }
             else if (obstacle.TryGetComponent(out DownToTopMoving downToTopMoving))
-            {
                 downToTopMoving.enabled = true;
-            }
 
             Destroy(key.gameObject);
         }
 
         if (other.GetComponent<Exit>())
-        {
             GameProcessManager.Instance.GameWin();
-        }
     }
 }

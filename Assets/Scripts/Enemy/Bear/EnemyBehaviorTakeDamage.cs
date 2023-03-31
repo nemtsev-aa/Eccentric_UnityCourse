@@ -19,12 +19,12 @@ namespace Assets.Scripts.Enemy.Bear
 
         public void Exit()
         {
-            Debug.Log("TakeDamage Exit");
+            Debug.Log("TakeDamage Exit"); 
         }
 
         public void Play()
         {
-            Debug.Log("TakeDamage Play");
+           Debug.Log("TakeDamage Play");
         }
     }
 }

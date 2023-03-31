@@ -23,6 +23,10 @@ public class Automat : Gun
             base.Shot();
             NumberOfBullets -= 1;
             UpdateText(NumberOfBullets.ToString());
+            if (NumberOfBullets == 0)
+            {
+                PlayerArmory.TakeGunByIndex(0);
+            }
         }
         else
         {

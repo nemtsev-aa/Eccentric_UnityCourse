@@ -8,6 +8,7 @@ public class HitCounter : MonoBehaviour
     private int _hitCount;
 
     public event Action<int> OnHitRegistration;
+    public event Action<int> OnHitBearRegistration;
 
     private void Awake()
     {
@@ -24,13 +25,22 @@ public class HitCounter : MonoBehaviour
     /// <summary>
     /// Подсчёт количества попаданий во врагов
     /// </summary>
-    public void HitCounting(GameObject hitTarget)
+    public void HitCounting(GameObject hitTarget, Bullet bullet)
     {
         EnemyHealth enemyHealth = hitTarget.GetComponentInParent<EnemyHealth>();
         if (enemyHealth)
         {
-            _hitCount++;
+            // Ценность попадания: величина урона от пули * количество рикошетов
+            int hitValue = bullet.DamageValue * bullet.GetRicochetCount();
+            Debug.Log("RocketHit: " + hitValue);
+            // Общее количество попаданий
+            _hitCount += hitValue;
             OnHitRegistration?.Invoke(_hitCount);
+
+            if (enemyHealth.EnemyType == EnemyType.Bear)
+            {
+                OnHitBearRegistration?.Invoke(hitValue);
+            }
         }
     }
 

@@ -26,7 +26,7 @@ public class Gun : MonoBehaviour
 
         if (_timer > ShotPeriod)
         {
-            if (Input.GetMouseButton(0) && !_isOverUI)
+            if (Input.GetMouseButton(0))
             {
                 _timer = 0;
                 Shot();

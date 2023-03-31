@@ -12,11 +12,12 @@ namespace Assets.Scripts.Enemy.Bear
         }
 
         private EnemyBehaviorsManager _enemy;
-        
+        private float _timer;
+
         public void Enter()
         {
             Debug.Log("MeleeAttack Enter");
-            MeleeAttack(); 
+            MeleeAttack();
         }
 
         public void Exit()

@@ -11,16 +11,13 @@ public class TakeDamageOnCollision : MonoBehaviour
     {
         if (collision.rigidbody)
         {
-            if (collision.rigidbody.GetComponent<Bullet>())
-            {
+            Bullet bullet = collision.rigidbody.GetComponent<Bullet>();
+            if (bullet)
                 // Оцениваем эффект попадания для здоровья противника
-                _enemyHealth.TakeDamage(1);
-            }
+                _enemyHealth.TakeDamage(bullet.DamageValue);
         }
 
         if (DieOnAnyCollision)
-        {
             _enemyHealth.Die();
-        }
     }
 }

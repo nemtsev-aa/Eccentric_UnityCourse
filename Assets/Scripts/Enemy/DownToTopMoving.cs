@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class DownToTopMoving : MonoBehaviour
 {
+    [Tooltip("Твёрдое тело")]
+    public Rigidbody Rigidbody;
     [Tooltip("Статус остановки")]
     public bool IsStopped;
     [Tooltip("Крайнее верхнее положение")]
@@ -30,7 +32,7 @@ public class DownToTopMoving : MonoBehaviour
         _selectable = GetComponent<Selectable>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (IsStopped)
         {
