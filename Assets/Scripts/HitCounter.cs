@@ -37,10 +37,10 @@ public class HitCounter : MonoBehaviour
             _hitCount += hitValue;
             OnHitRegistration?.Invoke(_hitCount);
 
-            if (enemyHealth.EnemyType == EnemyType.Bear)
-            {
-                OnHitBearRegistration?.Invoke(hitValue);
-            }
+            //if (enemyHealth.EnemyType == EnemyType.Bear)
+            //{
+            //    OnHitBearRegistration?.Invoke(hitValue);
+            //}
         }
     }
 

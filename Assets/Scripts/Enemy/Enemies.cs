@@ -28,8 +28,6 @@ public class Enemies : MonoBehaviour
     public void RemoveEnemy(EnemyHealth enemyHealth)
     {
         enemyHealth.EnemyKilled -= RemoveEnemy;
-        if (enemyHealth.EnemyType == EnemyType.Bear)
-            BossKilled?.Invoke();
         if (ListEnemyies.Count == 0)
             AllEnemiesDestroyed?.Invoke();
 

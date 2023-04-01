@@ -170,7 +170,6 @@ public class EnemyBehaviorsManager : MonoBehaviour
     /// </summary>
     public void SetTemporaryInvulnerability(bool invulnerabilityStatus, bool moveStatus)
     {
-        EnemyHealth.Invulnerable = invulnerabilityStatus;
         gameObject.GetComponent<LeftToRightMove>().enabled = moveStatus;
     }
 

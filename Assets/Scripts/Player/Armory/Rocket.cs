@@ -1,9 +1,0 @@
-
-public class Rocket : Bullet
-{
-    public override void Ricochet()
-    {
-        Instantiate(HitParticle, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }
-}

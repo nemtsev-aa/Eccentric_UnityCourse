@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 899027391497057734}
   - component: {fileID: 899027391497057731}
+  - component: {fileID: 7704330520865288241}
   - component: {fileID: 899027391497057730}
+  - component: {fileID: 899027391497057735}
   - component: {fileID: 899027391497057729}
   - component: {fileID: 899027391497057728}
-  - component: {fileID: 899027391497057735}
   - component: {fileID: 899027391497057724}
   m_Layer: 0
   m_Name: Carrot
@@ -54,6 +55,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 1
+--- !u!114 &7704330520865288241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899027391497057733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1400b7be5a3a61c419e6bceb534d1388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <EnemyType>k__BackingField: 1
+  <EnemyHealth>k__BackingField: {fileID: 899027391497057730}
 --- !u!114 &899027391497057730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,27 +81,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b31a79dc2d71744918520a3a9ccd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 0
   _maxHealth: 1
-  _meHit: {fileID: 899027391497057724}
-  _healthView: {fileID: 0}
-  _invulnerable: 0
-  EventOnTakeDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 899027391497057724}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _dieParticleEffect: {fileID: 0}
+--- !u!114 &899027391497057735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899027391497057733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917f2741c8e5c7b4091be0a47870ff93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 899027391497057731}
+  _speed: 3
 --- !u!114 &899027391497057729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,20 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageValue: 1
---- !u!114 &899027391497057735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899027391497057733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 917f2741c8e5c7b4091be0a47870ff93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 899027391497057731}
-  _speed: 3
 --- !u!82 &899027391497057724
 AudioSource:
   m_ObjectHideFlags: 0
