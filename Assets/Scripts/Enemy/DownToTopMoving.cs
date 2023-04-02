@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 public class DownToTopMoving : MonoBehaviour
 {
-    [Tooltip("Твёрдое тело")]
     public Rigidbody Rigidbody;
     [Tooltip("Статус остановки")]
     public bool IsStopped;
@@ -23,6 +22,7 @@ public class DownToTopMoving : MonoBehaviour
     [SerializeField] private UnityEvent EventOnTopTarget;
 
     private Selectable _selectable;
+    
     private void Start()
     {
         // Открепляем ограничивающие движение точки от модели
@@ -30,6 +30,7 @@ public class DownToTopMoving : MonoBehaviour
         _downPoint.parent = null;
         transform.position = _downPoint.position;
         _selectable = GetComponent<Selectable>();
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -42,7 +43,7 @@ public class DownToTopMoving : MonoBehaviour
 
         if (CurrentDirection == Direction.Down)
         {
-            GetComponent<Rigidbody>().MovePosition(transform.position - transform.up * _moveSpeed * Time.deltaTime);
+            Rigidbody.MovePosition(transform.position - transform.up * _moveSpeed * Time.deltaTime);
             if (transform.position.y <= _downPoint.position.y)
             {
                 CurrentDirection = Direction.Top;
@@ -54,10 +55,9 @@ public class DownToTopMoving : MonoBehaviour
         }
         else
         {
-            GetComponent<Rigidbody>().MovePosition(transform.position + transform.up * _moveSpeed * Time.deltaTime);
+            Rigidbody.MovePosition(transform.position + transform.up * _moveSpeed * Time.deltaTime);
             if (transform.position.y >= _topPoint.position.y)
             {
-
                 CurrentDirection = Direction.Down;
                 Debug.Log("Direction.Down");
                 IsStopped = true;
@@ -73,5 +73,8 @@ public class DownToTopMoving : MonoBehaviour
         _selectable.Show(false);
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(_topPoint.position, _downPoint.position);
+    }
 }

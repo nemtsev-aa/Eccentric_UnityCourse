@@ -48,18 +48,14 @@ public class GameProcessManager : MonoBehaviour
 
     private LevelManager _levelManager;
     private HitCounter _hitCounter;
-    private int _hitCount;
+
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else if (Instance == this)
-        {
             Destroy(gameObject);
-        }
   
         OnGame += _timeManager.StartTimer;
         OnPause += _timeManager.PauseTimer;
@@ -89,13 +85,9 @@ public class GameProcessManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (CurrentGameStatus == GameStatus.Pause)
-            {
                 Resume();
-            }
             else if (CurrentGameStatus == GameStatus.Active)
-            {
                 PauseGame();
-            }
         }
 
         _enemies.ShowNearEnemy();

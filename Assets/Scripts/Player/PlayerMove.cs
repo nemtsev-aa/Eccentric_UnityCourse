@@ -113,16 +113,7 @@ public class PlayerMove : MonoBehaviour
     {
         // Активируем эффект ключей при соприкосновении с игроком
         if (other.TryGetComponent<Key>(out Key key))
-        {
-            GameObject obstacle = key.GetTarget();
-
-            if (obstacle.TryGetComponent(out LimitRotation limitRotation))
-                limitRotation.SetStatus(true);
-            else if (obstacle.TryGetComponent(out DownToTopMoving downToTopMoving))
-                downToTopMoving.enabled = true;
-
-            Destroy(key.gameObject);
-        }
+           key.HitToKey();
 
         if (other.GetComponent<Exit>())
             GameProcessManager.Instance.GameWin();

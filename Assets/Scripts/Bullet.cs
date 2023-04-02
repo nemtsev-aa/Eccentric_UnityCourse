@@ -29,15 +29,7 @@ public class Bullet : MonoBehaviour
         // Активируем эффект ключей при попадании в них пули
         else if (other.TryGetComponent(out Key key))
         {
-            GameObject obstacle = key.GetTarget();
-            if (obstacle.TryGetComponent(out LimitRotation limitRotation))
-            {
-                limitRotation.SetStatus(true);
-            }
-            else if (obstacle.TryGetComponent(out DownToTopMoving downToTopMoving))
-            {
-                downToTopMoving.enabled = true;
-            }
+            key.HitToKey();
             Hit(other.gameObject);
         }
     }

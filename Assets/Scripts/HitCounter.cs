@@ -8,18 +8,13 @@ public class HitCounter : MonoBehaviour
     private int _hitCount;
 
     public event Action<int> OnHitRegistration;
-    public event Action<int> OnHitBearRegistration;
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else if (Instance == this)
-        {
             Destroy(gameObject);
-        }
     }
 
     /// <summary>
@@ -36,11 +31,6 @@ public class HitCounter : MonoBehaviour
             // Общее количество попаданий
             _hitCount += hitValue;
             OnHitRegistration?.Invoke(_hitCount);
-
-            //if (enemyHealth.EnemyType == EnemyType.Bear)
-            //{
-            //    OnHitBearRegistration?.Invoke(hitValue);
-            //}
         }
     }
 

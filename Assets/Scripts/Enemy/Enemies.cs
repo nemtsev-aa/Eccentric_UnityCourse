@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    [Tooltip("Контейнер врагов")]
-    [SerializeField] private GameObject _enemyParent;
     [Tooltip("Список врагов")]
-    public List<ActivateByDistance> ListEnemyies = new List<ActivateByDistance>();
+    [SerializeField] private List<EnemyAnimal> ListEnemyies = new List<EnemyAnimal>();
     // Расположение игрока
     public Transform _playerTransform;
     
@@ -16,6 +15,25 @@ public class Enemies : MonoBehaviour
     // Событие - убийство всех врагов
     public event Action AllEnemiesDestroyed;
 
+    private void Start()
+    {
+        ListEnemyies = FindObjectsOfType<EnemyAnimal>().ToList();
+        for (int i = 0; i < ListEnemyies.Count; i++)
+        {
+            ListEnemyies[i].EnemyKilled += RemoveEnemyFromList;
+        }
+    }
+    
+    public void RemoveEnemyFromList(EnemyAnimal enemyAnimal)
+    {
+        enemyAnimal.EnemyKilled -= RemoveEnemyFromList;
+        if (ListEnemyies.Count == 0)
+            AllEnemiesDestroyed?.Invoke();
+        if (enemyAnimal.EnemyAnimalType == EnemyAnimalType.Bear)
+            BossKilled?.Invoke();
+
+        ListEnemyies.Remove(enemyAnimal);
+    }
 
     public void ShowNearEnemy()
     {
@@ -23,14 +41,5 @@ public class Enemies : MonoBehaviour
         {
             ListEnemyies[i].CheckDistance(_playerTransform.position);
         }
-    }
-
-    public void RemoveEnemy(EnemyHealth enemyHealth)
-    {
-        enemyHealth.EnemyKilled -= RemoveEnemy;
-        if (ListEnemyies.Count == 0)
-            AllEnemiesDestroyed?.Invoke();
-
-        ListEnemyies.Remove(enemyHealth.gameObject.GetComponent<ActivateByDistance>());
     }
 }
