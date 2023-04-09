@@ -1010,9 +1010,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EnemyHealth>k__BackingField: {fileID: 5193099491201007917}
-  EnemyAnimalType: 0
-  _distanceToActivate: 20
   IsActive: 1
+  EnemyAnimalType: 0
+  _distanceToActivate: 15
   _healthView: {fileID: 5813399428555309575}
   _dieParticleEffect: {fileID: 19800018, guid: 723fd657513ecfc4aa06c568b425b480, type: 3}
   _meHit: {fileID: 8300000, guid: 8fb10d4d4964e0a4b93e9689689a1d8c, type: 3}
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5193099491201007918}
-  _speed: 1
+  _speed: 2
   _timeToReachSpeed: 10
 --- !u!114 &5193099491201007905
 MonoBehaviour:
