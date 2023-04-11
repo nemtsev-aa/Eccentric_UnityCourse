@@ -55,7 +55,7 @@ MonoBehaviour:
   <EnemyHealth>k__BackingField: {fileID: 5828412990401904002}
   IsActive: 1
   EnemyAnimalType: 3
-  _distanceToActivate: 20
+  _distanceToActivate: 10
   _healthView: {fileID: 5828412992168145505}
   _dieParticleEffect: {fileID: 19800018, guid: 723fd657513ecfc4aa06c568b425b480, type: 3}
   _meHit: {fileID: 8300000, guid: 90b3ddb67274c9c4fa476e5126d4e759, type: 3}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0557bb8de481e8d4ab9d6e3d8381f59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _period: 7
+  _period: 3
   _animator: {fileID: 5828412991999663059}
   _triggerName: Attack
 --- !u!114 &5828412990401904060
