@@ -20,9 +20,10 @@ public class Ball : ActiveItem
 
         Projection.Setup(_ballSettings.BallProjectionsMaterials[level], _levelText.text, Radius);
 
-        if (ScoreManager.Instance.AddScore(ItemType, transform.position, level))
+        if (ScoreManager.Instance)
         {
-            Die();
+            if (ScoreManager.Instance.AddScore(ItemType, transform.position, level))
+                Die();
         }
     }
 

@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Star : ActiveItem
 {
@@ -28,11 +31,12 @@ public class Star : ActiveItem
         {
             if (colliders[i].attachedRigidbody)
             {
-                ActiveItem item = colliders[i].attachedRigidbody.GetComponent<ActiveItem>();
+                colliders[i].attachedRigidbody.TryGetComponent(out ActiveItem item);
                 if (item)
                     item.IncreaseLevel();
             }
         }
+
         Instantiate(_affectPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
@@ -47,4 +51,12 @@ public class Star : ActiveItem
         base.DoEffect();
         StartCoroutine(AffectProcess());
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.green;
+        Handles.DrawWireDisc(transform.position, Vector3.forward, _affectRadius);
+    }
+#endif
 }

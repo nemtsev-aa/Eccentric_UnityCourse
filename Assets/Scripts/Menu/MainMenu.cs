@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Tooltip("Метка - количество монет")]
     [SerializeField] private TextMeshProUGUI _coinsText;
+    [Tooltip("Метка - текущий уровень")]
     [SerializeField] private TextMeshProUGUI _levelText;
+    [Tooltip("Кнопка - старт")]
     [SerializeField] private Button _startButton;
 
     private void Start()

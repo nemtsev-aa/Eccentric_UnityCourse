@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class Progress : MonoBehaviour
 {
-    [SerializeField] private int _coins;
-    [SerializeField] private int _level;
-    [SerializeField] private bool _isMusicOn;
-    //[SerializeField] private Color _backgroundColor;
-    //public Color BackgroundColor => _backgroundColor;
-    public bool IsMusicOn => _isMusicOn;
-    public int Coins => _coins;
-    public int Level => _level;
+    [Tooltip("Статус музыки")]
+    public bool IsMusicOn;
+    [Tooltip("Количество монет")]
+    public int Coins;
+    [Tooltip("Текущий уровень")]
+    public int Level;
 
     public static Progress Instance;
     private void Awake()
@@ -27,13 +25,13 @@ public class Progress : MonoBehaviour
 
     public void SetLevel(int level)
     {
-        _level = level;
+        Level = level;
         Save();
     }
 
     public void AddCoins(int value)
     {
-        _coins += value;
+        Coins += value;
         Save();
     }
 
@@ -54,21 +52,15 @@ public class Progress : MonoBehaviour
         ProgressData progressData = SaveSystem.Load();
         if (progressData != null)
         {
-            _coins = progressData.Coins;
-            _level = progressData.Level;
-            _isMusicOn = progressData.IsMusicOn;
-
-            //Color color = new Color();
-            //color.r = progressData.BackgroundColor[0];
-            //color.g = progressData.BackgroundColor[1];
-            //color.b = progressData.BackgroundColor[2];
-            //_backgroundColor = color;
+            Coins = progressData.Coins;
+            Level = progressData.Level;
+            IsMusicOn = progressData.IsMusicOn;
         }
         else
         {
-            _coins = 0;
-            _level = 1;
-            _isMusicOn = true;
+            Coins = 0;
+            Level = 1;
+            IsMusicOn = true;
         }
     }
 }

@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CollapseManager : MonoBehaviour
 {
+    [Tooltip("Событие - объединение объектов")]
+    public UnityEvent OnCollapse;
+   
     public static CollapseManager Instance;
 
     private void Awake()
@@ -77,6 +81,8 @@ public class CollapseManager : MonoBehaviour
             else
                 toItem.DoEffect();
         }
+
+        OnCollapse.Invoke();
     }
 
     public void ExploadeBall(Vector3 position, float radius)

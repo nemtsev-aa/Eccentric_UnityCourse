@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class Creator : MonoBehaviour
 {
@@ -17,19 +18,37 @@ public class Creator : MonoBehaviour
     private ActiveItem _itemInTube;
     // Шар в манипуляторе
     private ActiveItem _itemInSpawner;
+    // Количество оставшихся шаров
+    private int _ballsLeft;
+    // Метка для отображения шаров на экране
+    [SerializeField] private TextMeshProUGUI _numberOfBallsText;
+    // Корутина ожидания проигрыша
+    private Coroutine _waitForLose;
 
     void Start()
     {
+        _ballsLeft = Level.Instance.NumberOfBalls;
         CreateItemInTube();
         StartCoroutine(MoveToSpawner());
     }
 
+    public void UpdateBallsLeftText()
+    {
+        _numberOfBallsText.text = _ballsLeft.ToString();
+    }
+
     void CreateItemInTube()
     {
+        if (_ballsLeft == 0)
+        {
+            return;
+        }
         int itemLevel = Random.Range(0, 5);
         _itemInTube = Instantiate(_ballPrefab, _tube.position, Quaternion.identity);
-        //_itemInTube.SetLevel(itemLevel);
+        _itemInTube.SetLevel(itemLevel);
         _itemInTube.SetupToTube();
+        _ballsLeft--;
+        UpdateBallsLeftText();
     }
 
     private IEnumerator MoveToSpawner()
@@ -73,5 +92,32 @@ public class Creator : MonoBehaviour
         _rayTransform.gameObject.SetActive(false);
         if (_itemInTube)
             StartCoroutine(MoveToSpawner());
+        else
+            _waitForLose = StartCoroutine(WaitForLose());
+            CollapseManager.Instance.OnCollapse.AddListener(ResetLoseTimer);
+            GameManager.Instance.OnWin.AddListener(StopWaitForLose);
+
+    }
+    private void ResetLoseTimer()
+    {
+        if (_waitForLose != null)
+        {
+            StopCoroutine(_waitForLose);
+            _waitForLose = StartCoroutine(WaitForLose());
+        }
+    }
+
+    private void StopWaitForLose()
+    {
+        if (_waitForLose != null)
+            StopCoroutine(_waitForLose);
+    }
+
+    IEnumerator WaitForLose()
+    {
+        for (float t = 0f; t < 5f; t += Time.deltaTime)
+            yield return null;
+
+        GameManager.Instance.Lose();
     }
 }

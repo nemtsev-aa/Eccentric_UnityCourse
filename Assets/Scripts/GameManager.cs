@@ -4,10 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Окно - победа")]
     [SerializeField] private GameObject _winObject;
+    [Tooltip("Окно - поражение")]
     [SerializeField] private GameObject _loseObject;
-    [SerializeField] private UnityEvent _onWin;
-    public UnityEvent OnWin => _onWin;
+    [Tooltip("Событие - победа")]
+    public UnityEvent OnWin;
+
     public static GameManager Instance;
     private void Awake()
     {
@@ -18,7 +21,7 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         _winObject.SetActive(true);
-        _onWin?.Invoke();
+        OnWin?.Invoke();
 
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         Progress.Instance.SetLevel(currentLevelIndex++);

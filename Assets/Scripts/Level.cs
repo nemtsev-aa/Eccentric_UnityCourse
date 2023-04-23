@@ -15,14 +15,14 @@ public struct Task
 public class Level : MonoBehaviour
 {
     [Tooltip("Количество шаров на уровень")]
-    [SerializeField] private int _numberOfBalls = 50;
+    public int NumberOfBalls = 11;
     [Tooltip("Предел уровней у создаваемых шаров")]
-    [SerializeField] private int _maxCreatedBallLevel = 1;
+    public int MaxCreatedBallLevel;
     [Tooltip("Список задач на уровень")]
     [SerializeField] private Task[] _tasks;
 
-    public int NumberOfBalls => _numberOfBalls;
-    public int MaxCreatedBallLevel => _maxCreatedBallLevel;
+    
+    
     public Task[] Tasks => _tasks;
     public static Level Instance;
 
@@ -34,7 +34,7 @@ public class Level : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_maxCreatedBallLevel <= 0)
-            _maxCreatedBallLevel = 1;
+        if (MaxCreatedBallLevel <= 0)
+            MaxCreatedBallLevel = 1;
     }
 }
