@@ -231,6 +231,11 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
       propertyPath: m_Name
@@ -542,6 +547,11 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
       propertyPath: m_Name
@@ -755,6 +765,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UseGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846452355963971555, guid: 7bd241f47342009428ebcb9099b43bc7,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8927366557951992788, guid: 7bd241f47342009428ebcb9099b43bc7,
         type: 3}
@@ -982,6 +997,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UseGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}

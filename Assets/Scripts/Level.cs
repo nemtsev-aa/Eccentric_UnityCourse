@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public struct Task 
@@ -20,8 +18,6 @@ public class Level : MonoBehaviour
     public int MaxCreatedBallLevel;
     [Tooltip("Список задач на уровень")]
     [SerializeField] private Task[] _tasks;
-
-    
     
     public Task[] Tasks => _tasks;
     public static Level Instance;

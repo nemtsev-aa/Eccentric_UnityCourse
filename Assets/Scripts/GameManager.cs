@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     [Tooltip("Окно - победа")]
     [SerializeField] private GameObject _winObject;
     [Tooltip("Окно - поражение")]
@@ -35,7 +36,16 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(Progress.Instance.Level + 1);
+        try
+        {
+            SceneManager.LoadScene(Progress.Instance.Level + 1);
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Game Over");
+            throw;
+        }
+        
     }
     
     public void ToMainMenu()

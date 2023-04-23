@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class ScoreManager : MonoBehaviour
 
     [Tooltip("Текущий уровень")]
     [SerializeField] private Level _level;
+    [Tooltip("Метка - название уровня")]
+    [SerializeField] private TextMeshProUGUI _levelNameText;
     [Tooltip("Массив префабов для заданий")]
     [SerializeField] private ScoreElement[] _scoreElementPrefabs;
     [Tooltip("Массив созданных заданий")]
@@ -26,6 +29,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
+        _levelNameText.text = "Level: " + Progress.Instance.Level.ToString();
         int lengthTasks = _level.Tasks.Length;  // Количество задач в уровне 
         _scoreElements = new ScoreElement[lengthTasks]; // Массив задач для уровня
         for (int taskIndex = 0; taskIndex < lengthTasks; taskIndex++)   // Проходимся по всем задачам уровня

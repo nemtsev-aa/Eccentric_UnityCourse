@@ -223,6 +223,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
       propertyPath: m_Name
@@ -459,6 +469,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8547996421106937699, guid: e74864ff3ba5b2f4f87c4f50cae415fa,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547996421106937699, guid: e74864ff3ba5b2f4f87c4f50cae415fa,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e74864ff3ba5b2f4f87c4f50cae415fa, type: 3}
 --- !u!4 &515615404 stripped
@@ -528,6 +548,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
@@ -884,6 +914,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}

@@ -136,6 +136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dinamit (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6110741970309908234, guid: e61551de7945e37439485b6631d49285,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6110741970309908235, guid: e61551de7945e37439485b6631d49285,
         type: 3}
       propertyPath: m_RootOrder
@@ -300,6 +305,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
@@ -609,6 +619,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736701778848609938, guid: b57322df0c6b267438d72bc27307d3ed,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7736701778848609940, guid: b57322df0c6b267438d72bc27307d3ed,
         type: 3}
@@ -1088,6 +1103,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846452355963971555, guid: 7bd241f47342009428ebcb9099b43bc7,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8927366557951992788, guid: 7bd241f47342009428ebcb9099b43bc7,
         type: 3}

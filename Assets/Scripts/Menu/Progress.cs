@@ -40,6 +40,7 @@ public class Progress : MonoBehaviour
     {
         SaveSystem.DeleteFile();
     }
+
     [ContextMenu("Save")]
     public void Save()
     {
