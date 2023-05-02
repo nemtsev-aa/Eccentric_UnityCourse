@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [Tooltip("Тип ввода")]
+    [Tooltip("Цель для преследования")]
     [SerializeField] private Transform _target;
 
     private void LateUpdate()
