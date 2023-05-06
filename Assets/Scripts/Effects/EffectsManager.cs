@@ -88,4 +88,26 @@ public class EffectsManager : MonoBehaviour
 
         return result;
     }
+
+    public void AddEffect(Effect effect)
+    {
+        if (effect is ContinuousEffect c_effect) //Выбанный эффект - постоянный
+        {
+            if (!_continuousEffectsApplied.Contains(c_effect)) // Выбранный эффект не находится в списке применённых постоянных
+            {
+                _continuousEffectsApplied.Add(c_effect); // Добавляем эффект в список применённых постоянных эффектов
+                _continuousEffects.Remove(c_effect); // Удаляем эффект из общего списка поятоянных эффектов
+            }
+        }
+        if (effect is OneTimeEffect o_effect) //Выбанный эффект - временный
+        {
+            if (!_oneTimeEffectsApplied.Contains(o_effect)) // Выбранный эффект не находится в списке применённых временных
+            {
+                _oneTimeEffectsApplied.Add(o_effect); // Добавляем эффект в список временных применённых эффектов
+                _oneTimeEffects.Remove(o_effect); // Удаляем эффект из общего списка временных эффектов
+            }
+        }
+
+        effect.Activate(); // Активируем эффект
+    }
 }

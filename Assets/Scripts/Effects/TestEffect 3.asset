@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: TestEffect 3
   Description: TestEffect 3_Description
   Sprite: {fileID: 21300000, guid: 85bf7e239737a1541918d0a20f977f30, type: 3}
-  Level: 0
+  Level: -1

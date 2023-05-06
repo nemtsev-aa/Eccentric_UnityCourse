@@ -24,6 +24,16 @@ public class Card : MonoBehaviour
     [SerializeField] private Sprite _oneTimeEffectSprite;
 
     private Effect _effect;
+    private EffectsManager _effectsManager;
+    private CardManager _cardManager;
+
+    public void Init(EffectsManager effectsManager, CardManager cardManager)
+    {
+        _effectsManager = effectsManager;
+        _cardManager = cardManager;
+        _button.onClick.AddListener(Click);
+    }
+   
     public void Show(Effect effect)
     {
         _effect = effect;
@@ -36,5 +46,11 @@ public class Card : MonoBehaviour
             _iconBackground.sprite = _continuousEffectSprite;
         else
             _iconBackground.sprite = _oneTimeEffectSprite;
+    }
+
+    public void Click()
+    {
+        _effectsManager.AddEffect(_effect);
+        _cardManager.Hide();
     }
 }

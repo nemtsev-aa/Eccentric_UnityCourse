@@ -12,6 +12,10 @@ public abstract class Effect : ScriptableObject
     [Tooltip("Спрайт")]
     public Sprite Sprite;
     [Tooltip("Текущий уровень")]
-    public int Level = 0;
+    public int Level = -1;
 
+    public virtual void Activate()
+    {
+        Level++;
+    }
 }
