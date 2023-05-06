@@ -30,6 +30,11 @@ public class Loot : MonoBehaviour
             transform.position = position; // Новое положение лута на пути к сборщику
             yield return null;
         }
+        Take(collector);
+    }
+
+    public virtual void Take(Collector collector)
+    {
         Destroy(gameObject); // Унижтожаем лут после сбора
     }
 }
