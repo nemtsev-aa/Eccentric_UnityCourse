@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Collector : MonoBehaviour
@@ -10,7 +11,6 @@ public class Collector : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [Tooltip("Менеджер опыта")]
     [SerializeField] private ExperienceManager _experienceManager;
-
 
     private void FixedUpdate()
     {
@@ -26,4 +26,12 @@ public class Collector : MonoBehaviour
     {
         _experienceManager.AddExperience(value);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.yellow;
+        Handles.DrawWireDisc(transform.position, Vector3.up, _distanceToCollect);
+    }
+#endif
 }

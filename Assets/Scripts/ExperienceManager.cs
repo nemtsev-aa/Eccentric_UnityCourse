@@ -18,6 +18,8 @@ public class ExperienceManager : MonoBehaviour
     [SerializeField] private EffectsManager _effectsManager;
     [Tooltip("Кривая необходимого опыта")]
     [SerializeField] private AnimationCurve _experienceCurve;
+    [Tooltip("Эффект - получение нового уровня")]
+    [SerializeField] private ParticleSystem _upEffect;
 
     private int _level; // Текущий уровень
 
@@ -39,14 +41,27 @@ public class ExperienceManager : MonoBehaviour
     public void UpLevel()
     {
         _level++;
-        _effectsManager.ShowCards();
         _levelText.text = _level.ToString();
         _experience = 0;
         _nextLevelExperience = _experienceCurve.Evaluate(_level);
+
+        ShowEffectToLevelUp();
+
+        Invoke(nameof(ShowCards), 2f);
     }
 
     public void DisplayExperience()
     {
         _experienceScale.fillAmount = _experience / _nextLevelExperience;
+    }
+
+    private void ShowEffectToLevelUp()
+    {
+        _upEffect.Play();
+    }
+
+    private void ShowCards()
+    {
+        _effectsManager.ShowCards();
     }
 }
