@@ -2,15 +2,32 @@ using UnityEngine;
 
 public class ShowTargetMark : MonoBehaviour
 {
-    [Tooltip("”казатель")]
-    [SerializeField] private GameObject _mark;
+    [Tooltip("÷ель")]
+    [SerializeField] private Transform _markTarget;
+
+    public void SetTarget(Transform target)
+    {
+        _markTarget = target;
+    }
+
+    private void Update()
+    {
+        if (_markTarget)
+        {
+            Show();
+            transform.position = _markTarget.position;
+        }
+        else
+            Hide();
+    }
 
     public void Show()
     {
-        _mark.SetActive(true);
+        gameObject.SetActive(true);
+
     }
     public void Hide()
     {
-        _mark.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
