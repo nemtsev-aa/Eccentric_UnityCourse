@@ -17,7 +17,8 @@ public class SoundToEvent : MonoBehaviour
 
     public void StepSoundPlay()
     {
-        _audioSource.PlayOneShot(_runStepsSound);
+        _audioSource.clip = _runStepsSound;
+        _audioSource.Play();
     }
 
     public void StepSoundStop()

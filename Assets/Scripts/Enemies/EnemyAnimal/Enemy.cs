@@ -14,6 +14,17 @@ public class Enemy : MonoBehaviour
 
     private float _attackTimer;
     private PlayerHealth _playerHealth;
+    private EnemyMove _enemyMove;
+
+    private void Awake()
+    {
+        _enemyMove = gameObject.GetComponent<EnemyMove>();
+    }
+    
+    public void Init(Transform playerTransform)
+    {
+        _enemyMove.Setup(playerTransform);
+    }
 
     private void Update()
     {

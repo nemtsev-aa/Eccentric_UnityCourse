@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7f66d8220fce2e45affd0079c7187fa, type: 3}
+  m_Name: Chapter 0
+  m_EditorClassIdentifier: 
+  EnemyWavesArray:
+  - Enemy: {fileID: 1492604535708774638, guid: d15c2f89b1261ba4a993bcb89fcf9efe, type: 3}
+    NumberPerSecond:
+    - 0.5
+    - 0.6
+    - 0.7
+    - 1
+    - 1.5
+    - 1.6
+  - Enemy: {fileID: 267760336326562637, guid: 5d729fa731b445e40b27b10fa1647bc7, type: 3}
+    NumberPerSecond:
+    - 0
+    - 0
+    - 0
+    - 1
+    - 1.5
+    - 1.6
+  - Enemy: {fileID: 6326724194826883501, guid: 7c49eafd97ab30844b9c4461c302cd93, type: 3}
+    NumberPerSecond:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 1
+    - 2

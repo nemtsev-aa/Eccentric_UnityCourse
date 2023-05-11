@@ -85,8 +85,6 @@ public class GameProcessManager : MonoBehaviour
             else if (CurrentGameStatus == GameStatus.Active)
                 PauseGame();
         }
-
-        _enemies.ShowNearEnemy();
     }
 
     public void StartGame()

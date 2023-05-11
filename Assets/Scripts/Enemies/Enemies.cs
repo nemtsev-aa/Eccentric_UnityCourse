@@ -22,7 +22,7 @@ public class Enemies : MonoBehaviour
         for (int i = 0; i < _enemyiesList.Count; i++)
         {
             _enemyiesList[i].EnemyKilled += RemoveEnemyFromList;
-            _enemyiesList[i].GetComponent<HenMove>().Setup(_playerTransform);
+            _enemyiesList[i].GetComponent<EnemyMove>().Setup(_playerTransform);
         }
     }
     
@@ -37,14 +37,6 @@ public class Enemies : MonoBehaviour
         _enemyiesList.Remove(enemyAnimal);
     }
 
-    public void ShowNearEnemy()
-    {
-        for (int i = 0; i < _enemyiesList.Count; i++)
-        {
-            _enemyiesList[i].CheckDistance(_playerTransform.position);
-        }
-    }
-
     public EnemyAnimal[] GetNearest(Vector3 point, int number)
     {
         _enemyiesList = _enemyiesList.OrderBy(x => Vector3.Distance(point, x.transform.position)).ToList();
@@ -56,5 +48,4 @@ public class Enemies : MonoBehaviour
         }
         return enemies;
     }
-
 }

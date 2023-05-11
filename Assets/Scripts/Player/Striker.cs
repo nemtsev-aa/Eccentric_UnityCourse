@@ -6,7 +6,7 @@ using UnityEngine;
 public class Striker : MonoBehaviour
 {
     [Tooltip("Менеджер врагов")]
-    [SerializeField] private Enemies _enemies;
+    [SerializeField] private EnemyManager _enemies;
     [Tooltip("Дистанция атаки")]
     [SerializeField] private float _distanceToAttack = 4f;
     [Tooltip("Маркер")]
@@ -48,8 +48,10 @@ public class Striker : MonoBehaviour
     public void StrikeToEnemy(EnemyAnimal animal)
     {
         if (!animal.transform.GetComponentInChildren<ShowTargetMark>())
-       
-        _animator.SetBool("Attack", true);
+        {
+            _markerToAttack.GetComponent<ShowTargetMark>().SetTarget(animal.transform);
+            _animator.SetBool("Attack", true);
+        }
     }
 
 #if UNITY_EDITOR

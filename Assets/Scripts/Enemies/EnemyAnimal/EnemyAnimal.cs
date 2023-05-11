@@ -12,7 +12,10 @@ public enum EnemyAnimalType
     Rabbit,
     Pig,
     Squirrel,
-    Bear
+    Bear,
+    Spike,
+    Shell,
+    HermitKing
 }
 
 public class EnemyAnimal : Enemy
@@ -22,8 +25,6 @@ public class EnemyAnimal : Enemy
     public bool IsActive = true;
     [Tooltip("“ип противника")]
     [SerializeField] public EnemyAnimalType EnemyAnimalType;
-    [Tooltip("ƒистанци€ дл€ активации")]
-    [SerializeField] private float _distanceToActivate = 20f;
     [Tooltip("»ндикатор здоровь€ противника")]
     [SerializeField] private Slider _healthView;
     [Tooltip("Ёффект смерти")]
@@ -57,43 +58,6 @@ public class EnemyAnimal : Enemy
         EnemyHealth.HealthDecreased -= ShowHealth;
         EnemyHealth.HealthIsOver -= Die;
     }
-
-    public void CheckDistance(Vector3 playerPosition)
-    {
-        float distance = Vector3.Distance(transform.position, playerPosition);
-        if (IsActive)
-        {
-            if (distance > _distanceToActivate + 2f)
-                Deactivate();
-        }
-        else
-        {
-            if (distance < _distanceToActivate)
-                Activate();
-        }
-    }
-
-    public void Activate()
-    {
-        Debug.Log("Activate");
-        gameObject.SetActive(true);
-        IsActive = true;
-    }
-
-    public void Deactivate()
-    {
-        Debug.Log("Deactivate");
-        gameObject.SetActive(false);
-        IsActive = false;
-    }
-
-    #if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        Handles.color = Color.grey;
-        Handles.DrawWireDisc(transform.position, Vector3.up, _distanceToActivate);
-    }
-    #endif
 
     private void Die(EnemyHealth enemyHealth)
     {
