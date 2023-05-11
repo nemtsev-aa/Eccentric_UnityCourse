@@ -17,6 +17,8 @@ public class PlayerHealth : MonoBehaviour
     public event Action<float, float> OnAddHealth;
     [Tooltip("Событие - смерть персонажа")]
     public event Action OnDie;
+    [SerializeField] private GameStateManager _gameStateManager;
+
 
     private void Start()
     {
@@ -55,6 +57,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //GameProcessManager.Instance.GameLose();
         OnDie?.Invoke();
+        _gameStateManager.SetLose();
         Debug.Log("Die");
     }
 

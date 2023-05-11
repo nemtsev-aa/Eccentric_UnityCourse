@@ -25,9 +25,9 @@ public class Card : MonoBehaviour
 
     private Effect _effect;
     private EffectsManager _effectsManager;
-    private CardManager _cardManager;
+    private CardsManager _cardManager;
 
-    public void Init(EffectsManager effectsManager, CardManager cardManager)
+    public void Init(EffectsManager effectsManager, CardsManager cardManager)
     {
         _effectsManager = effectsManager;
         _cardManager = cardManager;

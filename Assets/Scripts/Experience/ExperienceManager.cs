@@ -25,7 +25,7 @@ public class ExperienceManager : MonoBehaviour
     [Tooltip("Звук - повышение уровня")]
     [SerializeField] private AudioClip _levelUpSound;
 
-    private int _level; // Текущий уровень
+    private int _level = -1; // Текущий уровень
     private AudioSource _audioSource; // Аудио
 
     private void Awake()

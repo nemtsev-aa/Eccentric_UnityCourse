@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardManager : MonoBehaviour
+public class CardsManager : MonoBehaviour
 {
     [Tooltip("Родительский объект для карт")]
     [SerializeField] private GameObject _cardManagerParent;
     [Tooltip("Массив карт")]
     [SerializeField] private Card[] _effectCards;
     [SerializeField] private EffectsManager _effectsManager;
+    [SerializeField] private GameStateManager _gameStateManager;
 
     private void Awake()
     {
@@ -25,10 +26,12 @@ public class CardManager : MonoBehaviour
         {
             _effectCards[i].Show(effects[i]); // Заполняем каждую карту соответствующими значениями
         }
+        _gameStateManager.SetCards();
     }
 
     public void Hide()
     {
         _cardManagerParent.SetActive(false);
+        _gameStateManager.SetAction();
     }
 }

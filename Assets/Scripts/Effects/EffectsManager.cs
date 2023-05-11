@@ -14,7 +14,7 @@ public class EffectsManager : MonoBehaviour
     [Tooltip("Список неприменённых постоянных эффектов")]
     [SerializeField] private List<OneTimeEffect> _oneTimeEffects = new List<OneTimeEffect>();
 
-    [SerializeField] private CardManager _cardManager;
+    [SerializeField] private CardsManager _cardsManager;
     private void Awake()
     {
         for (int i = 0; i < _continuousEffects.Count; i++) // Заменяем содержимое списка копиями, чтобы не изменять оригиналы
@@ -61,7 +61,7 @@ public class EffectsManager : MonoBehaviour
             effectsForCards.Add(effectsToShow[index]);
         }
 
-        _cardManager.ShowCards(effectsForCards);
+        _cardsManager.ShowCards(effectsForCards);
     }
 
     private int[] RandomSort(int length, int number)

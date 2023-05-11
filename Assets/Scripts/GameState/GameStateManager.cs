@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     [Tooltip("Состояние - Основное меню")]
-    [SerializeField] private GameState _startMenuState; 
+    [SerializeField] private GameState _startMenuState;
+    [Tooltip("Состояние - Показ карточек")]
+    [SerializeField] private GameState _cardsState;
     [Tooltip("Состояние - Активное состояние игры")]
     [SerializeField] private GameState _actionState;    
     [Tooltip("Состояние - Пауза")]
@@ -16,18 +18,25 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameState _loseState;
 
     private GameState _currentGameState; // Текущее игровое состояние
+    
     public void Init()
     {
         _startMenuState?.Init(this);
+        _cardsState?.Init(this);
         _actionState?.Init(this);
         _pauseState?.Init(this);
         _winState?.Init(this);
         _loseState?.Init(this);
+
+        SetGameState(_startMenuState);
     }
 
     private void SetGameState(GameState gameState)
     {
-        if (_currentGameState) _currentGameState.Exit(); //Выходим из текущего состояния
+        if (_currentGameState)
+        {
+            _currentGameState.Exit(); //Выходим из текущего состояния
+        }
         _currentGameState = gameState; // Изменяем текущее состояние
         gameState.Enter();  //Входим в новое состояние
     }
@@ -40,6 +49,10 @@ public class GameStateManager : MonoBehaviour
     public void SetAction()
     {
         SetGameState(_actionState);
+    }
+    public void SetCards()
+    {
+        SetGameState(_cardsState);
     }
 
     public void SetPause()

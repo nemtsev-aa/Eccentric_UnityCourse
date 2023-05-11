@@ -8,15 +8,18 @@ public class ActionState : GameState
     [SerializeField] private Joystick _joystick;
     [Tooltip("—крипт управл€ющий движением игрока")]
     [SerializeField] private RigidbodyMove _rigidbodyMove;
-    [Tooltip("—крипт управл€ющий врагами")]
+    [Tooltip("ћенеджер врагов")]
     [SerializeField] private EnemyManager _enemyManager;
+    [Tooltip("ћенеджер опыта")]
+    [SerializeField] private ExperienceManager _experienceManager;
 
     public override void EnterFirstTime()
     {
         base.EnterFirstTime();
         _enemyManager.StartNewWave(0);
-
+        _experienceManager.UpLevel();
     }
+
     public override void Init(GameStateManager gameStateManager)
     {
         base.Init(gameStateManager);
