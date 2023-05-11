@@ -15,11 +15,6 @@ public class EnemyManager : MonoBehaviour
     [Tooltip("Список созданных врагов")]
     [SerializeField] private List<EnemyAnimal> _enemyList = new List<EnemyAnimal>();
 
-    private void Start()
-    {
-        StartNewWave(0);
-    }
-
     public void StartNewWave(int wave)
     {
         StopAllCoroutines(); // Останавливаем все запущенные корутины перед стартом новой
