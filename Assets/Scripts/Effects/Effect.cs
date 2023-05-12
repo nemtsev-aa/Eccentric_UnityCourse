@@ -14,6 +14,17 @@ public abstract class Effect : ScriptableObject
     [Tooltip("Текущий уровень")]
     public int Level = -1;
 
+    protected EffectsManager _effectsManager;
+    protected Player _player;
+    protected EnemyManager _enemyManager;
+
+    public virtual void Initialize(EffectsManager effectsManager, EnemyManager enemyManager, Player player)
+    {
+        _effectsManager = effectsManager;
+        _enemyManager = enemyManager;
+        _player = player;
+    }
+
     public virtual void Activate()
     {
         Level++;

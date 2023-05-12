@@ -613,7 +613,8 @@ MonoBehaviour:
   IsActive: 1
   EnemyAnimalType: 5
   _healthView: {fileID: 5933390760060572376}
-  _dieParticleEffect: {fileID: 19800018, guid: 3c0799aee75ff654aa806465cae076e8, type: 3}
+  _dieParticleEffect: {fileID: 8766046832017114337, guid: a76161fe5e4d2c447965f3a0c359e851,
+    type: 3}
   _meHit: {fileID: 8300000, guid: 8419d3d0ec3ae3b4185b0f241710b89d, type: 3}
   _meDie: {fileID: 8300000, guid: 8419d3d0ec3ae3b4185b0f241710b89d, type: 3}
 --- !u!114 &5398528383943250418

@@ -26,6 +26,15 @@ public class EnemyHealth : MonoBehaviour
             Die();
     }
 
+    public void TakeDamage(float damageValue)
+    {
+        _health -= (int)damageValue;
+        if (_health > 0)
+            ShowHealth();
+        if (_health <= 0)
+            Die();
+    }
+
     public void ShowHealth()
     {
         HealthDecreased.Invoke(_health, _maxHealth);

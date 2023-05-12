@@ -42,6 +42,7 @@ public class EnemyManager : MonoBehaviour
         Vector3 position = new Vector3(randomPoint.x, 0f, randomPoint.y) * _creationRadius + _playerTransform.position; // Положение врага при создании
         EnemyAnimal newEnemy = Instantiate(enemy,position, Quaternion.identity); // Новый враг в расчитанном положении
         newEnemy.Init(_playerTransform); // Передаём врагу сведения о положении игрока
+        newEnemy.EnemyKilled += RemoveEnemy;
         _enemyList.Add(newEnemy); // Добавляем врага в список
     }
 
@@ -49,7 +50,8 @@ public class EnemyManager : MonoBehaviour
     {
         _enemyList.Remove(enemy); // Удаляем врага из списка
     }
-        public EnemyAnimal[] GetNearest(Vector3 point, int number)
+
+    public EnemyAnimal[] GetNearest(Vector3 point, int number)
     {
         _enemyList = _enemyList.OrderBy(x => Vector3.Distance(point, x.transform.position)).ToList();
         int returnNumber = Mathf.Min(number, _enemyList.Count);

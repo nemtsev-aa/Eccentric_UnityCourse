@@ -63,12 +63,10 @@ public class EnemyAnimal : Enemy
     {
         // Создаём эффект смери
         ParticleSystem dieParticle = Instantiate(_dieParticleEffect, enemyHealth.transform.position - Vector3.down * 1.5f, enemyHealth.transform.rotation);
-        // Сообщаем подписчикам об убийстве врага
-        EnemyKilled?.Invoke(this);
-        // Проигрываем звук смерти
-        PlayDieSound();
-        // Удаляем объект врага со сцены
-        Destroy(enemyHealth.gameObject);
+       
+        EnemyKilled?.Invoke(this); // Сообщаем подписчикам об убийстве врага
+        PlayDieSound(); // Проигрываем звук смерти
+        Destroy(enemyHealth.gameObject); // Удаляем объект врага со сцены
         // Создаём префаб опыта на месте смерти врага
         GameObject experienceLoot = Instantiate(_experienceLoot, transform.position, transform.rotation);
     }

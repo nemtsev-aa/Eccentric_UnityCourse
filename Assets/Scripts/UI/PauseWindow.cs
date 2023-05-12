@@ -5,14 +5,6 @@ using UnityEngine.UI;
 
 public class PauseWindow : MonoBehaviour
 {
-    [Tooltip("Кнопка для продолжения")]
-    [SerializeField] private Button _resumeButton;
-
-    private void Awake()
-    {
-        _resumeButton.onClick.AddListener(Hide);
-    }
-
     public void Show()
     {
         gameObject.SetActive(true);

@@ -15,16 +15,29 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] private List<OneTimeEffect> _oneTimeEffects = new List<OneTimeEffect>();
 
     [SerializeField] private CardsManager _cardsManager;
+    [SerializeField] private Player _player;
+    [SerializeField] private EnemyManager _enemyManager;
+
     private void Awake()
     {
         for (int i = 0; i < _continuousEffects.Count; i++) // Заменяем содержимое списка копиями, чтобы не изменять оригиналы
         {
             _continuousEffects[i] = Instantiate(_continuousEffects[i]);
+            _continuousEffects[i].Initialize(this, _enemyManager, _player);
         }
 
         for (int i = 0; i < _oneTimeEffects.Count; i++) // Заменяем содержимое списка копиями, чтобы не изменять оригиналы
         {
             _oneTimeEffects[i] = Instantiate(_oneTimeEffects[i]);
+            _oneTimeEffects[i].Initialize(this, _enemyManager, _player);
+        }
+    }
+
+    private void Update()
+    {
+        foreach (var effect in _continuousEffectsApplied) // Для каждого применённого постоянного эффекта
+        {
+            effect.ProcessFrame(Time.deltaTime); // передаём значение времени
         }
     }
 

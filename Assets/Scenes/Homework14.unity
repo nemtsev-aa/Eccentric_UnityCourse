@@ -492,14 +492,13 @@ MonoBehaviour:
   _continuousEffectsApplied: []
   _oneTimeEffectsApplied: []
   _continuousEffects:
-  - {fileID: 11400000, guid: 98983633a6c364346bb05f1daa8f4125, type: 2}
-  - {fileID: 11400000, guid: 66adfb75e472d084a9df884b28a71434, type: 2}
-  - {fileID: 11400000, guid: 586abde2946ee4a49b775d78a6705044, type: 2}
-  _oneTimeEffects:
-  - {fileID: 11400000, guid: 5c48b3c016e66b748b6b2452e8b2f60b, type: 2}
-  - {fileID: 11400000, guid: 9eb0a733d43f6994dad89fb86b90d21d, type: 2}
-  - {fileID: 11400000, guid: d1f99a9a4b40d6645bbf519f92fce3f3, type: 2}
+  - {fileID: 11400000, guid: 5b2fbf14cc1d5974cbd596c30d0e137e, type: 2}
+  - {fileID: 11400000, guid: 2f8813a14b850da4a82a897e73f74930, type: 2}
+  - {fileID: 11400000, guid: 5b2fbf14cc1d5974cbd596c30d0e137e, type: 2}
+  _oneTimeEffects: []
   _cardsManager: {fileID: 57375350}
+  _player: {fileID: 125554085}
+  _enemyManager: {fileID: 1162762056}
 --- !u!1 &86392297 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2095247933900446175, guid: 9d2b284a1919236489a7124e2b97b8e5,
@@ -627,6 +626,7 @@ GameObject:
   - component: {fileID: 125554082}
   - component: {fileID: 125554083}
   - component: {fileID: 125554084}
+  - component: {fileID: 125554085}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -766,6 +766,18 @@ MonoBehaviour:
   _animator: {fileID: 725990574}
   _rigidBodyMove: {fileID: 125554075}
   targetList: []
+--- !u!114 &125554085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125554074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933cd8636cd25314bbfb2e8b6f5fcf9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &214803579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,6 +2794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd602eb8f3526d439bd26c4419fc508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _resumeButton: {fileID: 929910786}
   _pauseWindow: {fileID: 649210638}
 --- !u!1 &581603819
 GameObject:
@@ -3046,7 +3059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7215af3e595d54444bca263f61a14add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resumeButton: {fileID: 929910786}
 --- !u!114 &649210640
 MonoBehaviour:
   m_ObjectHideFlags: 0

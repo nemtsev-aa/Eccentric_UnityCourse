@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (fileName = nameof(TestEffect), menuName = "Effects/Continuous/" + nameof(TestEffect))]
-public class TestEffect : ContinuousEffect
+public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

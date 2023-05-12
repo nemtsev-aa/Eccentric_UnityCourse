@@ -1,11 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class PauseState : GameState
 {
+    [Tooltip("Кнопка для продолжения")]
+    [SerializeField] private Button _resumeButton;
+    [Tooltip("Окно паузы")]
     [SerializeField] private PauseWindow _pauseWindow;
+
+    public override void Init(GameStateManager gameStateManager)
+    {
+        base.Init(gameStateManager);
+        _resumeButton.onClick.AddListener(gameStateManager.SetAction);
+    }
 
     public override void Enter()
     {
