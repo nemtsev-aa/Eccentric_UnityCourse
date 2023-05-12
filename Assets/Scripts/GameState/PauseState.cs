@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseState : MonoBehaviour
+
+public class PauseState : GameState
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private PauseWindow _pauseWindow;
+
+    public override void Enter()
     {
-        
+        base.Enter();
+        Time.timeScale = 0f;
+        _pauseWindow.Show();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+        base.Exit();
+        Time.timeScale = 1f;
+        _pauseWindow.Hide();
     }
 }

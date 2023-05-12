@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoseWindow : MonoBehaviour
 {
-    [Tooltip("Кнопка для старта")]
+    [Tooltip("Кнопка для продолжения")]
     [SerializeField] private Button _continueButton;
 
     private void Awake()
