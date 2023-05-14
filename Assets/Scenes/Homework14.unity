@@ -489,15 +489,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a1a69031b8cf94d91e19a347de42ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 125554085}
   _continuousEffectsApplied: []
   _oneTimeEffectsApplied: []
   _continuousEffects:
   - {fileID: 11400000, guid: 5b2fbf14cc1d5974cbd596c30d0e137e, type: 2}
   - {fileID: 11400000, guid: 2f8813a14b850da4a82a897e73f74930, type: 2}
-  - {fileID: 11400000, guid: 5b2fbf14cc1d5974cbd596c30d0e137e, type: 2}
-  _oneTimeEffects: []
+  - {fileID: 11400000, guid: f7f36d19fb4eeb84bb9914fa2a662fb6, type: 2}
+  _oneTimeEffects:
+  - {fileID: 11400000, guid: fc2e87c6dd1b2a746bae0670bd688b35, type: 2}
+  - {fileID: 11400000, guid: 6c3a69dfb09ae0e4c82e8a4cf59c10d4, type: 2}
+  - {fileID: 11400000, guid: 76c15259d04317e4287129bc3a417080, type: 2}
   _cardsManager: {fileID: 57375350}
-  _player: {fileID: 125554085}
   _enemyManager: {fileID: 1162762056}
 --- !u!1 &86392297 stripped
 GameObject:
@@ -778,6 +781,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933cd8636cd25314bbfb2e8b6f5fcf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CollectionDistance>k__BackingField: 3
+  <Damage>k__BackingField: 1
+  <MoveSpeed>k__BackingField: 5
+  <ShotPeriod>k__BackingField: 1
+  <Colldown>k__BackingField: 1
+  _playerTransform: {fileID: 125554080}
+  _collector: {fileID: 125554081}
+  _rigidbodyMove: {fileID: 125554075}
 --- !u!1 &214803579
 GameObject:
   m_ObjectHideFlags: 0

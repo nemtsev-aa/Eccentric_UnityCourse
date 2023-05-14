@@ -28,7 +28,7 @@ public class ShadowMisslesEffect : ContinuousEffect
             float angle = (360f / bulletNumber) * i;
             Vector3 direction = Quaternion.Euler(0, angle, 0) * _playerTransform.forward;
             ShadowMissle newBullet = Instantiate(_shadowMissile, _playerTransform.position, Quaternion.identity);
-            newBullet.Setup(direction * _bulletSpeed, 20, 2);
+            newBullet.Setup(direction * _bulletSpeed, _effectsManager.Player.Damage, 2);
         }
     }
 }

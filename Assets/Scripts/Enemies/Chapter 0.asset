@@ -23,7 +23,7 @@ MonoBehaviour:
     - 1.6
   - Enemy: {fileID: 267760336326562637, guid: 5d729fa731b445e40b27b10fa1647bc7, type: 3}
     NumberPerSecond:
-    - 0
+    - 0.25
     - 0
     - 0
     - 1

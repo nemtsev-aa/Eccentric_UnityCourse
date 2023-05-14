@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
+    public Player Player;
+
     [Tooltip("Список применённых постоянных эффектов")]
     [SerializeField] private List<ContinuousEffect> _continuousEffectsApplied = new List<ContinuousEffect>();
     [Tooltip("Список применённых временных эффектов")]
@@ -15,7 +17,6 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] private List<OneTimeEffect> _oneTimeEffects = new List<OneTimeEffect>();
 
     [SerializeField] private CardsManager _cardsManager;
-    [SerializeField] private Player _player;
     [SerializeField] private EnemyManager _enemyManager;
 
     private void Awake()
@@ -23,13 +24,13 @@ public class EffectsManager : MonoBehaviour
         for (int i = 0; i < _continuousEffects.Count; i++) // Заменяем содержимое списка копиями, чтобы не изменять оригиналы
         {
             _continuousEffects[i] = Instantiate(_continuousEffects[i]);
-            _continuousEffects[i].Initialize(this, _enemyManager, _player);
+            _continuousEffects[i].Initialize(this, _enemyManager, Player);
         }
 
         for (int i = 0; i < _oneTimeEffects.Count; i++) // Заменяем содержимое списка копиями, чтобы не изменять оригиналы
         {
             _oneTimeEffects[i] = Instantiate(_oneTimeEffects[i]);
-            _oneTimeEffects[i].Initialize(this, _enemyManager, _player);
+            _oneTimeEffects[i].Initialize(this, _enemyManager, Player);
         }
     }
 
@@ -75,6 +76,8 @@ public class EffectsManager : MonoBehaviour
         }
 
         _cardsManager.ShowCards(effectsForCards);
+        Player.GetComponent<RigidbodyMove>().CurrentMoveStatus = MoveStatus.Stop;
+        Player.UpdateProperties();
     }
 
     private int[] RandomSort(int length, int number)

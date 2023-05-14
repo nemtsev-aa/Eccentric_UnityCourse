@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [field: SerializeField] public float CollectionDistance { get; internal set; }
+    [field: SerializeField] public float Damage { get; internal set; }
+    [field: SerializeField] public float MoveSpeed { get; internal set; }
+    [field: SerializeField] public float ShotPeriod { get; internal set; }
+    [field: SerializeField] public float Colldown { get; internal set; }
 
-    // Update is called once per frame
-    void Update()
+    //[Space(10)]
+    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private Collector _collector;
+    [SerializeField] private RigidbodyMove _rigidbodyMove;
+    
+    public void UpdateProperties()
     {
-        
+        _collector.CollectionDistanceUpdate(CollectionDistance);
+        _rigidbodyMove.SpeedUpdate(MoveSpeed);
     }
 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a66c0e80a5bd404e87e8df4aec15332, type: 3}
+  m_Name: MineEffect
+  m_EditorClassIdentifier: 
+  Name: Mine
+  Description: 
+  Sprite: {fileID: 21300000, guid: e7bf26933934a584ca7e2167c74d8689, type: 3}
+  Level: -1
+  _colldown: 4
+  _minePrefab: {fileID: 4303279428956399197, guid: 8aeb39d57bc3d964ab76697dd5734aef,
+    type: 3}
+  _damage: 3
+  _radius: 5

@@ -27,6 +27,11 @@ public class Collector : MonoBehaviour
         _experienceManager.AddExperience(value);
     }
 
+    public void CollectionDistanceUpdate(float value)
+    {
+        _distanceToCollect = value;
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {

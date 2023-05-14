@@ -46,4 +46,9 @@ public class RigidbodyMove : MonoBehaviour
             _rigidbody.velocity = Vector3.zero;
         }
     }
+
+    public void SpeedUpdate(float value)
+    {
+        _speed = value;
+    }
 }

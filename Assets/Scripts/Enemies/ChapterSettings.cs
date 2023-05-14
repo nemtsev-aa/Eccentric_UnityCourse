@@ -7,7 +7,7 @@ public struct EnemyWaves
 {
     [Tooltip("Префаб врага")]
     public EnemyAnimal Enemy;
-    [Tooltip("Префаб врага")]
+    [Tooltip("Количество")]
     public float[] NumberPerSecond;
 }
 
