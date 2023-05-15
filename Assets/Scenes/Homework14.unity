@@ -496,6 +496,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b2fbf14cc1d5974cbd596c30d0e137e, type: 2}
   - {fileID: 11400000, guid: 2f8813a14b850da4a82a897e73f74930, type: 2}
   - {fileID: 11400000, guid: f7f36d19fb4eeb84bb9914fa2a662fb6, type: 2}
+  - {fileID: 11400000, guid: 4d0eadea4f3d9484ba27ae07a34d5c74, type: 2}
+  - {fileID: 11400000, guid: eeb5c9741bce9b440830cc9ef16dcd9c, type: 2}
   _oneTimeEffects:
   - {fileID: 11400000, guid: fc2e87c6dd1b2a746bae0670bd688b35, type: 2}
   - {fileID: 11400000, guid: 6c3a69dfb09ae0e4c82e8a4cf59c10d4, type: 2}

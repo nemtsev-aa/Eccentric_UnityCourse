@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93e6960eb24ca5489db362791cd9f3e, type: 3}
+  m_Name: AxesEffect
+  m_EditorClassIdentifier: 
+  Name: Axes
+  Description: 
+  Sprite: {fileID: 21300000, guid: 33e90a070c2e14b498d43ad440c3af61, type: 3}
+  Level: -1
+  _colldown: 1
+  _axesPrefab: {fileID: 2735291156018875916, guid: 93aa4acb23c2ed64ab35ec7eca79a543,
+    type: 3}

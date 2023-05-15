@@ -24,7 +24,6 @@ public class Mine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
         if (other.TryGetComponent(out EnemyAnimal enemy))
         {
             Explode();
@@ -33,7 +32,6 @@ public class Mine : MonoBehaviour
 
     private void Explode()
     {
-        Debug.Log("Explode");
         Instantiate(_explosionEffect, transform.position, Quaternion.identity);
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _layerMask);
         foreach (var collider in colliders)

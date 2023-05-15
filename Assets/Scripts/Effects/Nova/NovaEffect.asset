@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9250fc011131ab340b9feda5c6dec660, type: 3}
+  m_Name: NovaEffect
+  m_EditorClassIdentifier: 
+  Name: Nova
+  Description: 
+  Sprite: {fileID: 21300000, guid: 9c1e43efa855fc54180eb9a1418b40e3, type: 3}
+  Level: -1
+  _colldown: 0.5
+  _radius: 4
+  _damage: 0.5
+  _novaPrefab: {fileID: 6710092535430007190, guid: 2cbc51130f0741d4da0a0bed67bc29f3,
+    type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 2048

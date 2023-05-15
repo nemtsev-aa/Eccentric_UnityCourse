@@ -28,5 +28,13 @@ public abstract class Effect : ScriptableObject
     public virtual void Activate()
     {
         Level++;
+        if (Level == 0)
+        {
+            FirstTimeCreated();
+        }
+    }
+
+    protected virtual void FirstTimeCreated()
+    {
     }
 }
