@@ -23,7 +23,7 @@ public class SelectableObject : MonoBehaviour
         SelectIndicator.SetActive(true);
     }
 
-    public virtual void UnSelect() {
+    public virtual void Unselect() {
         SelectIndicator.SetActive(false);
     }
 }

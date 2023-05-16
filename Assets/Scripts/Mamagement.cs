@@ -5,7 +5,8 @@ using UnityEngine;
 public class Mamagement : MonoBehaviour
 {
     public Camera Camera;
-    public SelectableObject Howered;
+    public SelectableObject Hovered;
+    public List<SelectableObject> ListOfSelected = new List<SelectableObject>();
 
     void Update()
     {
@@ -17,15 +18,15 @@ public class Mamagement : MonoBehaviour
             SelectableCollider selectable = hit.collider.GetComponent<SelectableCollider>();
             if (selectable) {
                 SelectableObject hitSelectable = selectable.SelectableObject;
-                if (Howered) {
-                    if (Howered != hitSelectable) {
-                        Howered.OnUnhover();
-                        Howered = hitSelectable;
-                        Howered.OnHover();
+                if (Hovered) {
+                    if (Hovered != hitSelectable) {
+                        Hovered.OnUnhover();
+                        Hovered = hitSelectable;
+                        Hovered.OnHover();
                     }
                 } else {
-                    Howered = hitSelectable;
-                    Howered.OnHover();
+                    Hovered = hitSelectable;
+                    Hovered.OnHover();
                 }
             } else {
                 UnhowerCurrent();
@@ -33,12 +34,58 @@ public class Mamagement : MonoBehaviour
         } else {
             UnhowerCurrent();
         }
+
+        if (Input.GetMouseButtonDown(0)) {
+            if (Hovered) {
+                if (Input.GetKey(KeyCode.LeftControl)) { // Добавляем объект в группу сочитанием клавиш LeftCtr+LeftMouse
+                    Select(Hovered);
+                }
+                else if (Input.GetKey(KeyCode.LeftAlt)) { // Удаляем объект из группы сочитанием клавиш LeftAlt+LeftMouse
+                    Unselect(Hovered);
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0)) { // Выделяем одиночный объект
+            if (Hovered) {
+                if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftAlt))  {
+                    UnselectAll();
+                    Select(Hovered);
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1)) { // Очищаем список выделенных объектов нажатием на RightMouse
+            UnselectAll();
+        }
+
+    }
+
+    void Select(SelectableObject selectableObject) {
+        if (!ListOfSelected.Contains(selectableObject)) {
+            ListOfSelected.Add(selectableObject);
+            selectableObject.Select();
+        }
+    }
+
+    void Unselect(SelectableObject selectableObject) {
+        if (ListOfSelected.Contains(selectableObject)) {
+            ListOfSelected.Remove(selectableObject);
+            selectableObject.Unselect();
+        }
+    }
+
+    void UnselectAll() {
+        foreach (var iSelected in ListOfSelected) {
+            iSelected.Unselect();
+        }
+        ListOfSelected.Clear();
     }
 
     private void UnhowerCurrent() {
-        if (Howered) {
-            Howered.OnUnhover();
-            Howered = null;
+        if (Hovered) {
+            Hovered.OnUnhover();
+            Hovered = null;
         }
     }
 }
