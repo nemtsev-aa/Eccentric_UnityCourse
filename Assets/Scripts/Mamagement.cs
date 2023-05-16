@@ -15,8 +15,30 @@ public class Mamagement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             SelectableCollider selectable = hit.collider.GetComponent<SelectableCollider>();
-            if (selectable)
-                Howered = selectable.SelectableObject;
+            if (selectable) {
+                SelectableObject hitSelectable = selectable.SelectableObject;
+                if (Howered) {
+                    if (Howered != hitSelectable) {
+                        Howered.OnUnhover();
+                        Howered = hitSelectable;
+                        Howered.OnHover();
+                    }
+                } else {
+                    Howered = hitSelectable;
+                    Howered.OnHover();
+                }
+            } else {
+                UnhowerCurrent();
+            }
+        } else {
+            UnhowerCurrent();
+        }
+    }
+
+    private void UnhowerCurrent() {
+        if (Howered) {
+            Howered.OnUnhover();
+            Howered = null;
         }
     }
 }

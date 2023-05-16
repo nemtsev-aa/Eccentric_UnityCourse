@@ -15,7 +15,7 @@ public class SelectableObject : MonoBehaviour
         transform.localScale = Vector3.one * 1.1f;
     }
 
-    public void OnUnHover() {
+    public void OnUnhover() {
         transform.localScale = Vector3.one;
     }
 
