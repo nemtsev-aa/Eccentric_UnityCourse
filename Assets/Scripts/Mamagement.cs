@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mamagement : MonoBehaviour
 {
     public Camera Camera;
     public SelectableObject Hovered;
     public List<SelectableObject> ListOfSelected = new List<SelectableObject>();
+
+    [Header("Frame")]
+    public Image FrameImage;
+
+    private Vector2 _frameStart;
+    private Vector2 _frameEnd;
 
     void Update()
     {
@@ -65,6 +72,47 @@ public class Mamagement : MonoBehaviour
             UnselectAll();
         }
 
+        CreatingFrame(); //Выделение рамкой
+
+
+    }
+
+    void CreatingFrame() {
+        
+        if (Input.GetMouseButtonDown(0)) {
+            _frameStart = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButton(0)) {
+            
+            _frameEnd = Input.mousePosition;
+
+            Vector2 min = Vector2.Min(_frameStart, _frameEnd);
+            Vector2 max = Vector2.Max(_frameStart, _frameEnd);
+            Vector2 size = max - min;
+
+            if (size.magnitude > 10) {
+                FrameImage.enabled = true;
+
+                FrameImage.rectTransform.anchoredPosition = min;
+                FrameImage.rectTransform.sizeDelta = size;
+
+                Rect rect = new Rect(min, size);
+
+                UnselectAll();
+                Unit[] allUnits = FindObjectsOfType<Unit>();
+                for (int i = 0; i < allUnits.Length; i++) {
+                    Vector2 screenPosition = Camera.WorldToScreenPoint(allUnits[i].transform.position);
+                    if (rect.Contains(screenPosition)) {
+                        Select(allUnits[i]);
+                    }
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            FrameImage.enabled = false;
+        }
     }
 
     void Select(SelectableObject selectableObject) {

@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de58fb30da1ed984889a59f74b19b480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectableObject: {fileID: 8467380090400347780}
+  SelectableObject: {fileID: 8367539107735683504}
 --- !u!1 &1464279937328576036
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1464279937328576039}
-  - component: {fileID: 8467380090400347780}
+  - component: {fileID: 8367539107735683504}
   - component: {fileID: 3277952347302860728}
   m_Layer: 0
   m_Name: Knight
@@ -229,7 +229,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8467380090400347780
+--- !u!114 &8367539107735683504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464279937328576036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f0b33a5f2bc27f48980d47cefe59e79, type: 3}
+  m_Script: {fileID: 11500000, guid: 7316a9afa31d6ab4481a535a6195f583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 1464279936431432111}
