@@ -26,5 +26,9 @@ public class SelectableObject : MonoBehaviour
     public virtual void Unselect() {
         SelectIndicator.SetActive(false);
     }
+
+    public virtual void WhenClickOnGround(Vector3 point) {
+
+    }
 }
 

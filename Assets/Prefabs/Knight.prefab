@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de58fb30da1ed984889a59f74b19b480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectableObject: {fileID: 8545506295915867105}
+  SelectableObject: {fileID: 8467380090400347780}
 --- !u!1 &1464279937328576036
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +203,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1464279937328576039}
-  - component: {fileID: 8545506295915867105}
+  - component: {fileID: 8467380090400347780}
+  - component: {fileID: 3277952347302860728}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -228,7 +229,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8545506295915867105
+--- !u!114 &8467380090400347780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,7 +238,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464279937328576036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71b0aa2cc6d8c6488e5a71031c7067b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f0b33a5f2bc27f48980d47cefe59e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 1464279936431432111}
+  NavMeshAgent: {fileID: 3277952347302860728}
+--- !u!195 &3277952347302860728
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464279937328576036}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.25
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 600
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

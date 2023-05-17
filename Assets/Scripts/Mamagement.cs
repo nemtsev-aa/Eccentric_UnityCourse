@@ -53,6 +53,12 @@ public class Mamagement : MonoBehaviour
                     Select(Hovered);
                 }
             }
+
+            if (hit.collider.tag == "Ground") {
+                foreach (var iSelectedItem in ListOfSelected) {
+                    iSelectedItem.WhenClickOnGround(hit.point);
+                }
+            }
         }
 
         if (Input.GetMouseButtonDown(1)) { // Очищаем список выделенных объектов нажатием на RightMouse
