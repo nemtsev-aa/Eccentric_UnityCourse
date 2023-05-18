@@ -9,13 +9,11 @@ public class BuildingButton : MonoBehaviour
 
     public void TryBuy() {
         int price = BuildingPrefab.GetComponent<Building>().Price;
-        int monyCount = FindObjectOfType<Resources>().Money;
-        if (monyCount >= price) {
-            monyCount -= price;
+        if (FindObjectOfType<Resources>().Money >= price) {
+            FindObjectOfType<Resources>().Money -= price;
             BuildingPlacer.CreateBuilding(BuildingPrefab);
         } else {
             Debug.Log("Недостаточно денег!");
         }
-        
     }
 }

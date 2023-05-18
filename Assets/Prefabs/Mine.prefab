@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 1549273246599696206}
-  Price: 0
+  Price: 5
   XSize: 2
   ZSize: 2
   Renderer: {fileID: 8268856917768840633}

@@ -31,12 +31,27 @@ public class BuildingPlacer : MonoBehaviour
         int z = Mathf.RoundToInt(point.z);
 
         CurrentBuilding.transform.position = new Vector3(x, 0f, z) * CellSize;
-
-        if (Input.GetMouseButtonDown(0)) {
-
-            InstallBuilding(x, z, CurrentBuilding);
-            CurrentBuilding = null;
+        if (CheckAllow(x, z, CurrentBuilding)) {
+            CurrentBuilding.DisplayAcceptablePosition();
+            if (Input.GetMouseButtonDown(0)) {
+                InstallBuilding(x, z, CurrentBuilding);
+                CurrentBuilding = null;
+            }
+        } else {
+            CurrentBuilding.DisplayUnacceptablePosition();
         }
+    }
+
+    private bool CheckAllow(int xPosition, int ZPosition, Building building) {
+        for (int x = 0; x < building.XSize; x++) {
+            for (int z = 0; z < building.ZSize; z++) {
+                Vector2Int coordinate = new Vector2Int(xPosition + x, ZPosition + z);
+                if (BuildingDictionary.ContainsKey(coordinate)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void InstallBuilding(int xPosition, int ZPosition, Building building) {
@@ -45,10 +60,6 @@ public class BuildingPlacer : MonoBehaviour
                 Vector2Int coordinate = new Vector2Int(xPosition + x, ZPosition + z);
                 BuildingDictionary.Add(coordinate, CurrentBuilding);
             }
-        }
-
-        foreach (var item in BuildingDictionary) {
-            Debug.Log(item);
         }
     }
 
