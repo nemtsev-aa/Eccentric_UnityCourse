@@ -12,4 +12,9 @@ public class LoseState : GameState
         Time.timeScale = 0f;
         _loseWindow.Show();
     }
+    public override void Exit() {
+        base.Exit();
+        Time.timeScale = 1f;
+        _loseWindow.Continue();
+    }
 }

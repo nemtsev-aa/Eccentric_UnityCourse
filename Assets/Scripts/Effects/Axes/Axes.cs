@@ -22,9 +22,9 @@ public class Axes : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out EnemyAnimal enemy))
+        if (other.attachedRigidbody && other.attachedRigidbody.GetComponent<EnemyHealth>() is EnemyHealth enemy)
         {
-            other.attachedRigidbody.GetComponent<EnemyHealth>().TakeDamage(_damage + _damageBoost);
+            enemy.TakeDamage(_damage + _damageBoost);
         }
     }
 }

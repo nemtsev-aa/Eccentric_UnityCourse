@@ -20,14 +20,13 @@ public class Mine : MonoBehaviour
     {
         _damage = damage;
         _radius = radius;
+        Destroy(gameObject, 4f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out EnemyAnimal enemy))
-        {
+        if (other.GetComponent<EnemyAnimal>())
             Explode();
-        }
     }
 
     private void Explode()

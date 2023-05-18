@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderers:
-  - {fileID: 0}
+  - {fileID: 4301236600117961412}
 --- !u!82 &6326724194826883497
 AudioSource:
   m_ObjectHideFlags: 0
@@ -872,6 +872,12 @@ PrefabInstance:
 --- !u!4 &4301236600104793060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7817129395020021028, guid: dbcc8d6ff0d6aa1439146455fea9d413,
+    type: 3}
+  m_PrefabInstance: {fileID: 6326724195040956096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4301236600117961412 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7817129395024931844, guid: dbcc8d6ff0d6aa1439146455fea9d413,
     type: 3}
   m_PrefabInstance: {fileID: 6326724195040956096}
   m_PrefabAsset: {fileID: 0}

@@ -11,7 +11,7 @@ public class ContinuousEffect : Effect
     public void ProcessFrame(float frameTime) // Метод реализующий периодическое действие эффекта
     {
         _timer += frameTime;
-        if (_timer > _effectsManager.Player.Colldown)
+        if (_timer > _effectsManager.Player.Colldown + _colldown)
         {
             Produce();
             _timer = 0;
