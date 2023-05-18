@@ -8,7 +8,7 @@ public class BuildingPlacer : MonoBehaviour
     public Camera RaycastCamera;
     [field: SerializeField] public float CellSize { get; private set; }
     public Building CurrentBuilding;
-
+    public Dictionary<Vector2Int, Building> BuildingDictionary = new Dictionary<Vector2Int, Building>();
     private Plane _plane;
     
     private void Start() {
@@ -33,7 +33,22 @@ public class BuildingPlacer : MonoBehaviour
         CurrentBuilding.transform.position = new Vector3(x, 0f, z) * CellSize;
 
         if (Input.GetMouseButtonDown(0)) {
+
+            InstallBuilding(x, z, CurrentBuilding);
             CurrentBuilding = null;
+        }
+    }
+
+    private void InstallBuilding(int xPosition, int ZPosition, Building building) {
+        for (int x = 0; x < building.XSize; x++) {
+            for (int z = 0; z < building.ZSize; z++) {
+                Vector2Int coordinate = new Vector2Int(xPosition + x, ZPosition + z);
+                BuildingDictionary.Add(coordinate, CurrentBuilding);
+            }
+        }
+
+        foreach (var item in BuildingDictionary) {
+            Debug.Log(item);
         }
     }
 
@@ -41,5 +56,4 @@ public class BuildingPlacer : MonoBehaviour
         GameObject newBuilding = Instantiate(buildingPrafab);
         CurrentBuilding = newBuilding.GetComponent<Building>();
     }
-
 }
