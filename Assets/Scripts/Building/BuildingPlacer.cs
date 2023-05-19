@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BuildingPlacer : MonoBehaviour
 {
-    //public static BuildingPlacer Instance;
     public Camera RaycastCamera;
     [field: SerializeField] public float CellSize { get; private set; }
     public Building CurrentBuilding;

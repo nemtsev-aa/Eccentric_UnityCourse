@@ -92,10 +92,14 @@ public class Mamagement : MonoBehaviour
  
         if (Input.GetMouseButtonDown(0)) { 
             _frameStart = Input.mousePosition; // Фиксируем начальное положение мыши
+            Debug.Log("Input.mousePosition: " + Input.mousePosition);
+
         }
 
         if (Input.GetMouseButton(0)) {
-            
+
+            Debug.Log("_frameStart: " + _frameStart);
+
             _frameEnd = Input.mousePosition; // Обновляем конечное положение мыши всё время пока кнопка LeftMouse нажата
 
             Vector2 min = Vector2.Min(_frameStart, _frameEnd); 
@@ -103,7 +107,7 @@ public class Mamagement : MonoBehaviour
             Vector2 size = max - min; // Размер выделенной области
 
             if (size.magnitude > 10) { // Убеждаемся в намерении пользователя рисовать рамку
-               
+
                 FrameImage.enabled = true; // Отображаем рамку
                 FrameImage.rectTransform.anchoredPosition = min; // Положение рамки
                 FrameImage.rectTransform.sizeDelta = size;  // Размеры рамки
