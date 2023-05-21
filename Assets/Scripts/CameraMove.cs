@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class CameraMove : MonoBehaviour
-{
+public class CameraMove : MonoBehaviour {
     public Camera RaycastCamera;
     [Space(10)]
     [Tooltip("Перемещать камеру при приближении курсора к краю экрана")]
@@ -41,6 +40,7 @@ public class CameraMove : MonoBehaviour
     }
 
     void LateUpdate() {
+
         if (MoveWhileEdgeScreen) {
             Vector2 mousePos = Input.mousePosition; // Положение курсора
             mousePos.x /= Screen.width; // Горизонтальное положение курсора относительно ширины окна

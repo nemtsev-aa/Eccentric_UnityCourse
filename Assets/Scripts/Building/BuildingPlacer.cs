@@ -8,10 +8,17 @@ public class BuildingPlacer : MonoBehaviour
     [field: SerializeField] public float CellSize { get; private set; }
     public Building CurrentBuilding;
     public Dictionary<Vector2Int, Building> BuildingDictionary = new Dictionary<Vector2Int, Building>();
+
+    [Header("SoundsEffect")]
+    [SerializeField] private AudioClip _successfulPlacement;
+    [SerializeField] private AudioClip _errorPlacement;
+
+    private AudioSource _audioSource;
     private Plane _plane;
     
     private void Start() {
         _plane = new Plane(Vector3.up, Vector3.zero);
+        _audioSource = GetComponent<AudioSource>();
     }
     
     private void Update() {
@@ -37,9 +44,12 @@ public class BuildingPlacer : MonoBehaviour
                 CurrentBuilding = null;
             }
         } else {
+            _audioSource.clip = _errorPlacement;
+            _audioSource.Play();
             CurrentBuilding.DisplayUnacceptablePosition();
         }
     }
+
 
     private bool CheckAllow(int xPosition, int ZPosition, Building building) {
         for (int x = 0; x < building.XSize; x++) {
@@ -53,11 +63,12 @@ public class BuildingPlacer : MonoBehaviour
         return true;
     }
 
-    private void InstallBuilding(int xPosition, int ZPosition, Building building) {
+    private void InstallBuilding(int xPosition, int zPosition, Building building) {
         for (int x = 0; x < building.XSize; x++) {
             for (int z = 0; z < building.ZSize; z++) {
-                Vector2Int coordinate = new Vector2Int(xPosition + x, ZPosition + z);
+                Vector2Int coordinate = new Vector2Int(xPosition + x, zPosition + z);
                 BuildingDictionary.Add(coordinate, CurrentBuilding);
+                _audioSource.PlayOneShot(_successfulPlacement);
             }
         }
     }

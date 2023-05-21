@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarrackFactory : BarrackAbstractFactory {
+public class BarrackFactory : AbstractFactory {
 
     private Transform _spawnPoint;
     private Transform _сollectionPoint;
@@ -25,7 +25,7 @@ public class BarrackFactory : BarrackAbstractFactory {
     /// Метод создания стандартного рыцаря
     /// </summary>
     /// <returns></returns>
-    public override Unit CreateStandartKnight() {
+    public override Unit CreateUnit1() {
         var _standartKnight = Instantiate(_standartKnightPrefab, _spawnPoint.position, Quaternion.identity);
         _standartKnight.WhenClickOnGround(_сollectionPoint.position);
         return _standartKnight;
@@ -34,7 +34,7 @@ public class BarrackFactory : BarrackAbstractFactory {
     /// Метод создания лёгкого рыцаря
     /// </summary>
     /// <returns></returns>
-    public override Unit CreateLightKnight() {
+    public override Unit CreateUnit2() {
         var _lightKnight = Instantiate(_lightKnightPrefab, _spawnPoint.position, Quaternion.identity);
         _lightKnight.WhenClickOnGround(_сollectionPoint.position);
         return _lightKnight;
@@ -43,7 +43,7 @@ public class BarrackFactory : BarrackAbstractFactory {
     /// Метод создания тяжёлого рыцаря
     /// </summary>
     /// <returns></returns>
-    public override Unit CreateHeavyKnight() {
+    public override Unit CreateUnit3() {
         var _heavyKnight = Instantiate(_heavyKnightPrefab, _spawnPoint.position, Quaternion.identity);
         _heavyKnight.WhenClickOnGround(_сollectionPoint.position);
         return _heavyKnight;

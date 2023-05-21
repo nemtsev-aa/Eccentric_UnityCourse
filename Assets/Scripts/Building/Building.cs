@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BuildingType {
+    Barrack,
+    Farm,
+    TownHall
+}
+
 public class Building : SelectableObject
 {
+    public BuildingType BuildingType;
     public int Price;
     public int XSize = 3;
     public int ZSize = 3;
     public Renderer Renderer;
+
+    public GameObject CollectionPoint;
 
     private Color _startColor;
 
