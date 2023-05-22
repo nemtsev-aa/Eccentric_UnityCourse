@@ -199,6 +199,8 @@ MonoBehaviour:
   NavMeshAgent: {fileID: 2557660798223591328}
   DamageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
+  HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
+    type: 3}
   _selectionSound: {fileID: 8300000, guid: ae879e8ff4429ef44b8b9a3219562e79, type: 3}
   _animator: {fileID: 2685460653401511936}
 --- !u!195 &2557660798223591328

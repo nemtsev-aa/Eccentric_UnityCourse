@@ -16,6 +16,7 @@ public class Unit : SelectableObject
     public int Health; 
     public NavMeshAgent NavMeshAgent;
     public ParticleSystem DamageEffect;
+    public GameObject HealthBarPrefab;
 
     [Space(10)]
     [Header("SoundsEffect")]
@@ -24,9 +25,18 @@ public class Unit : SelectableObject
     [Header("Animation")]
     [SerializeField] private Animator _animator;
 
+    private int _maxHealth;
     private AudioSource _audioSource;
+    private HealthBar _healthBar;
+    
+    public override void Start() {
+        base.Start();
+        _maxHealth = Health;
+        GameObject healthBar = Instantiate(HealthBarPrefab);
+        healthBar.transform.parent = transform;
+        _healthBar = healthBar.GetComponent<HealthBar>();
+        _healthBar.Setup(transform);
 
-    private void Start() {
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -52,6 +62,7 @@ public class Unit : SelectableObject
 
     public void TakeDamage(int damageValue) {
         Health -= damageValue;
+        _healthBar.SetHealth(Health, _maxHealth);
         ParticleSystem damageEffect = Instantiate(DamageEffect, transform.position, Quaternion.identity);
         Destroy(damageEffect.gameObject, 1f);
         _animator.SetTrigger("TakeDamage");
@@ -62,5 +73,9 @@ public class Unit : SelectableObject
 
     public void Die() {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy() {
+        Destroy(_healthBar.gameObject);
     }
 }

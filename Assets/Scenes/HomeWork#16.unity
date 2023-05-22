@@ -2603,7 +2603,7 @@ PrefabInstance:
     - target: {fileID: 1896341325001344575, guid: 039213ba3a09d9a42bf121633b7e4854,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.96
+      value: -2.14
       objectReference: {fileID: 0}
     - target: {fileID: 1896341325001344575, guid: 039213ba3a09d9a42bf121633b7e4854,
         type: 3}
@@ -2613,7 +2613,7 @@ PrefabInstance:
     - target: {fileID: 1896341325001344575, guid: 039213ba3a09d9a42bf121633b7e4854,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.54
+      value: -2.52
       objectReference: {fileID: 0}
     - target: {fileID: 1896341325001344575, guid: 039213ba3a09d9a42bf121633b7e4854,
         type: 3}
@@ -2655,6 +2655,12 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1253368869}
+    - target: {fileID: 8799042768256922024, guid: 039213ba3a09d9a42bf121633b7e4854,
+        type: 3}
+      propertyPath: HealthBarPrefab
+      value: 
+      objectReference: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 039213ba3a09d9a42bf121633b7e4854, type: 3}
 --- !u!1 &785872820
@@ -8421,6 +8427,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563288522396841312, guid: 582b99d83b2604f4d8aac6048c7714fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1563288522396841327, guid: 582b99d83b2604f4d8aac6048c7714fd,
         type: 3}

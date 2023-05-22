@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
                     SetState(EnemyState.Idle);
                 } else {
                     float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
+                    if (distanceToBuilding > DistanceToAttack) SetState(EnemyState.WalkToBuilding);
                     if (distanceToBuilding < DistanceToAttack) SetState(EnemyState.Attack);
                 }
                 
@@ -82,19 +83,17 @@ public class Enemy : MonoBehaviour
             case EnemyState.Attack:
                 if (TargetUnit) {
                     float distanceToTarget = Vector3.Distance(transform.position, TargetUnit.transform.position);
-                    if (distanceToTarget > DistanceToAttack) SetState(EnemyState.WalkToUnit);
-                    _animator.SetTrigger("Attack");
-                    _timer += Time.deltaTime;
-                    if (_timer > AttackPeriod) {
-                        _timer = 0;
-                        TargetUnit.TakeDamage(DamagePerSecond);
+                    if (distanceToTarget <= DistanceToAttack) {
+                        TakeDamage();
+                    } else {
+                        SetState(EnemyState.WalkToUnit);
                     }
                 } else if (TargetBuilding) {
-                    _animator.SetTrigger("Attack");
-                    _timer += Time.deltaTime;
-                    if (_timer > AttackPeriod) {
-                        _timer = 0;
-                        TargetBuilding.TakeDamage(DamagePerSecond);
+                    float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
+                    if (distanceToBuilding <= DistanceToAttack) {
+                        TakeDamage();
+                    } else {
+                        SetState(EnemyState.WalkToBuilding);
                     }
                 }
                 else {
@@ -103,6 +102,15 @@ public class Enemy : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private void TakeDamage() {
+        _animator.SetTrigger("Attack");
+        _timer += Time.deltaTime;
+        if (_timer > AttackPeriod) {
+            _timer = 0;
+            TargetBuilding.TakeDamage(DamagePerSecond);
         }
     }
 
@@ -119,10 +127,10 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case EnemyState.WalkToUnit:
-                //if (_agent.velocity.magnitude > 0) {
-                //    _animator.SetTrigger("Run");
-                //    _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
-                //}
+                FindClosestUnit();
+                if (TargetUnit) {
+                    _agent.SetDestination(TargetUnit.transform.position);
+                }
                 break;
             case EnemyState.Attack:
                 _timer = 0f;

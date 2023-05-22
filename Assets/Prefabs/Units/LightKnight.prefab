@@ -199,6 +199,8 @@ MonoBehaviour:
   NavMeshAgent: {fileID: 3277952347302860728}
   DamageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
+  HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
+    type: 3}
   _selectionSound: {fileID: 8300000, guid: 469660906757e9e41aef774ce7656746, type: 3}
   _animator: {fileID: 5530368310163542085}
   KnightType: 1

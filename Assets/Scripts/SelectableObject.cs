@@ -7,7 +7,7 @@ public class SelectableObject : MonoBehaviour
 {
     public GameObject SelectIndicator;
 
-    public void Start() {
+    public virtual void Start() {
         SelectIndicator.SetActive(false);
     }
 
