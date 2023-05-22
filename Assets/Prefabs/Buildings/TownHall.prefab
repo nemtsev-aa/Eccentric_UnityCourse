@@ -198,9 +198,12 @@ MonoBehaviour:
   SelectIndicator: {fileID: 6801211732385668264}
   BuildingType: 2
   Price: 400
+  Health: 700
   XSize: 3
   ZSize: 3
   Renderer: {fileID: 3990745217920446179}
+  DamageEffect: {fileID: 871312489339975349, guid: 2d2512403e1ec3149916914c3e6331e9,
+    type: 3}
   CollectionPoint: {fileID: 1564078834393584316}
 --- !u!114 &8520893329731401023
 MonoBehaviour:

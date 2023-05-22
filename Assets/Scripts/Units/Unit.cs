@@ -15,7 +15,8 @@ public class Unit : SelectableObject
     public int Price;
     public int Health; 
     public NavMeshAgent NavMeshAgent;
-    
+    public ParticleSystem DamageEffect;
+
     [Space(10)]
     [Header("SoundsEffect")]
     [SerializeField] private AudioClip _selectionSound;
@@ -51,6 +52,9 @@ public class Unit : SelectableObject
 
     public void TakeDamage(int damageValue) {
         Health -= damageValue;
+        ParticleSystem damageEffect = Instantiate(DamageEffect, transform.position, Quaternion.identity);
+        Destroy(damageEffect.gameObject, 1f);
+        _animator.SetTrigger("TakeDamage");
         if (Health <= 0) {
             Die();
         }

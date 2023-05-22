@@ -197,6 +197,8 @@ MonoBehaviour:
   Price: 5
   Health: 5
   NavMeshAgent: {fileID: 2557660798223591328}
+  DamageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
+    type: 3}
   _selectionSound: {fileID: 8300000, guid: 70af0da1d43208c49898357949f0627c, type: 3}
   _animator: {fileID: 2685460653401511936}
 --- !u!195 &2557660798223591328

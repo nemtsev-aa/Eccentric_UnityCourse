@@ -195,7 +195,10 @@ MonoBehaviour:
   SelectIndicator: {fileID: 1464279936431432111}
   UnitType: 0
   Price: 10
+  Health: 0
   NavMeshAgent: {fileID: 3277952347302860728}
+  DamageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
+    type: 3}
   _selectionSound: {fileID: 8300000, guid: c440ef10ebef3d34f833e91bd400fcb2, type: 3}
   _animator: {fileID: 3118653163798997016}
   KnightType: 0

@@ -12,10 +12,11 @@ public class Building : SelectableObject
 {
     public BuildingType BuildingType;
     public int Price;
+    public int Health;
     public int XSize = 3;
     public int ZSize = 3;
     public Renderer Renderer;
-
+    public ParticleSystem DamageEffect;
     public GameObject CollectionPoint;
 
     private Color _startColor;
@@ -41,5 +42,20 @@ public class Building : SelectableObject
                 Gizmos.DrawWireCube(transform.position + new Vector3(x, 0f, z) * cellSize, new Vector3(1f, 0f, 1f) * cellSize);
             }
         }
+    }
+
+    public void TakeDamage(int damageValue) {
+        Health -= damageValue;
+        ParticleSystem damageEffect = Instantiate(DamageEffect, transform.position + new Vector3((XSize / 2), 0f, (ZSize / 2)), Quaternion.identity);
+        Destroy(damageEffect.gameObject, 1f);
+        if (Health <= 0) {
+            Die();
+        }
+    }
+
+    public void Die() {
+        // !!!Удалить строение из словаря
+
+        Destroy(gameObject);
     }
 }

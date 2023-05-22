@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,8 @@ public class Enemy : MonoBehaviour
     public int Health;
     [Tooltip("ДПС")]
     public int DamagePerSecond;
+    [Tooltip("Период атаки")]
+    public float AttackPeriod = 0.1f;
     [Tooltip("Радиус видимости юнитов")]
     public float DistanceToFollow = 7f;
     [Tooltip("Радиус атаки")]
@@ -49,23 +52,53 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyState.WalkToBuilding:
                 FindClosestUnit();
+                if (TargetBuilding == null) {
+                    SetState(EnemyState.Idle);
+                } else {
+                    float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
+                    if (distanceToBuilding < DistanceToAttack) SetState(EnemyState.Attack);
+                }
+                
+                if (_agent.velocity.magnitude > 0) {
+                    _animator.SetTrigger("Run");
+                    _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                }
                 break;
             case EnemyState.WalkToUnit:
-                _agent.SetDestination(TargetUnit.transform.position);
-                float distanceToUnit = Vector3.Distance(TargetUnit.transform.position, transform.position);
-                if (distanceToUnit > DistanceToFollow) SetState(EnemyState.WalkToBuilding);
-                if (distanceToUnit < DistanceToAttack) SetState(EnemyState.Attack);
+                if (TargetUnit) {
+                    _agent.SetDestination(TargetUnit.transform.position);
+                    float distanceToUnit = Vector3.Distance(transform.position, TargetUnit.transform.position);
+                    if (distanceToUnit > DistanceToFollow) SetState(EnemyState.WalkToBuilding);
+                    if (distanceToUnit < DistanceToAttack) SetState(EnemyState.Attack);
+
+                    if (_agent.velocity.magnitude > 0) {
+                        _animator.SetTrigger("Run");
+                        _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                    }
+                } else {
+                    SetState(EnemyState.WalkToBuilding);
+                }
                 break;
             case EnemyState.Attack:
                 if (TargetUnit) {
-                    float distanceToTarget = Vector3.Distance(TargetUnit.transform.position, transform.position);
-                    if (distanceToTarget > DistanceToAttack) {
-                        SetState(EnemyState.WalkToUnit);
-                    }
+                    float distanceToTarget = Vector3.Distance(transform.position, TargetUnit.transform.position);
+                    if (distanceToTarget > DistanceToAttack) SetState(EnemyState.WalkToUnit);
+                    _animator.SetTrigger("Attack");
                     _timer += Time.deltaTime;
-                    if (_timer > 1f) {
+                    if (_timer > AttackPeriod) {
+                        _timer = 0;
                         TargetUnit.TakeDamage(DamagePerSecond);
                     }
+                } else if (TargetBuilding) {
+                    _animator.SetTrigger("Attack");
+                    _timer += Time.deltaTime;
+                    if (_timer > AttackPeriod) {
+                        _timer = 0;
+                        TargetBuilding.TakeDamage(DamagePerSecond);
+                    }
+                }
+                else {
+                    SetState(EnemyState.WalkToBuilding);
                 }
                 break;
             default:
@@ -77,21 +110,19 @@ public class Enemy : MonoBehaviour
         CurrentEnemyState = enemyState;
         switch (CurrentEnemyState) {
             case EnemyState.Idle:
-
                 _animator.SetTrigger("Idle");
                 break;
             case EnemyState.WalkToBuilding:
                 FindClosestBuilding();
                 if (TargetBuilding) {
                     _agent.SetDestination(TargetBuilding.transform.position);
-                    _animator.SetTrigger("Run");
-                    _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
                 }
                 break;
             case EnemyState.WalkToUnit:
-
-                _animator.SetTrigger("Run");
-                _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                //if (_agent.velocity.magnitude > 0) {
+                //    _animator.SetTrigger("Run");
+                //    _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                //}
                 break;
             case EnemyState.Attack:
                 _timer = 0f;
@@ -133,4 +164,12 @@ public class Enemy : MonoBehaviour
             SetState(EnemyState.WalkToUnit);
         }       
     }
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected() {
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(transform.position, Vector3.up, DistanceToAttack);
+        Handles.color = Color.yellow;
+        Handles.DrawWireDisc(transform.position, Vector3.up, DistanceToFollow);
+    }
+#endif
 }
