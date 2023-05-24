@@ -11,19 +11,40 @@ public enum UnitType {
 }
 public class Unit : SelectableObject
 {
+    [Tooltip("Тип юнита")]
     public UnitType UnitType;
+    [Tooltip("Текущее состояние")]
+    public UnitState CurrentUnitState;
+    
+    [Header("Parametrs")]
+    [Tooltip("Цена")]
     public int Price;
-    public int Health; 
-    public NavMeshAgent NavMeshAgent;
-    public ParticleSystem DamageEffect;
+    [Tooltip("Количество здоровья")]
+    public int Health;
+    [Tooltip("ДПС")]
+    public int DamagePerSecond;
+    [Tooltip("Период атаки")]
+    public float AttackPeriod = 0.1f;
+    [Tooltip("Радиус видимости")]
+    public float DistanceToFollow = 7f;
+    [Tooltip("Радиус атаки")]
+    public float DistanceToAttack = 1f;
+    [Tooltip("Полоска жизни")]
     public GameObject HealthBarPrefab;
 
     [Space(10)]
-    [Header("SoundsEffect")]
+    [Header("FX Effects")]
     [SerializeField] private AudioClip _selectionSound;
+    [SerializeField] private ParticleSystem _damageEffect;
     [Space(10)]
-    [Header("Animation")]
-    [SerializeField] private Animator _animator;
+    [SerializeField] protected Animator _animator;
+    [SerializeField] protected NavMeshAgent _navMeshAgent;
+
+    [Header("Targets")]
+    [Tooltip("Цель - точка")]
+    public Building TargetPoint;
+    [Tooltip("Цель - враг")]
+    public Enemy TargetEnemy;
 
     private int _maxHealth;
     private AudioSource _audioSource;
@@ -48,22 +69,13 @@ public class Unit : SelectableObject
 
     public override void WhenClickOnGround(Vector3 point) {
         base.WhenClickOnGround(point);
-        NavMeshAgent.SetDestination(point);
-    }
-
-    private void Update() {
-        if (NavMeshAgent.velocity.magnitude > 0) {
-            _animator.SetTrigger("Run");
-            _animator.SetFloat("MoveSpeed", NavMeshAgent.velocity.magnitude);
-        } else {
-            _animator.SetTrigger("Idle");
-        }
+        _navMeshAgent.SetDestination(point);
     }
 
     public void TakeDamage(int damageValue) {
         Health -= damageValue;
         _healthBar.SetHealth(Health, _maxHealth);
-        ParticleSystem damageEffect = Instantiate(DamageEffect, transform.position, Quaternion.identity);
+        ParticleSystem damageEffect = Instantiate(_damageEffect, transform.position, Quaternion.identity);
         Destroy(damageEffect.gameObject, 1f);
         _animator.SetTrigger("TakeDamage");
         if (Health <= 0) {
