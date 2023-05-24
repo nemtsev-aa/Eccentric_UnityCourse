@@ -92,7 +92,7 @@ public class Management : MonoBehaviour
             if (Input.GetMouseButtonUp(0)) { 
                 if (hit.collider.tag == "Ground" && !_isOverUI) { 
                     foreach (var iSelectedItem in ListOfSelected) {
-                        iSelectedItem.WhenClickOnGround(hit.point); // Задаём пункт назначения для перемещения юнитов
+                        iSelectedItem.WhenClickOnGround(hit.point, this); // Задаём пункт назначения для перемещения юнитов
                     }
                 }
             }
@@ -170,7 +170,7 @@ public class Management : MonoBehaviour
         }
     }
 
-    void Unselect(SelectableObject selectableObject) {
+    public void Unselect(SelectableObject selectableObject) {
         if (ListOfSelected.Contains(selectableObject)) {
             ListOfSelected.Remove(selectableObject);
             selectableObject.Unselect();

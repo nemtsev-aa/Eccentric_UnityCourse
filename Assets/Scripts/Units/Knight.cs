@@ -23,40 +23,52 @@ public class Knight : Unit
 
     public override void Start() {
         base.Start();
-        SetState(UnitState.Idle);
+        SetState(UnitState.WalkToEnemy);
     }
 
     private void Update() {
 
         switch (CurrentUnitState) {
             case UnitState.Idle:
-                FindClosestEnemy();
+                _animator.SetTrigger("Idle");
+                if (TargetEnemy == null) {
+                    FindClosestEnemy();
+                }
                 break;
             case UnitState.WalkToPoint:
-                FindClosestEnemy();
-                if (_navMeshAgent.velocity.magnitude > 0) {
-                    _animator.SetTrigger("Run");
-                    _animator.SetFloat("MoveSpeed", _navMeshAgent.velocity.magnitude);
+                if (_targetPoint) {
+                    if (_agent.velocity.magnitude > 0) {
+                        TargetPointPrefab.SetActive(true);
+                        _animator.SetTrigger("Run");
+                        _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                    } else {
+                        if (Vector3.Distance(transform.position, _targetPoint.transform.position) < 1f) {
+                            Destroy(_targetPoint.gameObject);
+                            CurrentUnitState = UnitState.Idle;
+                        }
+                    }
                 }
+                FindClosestEnemy();
+                
                 break;
             case UnitState.WalkToEnemy:
                 if (TargetEnemy) {
-                    _navMeshAgent.SetDestination(TargetEnemy.transform.position);
+                    _agent.SetDestination(TargetEnemy.transform.position);
                     float distanceToEnemy = Vector3.Distance(transform.position, TargetEnemy.transform.position);
                     if (distanceToEnemy > DistanceToFollow) SetState(UnitState.WalkToPoint);
                     if (distanceToEnemy < DistanceToAttack) SetState(UnitState.EnemyAttack);
 
-                    if (_navMeshAgent.velocity.magnitude > 0) {
+                    if (_agent.velocity.magnitude > 0) {
                         _animator.SetTrigger("Run");
-                        _animator.SetFloat("MoveSpeed", _navMeshAgent.velocity.magnitude);
+                        _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
                     }
-                }
-                else {
+                } else {
                     SetState(UnitState.WalkToPoint);
                 }
                 break;
             case UnitState.EnemyAttack:
                 if (TargetEnemy) {
+                    _agent.SetDestination(TargetEnemy.transform.position);
                     float distanceToTarget = Vector3.Distance(transform.position, TargetEnemy.transform.position);
                     if (distanceToTarget < DistanceToAttack) {
                         _animator.SetTrigger("Attack");
@@ -65,13 +77,11 @@ public class Knight : Unit
                             _timer = 0;
                             TargetEnemy.TakeDamage(DamagePerSecond);
                         }
-                    }
-                    else {
+                    } else {
                         SetState(UnitState.WalkToEnemy);
                     }
-                }
-                else {
-                    SetState(UnitState.WalkToEnemy);
+                } else {
+                    SetState(UnitState.Idle);
                 }
                 break;
             default:
@@ -86,14 +96,14 @@ public class Knight : Unit
                 _animator.SetTrigger("Idle");
                 break;
             case UnitState.WalkToPoint:
-                if (TargetPoint) {
-                    _navMeshAgent.SetDestination(TargetPoint.transform.position);
+                if (TargetPointPrefab != null) {
+                    _agent.SetDestination(TargetPointPrefab.transform.position);
                 }
                 break;
             case UnitState.WalkToEnemy:
                 FindClosestEnemy();
                 if (TargetEnemy) {
-                    _navMeshAgent.SetDestination(TargetEnemy.transform.position);
+                    _agent.SetDestination(TargetEnemy.transform.position);
                 } else {
                     SetState(UnitState.Idle);
                 }
@@ -131,24 +141,6 @@ public class Knight : Unit
             }
         }
     }
-
-    //private void FindClosestEnemy() {
-    //    Enemy[] allEnemies = FindObjectsOfType<Enemy>(); // Массив всех врагов на карте
-    //    float minDistance = Mathf.Infinity; // Расстояние до ближайшего врага - бесконечность
-    //    Enemy closestEnemy = null; // Ближайший враг не найден
-    //    for (int i = 0; i < allEnemies.Length; i++) {
-    //        float distance = Vector3.Distance(transform.position, allEnemies[i].transform.position); // Расстояние до i-го врага
-    //        if (distance < minDistance) {
-    //            minDistance = distance;
-    //            closestEnemy = allEnemies[i];
-    //        }
-    //    }
-
-    //    if (minDistance < DistanceToFollow) {
-    //        TargetEnemy = closestEnemy; // Ближайшее здание
-    //        SetState(UnitState.WalkToEnemy);
-    //    }
-    //}
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

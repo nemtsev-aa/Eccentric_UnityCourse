@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 2549238147364901099}
   - component: {fileID: 3847798932348429541}
   - component: {fileID: 5211289003154958255}
+  - component: {fileID: 9104560914622087136}
   m_Layer: 0
   m_Name: Farm
   m_TagString: Untagged
@@ -278,6 +279,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _farmerPrefab: {fileID: 8799042768256922024, guid: 2c99a9a7b4cd0c2419105bb96b5a1eef,
     type: 3}
+--- !u!208 &9104560914622087136
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210571192478094873}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.75, y: 0.5, z: 0.75}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.5, y: 0.5, z: 0.5}
+  m_TimeToStationary: 0.5
 --- !u!1001 &241290376078001864
 PrefabInstance:
   m_ObjectHideFlags: 0

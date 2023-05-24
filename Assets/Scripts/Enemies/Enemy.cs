@@ -53,29 +53,40 @@ public class Enemy : MonoBehaviour {
 
         //_audioSource = GetComponent<AudioSource>();
 
-        SetState(EnemyState.WalkToBuilding);
+        SetState(EnemyState.WalkToUnit);
     }
 
     private void Update() {
 
         switch (CurrentEnemyState) {
             case EnemyState.Idle:
+                if (TargetBuilding == null) {
+                    FindClosestBuilding();
+                } else if (TargetUnit == null) {
+                    FindClosestUnit();
+                } else {
+                    _animator.SetTrigger("Idle");
+                    _animator.SetFloat("MoveSpeed", 0);
+                }
                 FindClosestUnit();
                 break;
             case EnemyState.WalkToBuilding:
-                FindClosestUnit();
+                FindClosestBuilding();
                 if (TargetBuilding == null) {
-                    SetState(EnemyState.Idle);
+                    FindClosestUnit();
                 } else {
+                    _agent.SetDestination(TargetBuilding.transform.position);
                     float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
-                    //if (distanceToBuilding > DistanceToAttack) SetState(EnemyState.WalkToBuilding);
                     if (distanceToBuilding < DistanceToAttack) SetState(EnemyState.BuildingAttack);
                 }
 
                 if (_agent.velocity.magnitude > 0) {
                     _animator.SetTrigger("Run");
                     _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
+                } else {
+                    _animator.SetTrigger("Idle");
                 }
+
                 break;
             case EnemyState.WalkToUnit:
                 if (TargetUnit) {
@@ -89,11 +100,12 @@ public class Enemy : MonoBehaviour {
                         _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
                     }
                 } else {
-                    SetState(EnemyState.WalkToBuilding);
+                    SetState(EnemyState.Idle);
                 }
                 break;
             case EnemyState.UnitAttack:
                 if (TargetUnit) {
+                    _agent.SetDestination(TargetUnit.transform.position);
                     float distanceToTarget = Vector3.Distance(transform.position, TargetUnit.transform.position);
                     if (distanceToTarget < DistanceToAttack) {
                         _animator.SetTrigger("Attack");
@@ -106,11 +118,12 @@ public class Enemy : MonoBehaviour {
                         SetState(EnemyState.WalkToUnit);
                     }
                 } else {
-                    SetState(EnemyState.WalkToBuilding);
+                    SetState(EnemyState.Idle);
                 }
                 break;
             case EnemyState.BuildingAttack:
                 if (TargetBuilding) {
+                    _agent.SetDestination(TargetBuilding.transform.position);
                     float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
                     if (distanceToBuilding < DistanceToAttack) {
                         _animator.SetTrigger("Attack");
@@ -144,9 +157,10 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
             case EnemyState.WalkToUnit:
-                FindClosestUnit();
                 if (TargetUnit) {
                     _agent.SetDestination(TargetUnit.transform.position);
+                } else {
+                    FindClosestUnit();
                 }
                 break;
             case EnemyState.UnitAttack:
@@ -181,6 +195,7 @@ public class Enemy : MonoBehaviour {
                 }
             }
             TargetBuilding = closestBuilding; // Ближайшее здание
+            SetState(EnemyState.WalkToBuilding);
         }
     }
 
@@ -205,7 +220,6 @@ public class Enemy : MonoBehaviour {
 
             if (minDistance < DistanceToFollow) {
                 TargetUnit = closestUnit; // Ближайший юнит
-                Debug.Log("TargetUnit: " + TargetUnit.gameObject.name);
                 SetState(EnemyState.WalkToUnit);
             }
         }    
@@ -227,7 +241,9 @@ public class Enemy : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        Destroy(_healthBar.gameObject);
+        if (_healthBar) {
+            Destroy(_healthBar.gameObject);
+        }
     }
 
 #if UNITY_EDITOR

@@ -203,12 +203,13 @@ MonoBehaviour:
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: 312dfc20d1306c846a6b2f12843d9686,
+    type: 3}
   _selectionSound: {fileID: 8300000, guid: c440ef10ebef3d34f833e91bd400fcb2, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
   _animator: {fileID: 3118653163798997016}
-  _navMeshAgent: {fileID: 3277952347302860728}
-  TargetPoint: {fileID: 0}
+  _agent: {fileID: 3277952347302860728}
   TargetEnemy: {fileID: 0}
   KnightType: 0
 --- !u!195 &3277952347302860728
@@ -222,7 +223,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.25
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 600
   m_StoppingDistance: 1

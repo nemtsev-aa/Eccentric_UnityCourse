@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 1253747560823168074}
   - component: {fileID: 8520893329731401023}
   - component: {fileID: 5516706973287570063}
+  - component: {fileID: 8884006634224501364}
   m_Layer: 0
   m_Name: Barrack
   m_TagString: Untagged
@@ -252,6 +253,22 @@ MonoBehaviour:
   _spawnPoint: {fileID: 9062027561911422422}
   "_\u0441ollectionPoint": {fileID: 3727588648770557274}
   _factory: {fileID: 1253747560823168074}
+--- !u!208 &8884006634224501364
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6801211732846442552}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.25, y: 1.25, z: 1.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1, y: 1, z: 1}
+  m_TimeToStationary: 0.5
 --- !u!1 &7890381631562455823
 GameObject:
   m_ObjectHideFlags: 0

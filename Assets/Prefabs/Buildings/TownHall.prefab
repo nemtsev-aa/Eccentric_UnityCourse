@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 8520893329731401023}
   - component: {fileID: 228737333636988256}
   - component: {fileID: 6926867945857588490}
+  - component: {fileID: 3746198000414448833}
   m_Layer: 0
   m_Name: TownHall
   m_TagString: Untagged
@@ -181,8 +182,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.454063, y: 2.2179744, z: 2.2379189}
-  m_Center: {x: 1.0512483, y: 1.1002249, z: 0.9137018}
+  m_Size: {x: 2.3329434, y: 2.2179744, z: 2.3287587}
+  m_Center: {x: 0.99068856, y: 1.1002249, z: 1.0095882}
 --- !u!114 &5407364502388096822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +250,22 @@ MonoBehaviour:
   _spawnPoint: {fileID: 9062027561911422422}
   "_\u0441ollectionPoint": {fileID: 3727588648770557274}
   _factory: {fileID: 228737333636988256}
+--- !u!208 &3746198000414448833
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6801211732846442552}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.15, y: 0.5, z: 1.15}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1, y: 1, z: 1}
+  m_TimeToStationary: 0.5
 --- !u!1 &7890381631562455823
 GameObject:
   m_ObjectHideFlags: 0
