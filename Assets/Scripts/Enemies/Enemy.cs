@@ -53,17 +53,17 @@ public class Enemy : MonoBehaviour {
 
         //_audioSource = GetComponent<AudioSource>();
 
-        SetState(EnemyState.WalkToUnit);
+        SetState(EnemyState.WalkToBuilding);
     }
 
     private void Update() {
 
         switch (CurrentEnemyState) {
             case EnemyState.Idle:
-                if (TargetBuilding == null) {
-                    FindClosestBuilding();
-                } else if (TargetUnit == null) {
+                if (TargetUnit == null) {
                     FindClosestUnit();
+                } else if (TargetBuilding == null) {
+                    FindClosestBuilding();
                 } else {
                     _animator.SetTrigger("Idle");
                     _animator.SetFloat("MoveSpeed", 0);
@@ -151,7 +151,6 @@ public class Enemy : MonoBehaviour {
                 _animator.SetTrigger("Idle");
                 break;
             case EnemyState.WalkToBuilding:
-                FindClosestBuilding();
                 if (TargetBuilding) {
                     _agent.SetDestination(TargetBuilding.transform.position);
                 }
@@ -176,15 +175,13 @@ public class Enemy : MonoBehaviour {
 
     private void FindClosestBuilding() {
         if (TargetBuilding == null) {
-
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow * 2);
-            
-            //_enemyList = _enemyList.OrderBy(x => Vector3.Distance(point, x.transform.position)).ToList();
+            Debug.Log("FindClosestBuilding");
+            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow * 2, LayerMask.NameToLayer("Building"));
             float minDistance = Mathf.Infinity; // Расстояние до ближайшего здания - бесконечность
             Building closestBuilding = null; // Ближайшее здание не найдено
 
             for (int i = 0; i < allColliders.Length; i++) {
-                Transform iParent = allColliders[i].gameObject.transform.parent;
+                Transform iParent = allColliders[i].gameObject.transform;
                 Building iBuilding = iParent.GetComponent<Building>();
                 if (iBuilding) {
                     float distance = Vector3.Distance(transform.position, iBuilding.transform.position); // Расстояние до i-го здания
@@ -194,14 +191,17 @@ public class Enemy : MonoBehaviour {
                     }
                 }
             }
-            TargetBuilding = closestBuilding; // Ближайшее здание
-            SetState(EnemyState.WalkToBuilding);
+            if (closestBuilding != null) {
+                TargetBuilding = closestBuilding; // Ближайшее здание
+                SetState(EnemyState.WalkToBuilding);
+            }
         }
     }
 
     private void FindClosestUnit() {
         if (TargetUnit == null) {
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow);
+            Debug.Log("FindClosestUnit");
+            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow, LayerMask.NameToLayer("Units"));
             
             float minDistance = Mathf.Infinity; // Расстояние до ближайшего юнита - бесконечность
             Unit closestUnit = null; // Ближайший юнит не найден
@@ -218,9 +218,11 @@ public class Enemy : MonoBehaviour {
                 }
             }
 
-            if (minDistance < DistanceToFollow) {
+            if (minDistance < DistanceToFollow && closestUnit != null) {
                 TargetUnit = closestUnit; // Ближайший юнит
                 SetState(EnemyState.WalkToUnit);
+            } else {
+                SetState(EnemyState.Idle);
             }
         }    
     }

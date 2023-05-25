@@ -63,7 +63,7 @@ public class Knight : Unit
                         _animator.SetFloat("MoveSpeed", _agent.velocity.magnitude);
                     }
                 } else {
-                    SetState(UnitState.WalkToPoint);
+                    SetState(UnitState.Idle);
                 }
                 break;
             case UnitState.EnemyAttack:
@@ -117,13 +117,13 @@ public class Knight : Unit
     }
     private void FindClosestEnemy() {
         if (TargetEnemy == null) {
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow);
-
+            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow, LayerMask.NameToLayer("Enemy"));
+            Debug.Log(allColliders.Length);
             float minDistance = Mathf.Infinity; // Расстояние до ближайшего юнита - бесконечность
             Enemy closestEnemy = null; // Ближайший юнит не найден
 
             for (int i = 0; i < allColliders.Length; i++) {
-                Transform iParent = allColliders[i].gameObject.transform.parent;
+                Transform iParent = allColliders[i].gameObject.transform;
                 Enemy iEnemy = iParent.GetComponent<Enemy>();
                 if (iEnemy) {
                     float distance = Vector3.Distance(transform.position, iEnemy.transform.position); // Расстояние до i-го юнита
@@ -134,7 +134,7 @@ public class Knight : Unit
                 }
             }
 
-            if (minDistance < DistanceToFollow) {
+            if (minDistance < DistanceToFollow && closestEnemy != null) {
                 TargetEnemy = closestEnemy; // Ближайший враг
                 Debug.Log("TargetEnemy: " + TargetEnemy.gameObject.name);
                 SetState(UnitState.WalkToEnemy);
