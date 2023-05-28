@@ -7,7 +7,9 @@ public class BuildingPlacer : MonoBehaviour
     public Camera RaycastCamera;
     [field: SerializeField] public float CellSize { get; private set; }
     public Building CurrentBuilding;
+    public GameObject City;
     public Dictionary<Vector2Int, Building> BuildingDictionary = new Dictionary<Vector2Int, Building>();
+    public Resources Resources;
 
     [Header("SoundsEffect")]
     [SerializeField] private AudioClip _successfulPlacement;
@@ -63,7 +65,7 @@ public class BuildingPlacer : MonoBehaviour
         return true;
     }
 
-    private void InstallBuilding(int xPosition, int zPosition, Building building) {
+    public void InstallBuilding(int xPosition, int zPosition, Building building) {
         for (int x = 0; x < building.XSize; x++) {
             for (int z = 0; z < building.ZSize; z++) {
                 Vector2Int coordinate = new Vector2Int(xPosition + x, zPosition + z);
@@ -73,8 +75,9 @@ public class BuildingPlacer : MonoBehaviour
         }
     }
 
-    public void CreateBuilding(GameObject buildingPrafab) {
-        GameObject newBuilding = Instantiate(buildingPrafab);
-        CurrentBuilding = newBuilding.GetComponent<Building>();
+    public void CreateBuilding(Building building) {
+        CurrentBuilding = Instantiate(building);
+        CurrentBuilding.gameObject.transform.parent = City.transform;
+
     }
 }

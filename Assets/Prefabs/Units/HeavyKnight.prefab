@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 1464279936656362345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3088684722125088480}
@@ -196,19 +196,23 @@ MonoBehaviour:
   UnitType: 0
   CurrentUnitState: 0
   Price: 20
-  Health: 0
-  DamagePerSecond: 0
-  AttackPeriod: 0.1
-  DistanceToFollow: 7
+  Health: 7
+  DamagePerSecond: 3
+  AttackPeriod: 2
+  DistanceToFollow: 5
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: 2a161253dcc23c543a5787b5f9885ea5,
+    type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _selectionSound: {fileID: 8300000, guid: 1bb7192adec0faa4c9f831038d34baff, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
   _animator: {fileID: 3088684722132780188}
-  _navMeshAgent: {fileID: 3277952347302860728}
-  TargetPoint: {fileID: 0}
+  _agent: {fileID: 3277952347302860728}
   TargetEnemy: {fileID: 0}
   KnightType: 2
 --- !u!195 &3277952347302860728
@@ -222,7 +226,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.25
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 600
   m_StoppingDistance: 1

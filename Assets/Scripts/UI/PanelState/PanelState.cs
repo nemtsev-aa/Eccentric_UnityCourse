@@ -20,7 +20,7 @@ public class PanelState : MonoBehaviour
             //Debug.Log("Step1: " + _unitsTrainer.gameObject.name);
             if (_unitsTrainer) { // Здание имеет возможность приозводить юнитов
                 foreach (Transform child in _units.GetComponentsInChildren<Transform>()) {
-                    if (child.TryGetComponent<TrainingButton>(out TrainingButton trainingButton)) {
+                    if (child.TryGetComponent(out TrainingButton trainingButton)) {
                         //Debug.Log("Step2: " + trainingButton.gameObject.name);
                         trainingButton.Init(_unitsTrainer); // Присваиаем кнопке соответствующее здание
                     }

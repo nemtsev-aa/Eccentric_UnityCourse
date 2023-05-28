@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class TrainingButton : MonoBehaviour
 {
-    public GameObject UnitPrefab;
+    public Unit Unit;
     public UnitsTrainer _unitsTrainer;
     public Button _button;
+    private Resources _resources;
 
     public void Init(UnitsTrainer unitsTrainer) {
         _unitsTrainer = unitsTrainer;
@@ -16,18 +17,19 @@ public class TrainingButton : MonoBehaviour
     private void Start() {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(TryBuy);
+        _resources = FindObjectOfType<Resources>();
     }
 
     public void TryBuy() {
-        int price = UnitPrefab.GetComponent<Unit>().Price;
-        Resources resources = FindObjectOfType<Resources>();
-        if (resources.Money >= price) {
-            FindObjectOfType<Resources>().Money -= price;
-            _unitsTrainer.CreateUnit(UnitPrefab);
+        int price = Unit.Price;
+       
+        if (_resources.Money >= price) {
+            _resources.Money -= price;
+            _unitsTrainer.CreateUnit(Unit);
         } else {
-            resources.NoGoldSoundEffect();
+            _resources.NoGoldSoundEffect();
             Debug.Log("Недостаточно денег!");
         }
-        resources.ShowRemainder();
+        _resources.ShowRemainder();
     }
 }

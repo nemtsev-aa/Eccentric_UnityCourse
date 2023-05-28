@@ -53,6 +53,23 @@ public class Management : MonoBehaviour
             } else {
                 UnhowerCurrent();
             }
+
+            if (CurrentSelectionState == SelectionState.UnitsSelected) {
+                if (Input.GetMouseButtonUp(0)) {
+                    if (hit.collider.tag == "Ground" && !_isOverUI) {
+                        int rowNumber = Mathf.CeilToInt(Mathf.Sqrt(ListOfSelected.Count));
+
+                        for (int i = 0; i < ListOfSelected.Count; i++) {
+                            int row = i / rowNumber;
+                            int column = i % rowNumber;
+
+                            Vector3 point = hit.point + new Vector3(row, 0f, column);
+                            ListOfSelected[i].WhenClickOnGround(point, this);  // Задаём пункт назначения для перемещения юнитов
+                        }
+                    }
+                }
+            }
+
         } else {
             UnhowerCurrent();
         }
@@ -88,16 +105,6 @@ public class Management : MonoBehaviour
             }
         }
 
-        if (CurrentSelectionState == SelectionState.UnitsSelected) {
-            if (Input.GetMouseButtonUp(0)) { 
-                if (hit.collider.tag == "Ground" && !_isOverUI) { 
-                    foreach (var iSelectedItem in ListOfSelected) {
-                        iSelectedItem.WhenClickOnGround(hit.point, this); // Задаём пункт назначения для перемещения юнитов
-                    }
-                }
-            }
-        }
-        
         if (Input.GetMouseButtonDown(1)) { // Очищаем список выделенных объектов нажатием на RightMouse
             UnselectAll();
         }
@@ -145,15 +152,15 @@ public class Management : MonoBehaviour
                 CurrentSelectionState = SelectionState.Other;
             } else if (ListOfSelected.Count == 1) {
                 GameObject selectedObject = ListOfSelected[0].gameObject;
-                if (selectedObject.GetComponent<Building>()) {
+                if (selectedObject.GetComponent<Building>() is Building building) {
                     //Debug.Log("Выделено здание");
                     CurrentSelectionState = SelectionState.BuildingSelected;
-                    PanelStateManager.ShowBuildingPanel(selectedObject);
+                    PanelStateManager.ShowBuildingPanel(building);
                 }
-                else if (selectedObject.GetComponent<Unit>()) {
+                else if (selectedObject.GetComponent<Unit>() is Unit unit) {
                     //Debug.Log("Выделен юнит");
                     CurrentSelectionState = SelectionState.UnitsSelected;
-                    PanelStateManager.ShowUnitPanel(selectedObject);
+                    PanelStateManager.ShowUnitPanel(unit);
                 }
             } else {
                 if (ListOfSelected.Count > 1) {

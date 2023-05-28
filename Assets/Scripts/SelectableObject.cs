@@ -30,6 +30,7 @@ public class SelectableObject : MonoBehaviour
     public virtual void WhenClickOnGround(Vector3 point) {
 
     }
+
     public virtual void WhenClickOnGround(Vector3 point, Management management) {
 
     }

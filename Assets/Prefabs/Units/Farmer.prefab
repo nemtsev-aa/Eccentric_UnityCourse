@@ -153,6 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1896341325001344575}
   - component: {fileID: 8799042768256922024}
+  - component: {fileID: 18399161835930363}
   - component: {fileID: 2557660798223591328}
   - component: {fileID: 9013488556943104561}
   m_Layer: 7
@@ -203,13 +204,30 @@ MonoBehaviour:
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: 312dfc20d1306c846a6b2f12843d9686,
+    type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _selectionSound: {fileID: 8300000, guid: ae879e8ff4429ef44b8b9a3219562e79, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
   _animator: {fileID: 2685460653401511936}
-  _navMeshAgent: {fileID: 2557660798223591328}
-  TargetPoint: {fileID: 0}
+  _agent: {fileID: 2557660798223591328}
   TargetEnemy: {fileID: 0}
+--- !u!114 &18399161835930363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896341325001344572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71b0aa2cc6d8c6488e5a71031c7067b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectIndicator: {fileID: 1896341324086383031}
 --- !u!195 &2557660798223591328
 NavMeshAgent:
   m_ObjectHideFlags: 0

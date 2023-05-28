@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -31,18 +32,27 @@ public class Enemy : MonoBehaviour {
     [Header("Targets")]
     [Tooltip("Цель - здание")]
     public Building TargetBuilding;
+    public LayerMask _layerMaskBuildings;
     [Tooltip("Цель - юнит")]
     public Unit TargetUnit;
+    public LayerMask _layerMaskUnits;
 
     [Tooltip("Аниматор")]
     [SerializeField] private Animator _animator;
     [Tooltip("ИИ перемещения")]
     [SerializeField] private NavMeshAgent _agent;
 
+    [Tooltip("Событие - враг уничтожен")]
+    public event Action<Enemy> EnemyKilled;
 
+    private Transform _targetPosition; // Главное здание игрока
     private int _maxHealth;
     private HealthBar _healthBar;
     private float _timer;
+
+    public void Init(Building targetBuilding) {
+        TargetBuilding = targetBuilding;
+    }
 
     private void Start() {
         _maxHealth = Health;
@@ -50,8 +60,6 @@ public class Enemy : MonoBehaviour {
         healthBar.transform.parent = transform;
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Setup(transform);
-
-        //_audioSource = GetComponent<AudioSource>();
 
         SetState(EnemyState.WalkToBuilding);
     }
@@ -123,7 +131,7 @@ public class Enemy : MonoBehaviour {
                 break;
             case EnemyState.BuildingAttack:
                 if (TargetBuilding) {
-                    _agent.SetDestination(TargetBuilding.transform.position);
+                    _agent.SetDestination(TargetBuilding.transform.position + new Vector3(1f, 0f, 1f));
                     float distanceToBuilding = Vector3.Distance(transform.position, TargetBuilding.transform.position);
                     if (distanceToBuilding < DistanceToAttack) {
                         _animator.SetTrigger("Attack");
@@ -136,7 +144,7 @@ public class Enemy : MonoBehaviour {
                         SetState(EnemyState.WalkToBuilding);
                     }
                 } else {
-                    SetState(EnemyState.WalkToBuilding);
+                    SetState(EnemyState.Idle);
                 }
                 break;
             default:
@@ -175,8 +183,8 @@ public class Enemy : MonoBehaviour {
 
     private void FindClosestBuilding() {
         if (TargetBuilding == null) {
-            Debug.Log("FindClosestBuilding");
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow * 2, LayerMask.NameToLayer("Building"));
+            
+            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow * 2, _layerMaskBuildings);           
             float minDistance = Mathf.Infinity; // Расстояние до ближайшего здания - бесконечность
             Building closestBuilding = null; // Ближайшее здание не найдено
 
@@ -200,9 +208,8 @@ public class Enemy : MonoBehaviour {
 
     private void FindClosestUnit() {
         if (TargetUnit == null) {
-            Debug.Log("FindClosestUnit");
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow, LayerMask.NameToLayer("Units"));
             
+            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow, _layerMaskUnits);
             float minDistance = Mathf.Infinity; // Расстояние до ближайшего юнита - бесконечность
             Unit closestUnit = null; // Ближайший юнит не найден
            
@@ -239,7 +246,9 @@ public class Enemy : MonoBehaviour {
     }
 
     public void Die() {
-        Destroy(gameObject);
+        EnemyKilled?.Invoke(this);
+        _animator.SetTrigger("Die");
+        Destroy(gameObject, 2f);
     }
 
     private void OnDestroy() {
@@ -247,6 +256,7 @@ public class Enemy : MonoBehaviour {
             Destroy(_healthBar.gameObject);
         }
     }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

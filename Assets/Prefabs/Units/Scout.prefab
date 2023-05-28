@@ -203,12 +203,16 @@ MonoBehaviour:
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: 25a59f089f553a247ad0f7716d242f16,
+    type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _selectionSound: {fileID: 8300000, guid: 2d4cf1a26a0af1441a560e31dbcee935, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
   _animator: {fileID: 2685460653401511936}
-  _navMeshAgent: {fileID: 2557660798223591328}
-  TargetPoint: {fileID: 0}
+  _agent: {fileID: 2557660798223591328}
   TargetEnemy: {fileID: 0}
 --- !u!195 &2557660798223591328
 NavMeshAgent:

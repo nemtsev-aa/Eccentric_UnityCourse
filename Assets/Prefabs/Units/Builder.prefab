@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de58fb30da1ed984889a59f74b19b480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectableObject: {fileID: 8799042768256922024}
+  SelectableObject: {fileID: 4752009020643151188}
 --- !u!1 &1896341325001344572
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1896341325001344575}
-  - component: {fileID: 8799042768256922024}
+  - component: {fileID: 4752009020643151188}
   - component: {fileID: 2557660798223591328}
   - component: {fileID: 1436036543154636399}
   m_Layer: 7
@@ -180,7 +180,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8799042768256922024
+--- !u!114 &4752009020643151188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,27 +189,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1896341325001344572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7316a9afa31d6ab4481a535a6195f583, type: 3}
+  m_Script: {fileID: 11500000, guid: 756ebe66fe3a5924eb2c402bb87d189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SelectIndicator: {fileID: 1896341324086383031}
   UnitType: 2
-  CurrentUnitState: 0
+  CurrentUnitState: 5
   Price: 5
-  Health: 5
-  DamagePerSecond: 0
-  AttackPeriod: 0.1
+  Health: 10
+  DamagePerSecond: 2
+  AttackPeriod: 2
   DistanceToFollow: 7
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: cb4647ea60559bd4eb7c68a7b46ae2b8,
+    type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _selectionSound: {fileID: 8300000, guid: 70af0da1d43208c49898357949f0627c, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
   _animator: {fileID: 2685460653401511936}
-  _navMeshAgent: {fileID: 2557660798223591328}
-  TargetPoint: {fileID: 0}
+  _agent: {fileID: 2557660798223591328}
   TargetEnemy: {fileID: 0}
+  _layerMaskBuildings:
+    serializedVersion: 2
+    m_Bits: 512
+  TargetBuilding: {fileID: 0}
+  _readSound: {fileID: 8300000, guid: 3cc2c4d9562943e4b8fc391d710dc47b, type: 3}
 --- !u!195 &2557660798223591328
 NavMeshAgent:
   m_ObjectHideFlags: 0

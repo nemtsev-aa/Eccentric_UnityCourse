@@ -196,15 +196,18 @@ MonoBehaviour:
   UnitType: 0
   CurrentUnitState: 0
   Price: 10
-  Health: 6
+  Health: 3
   DamagePerSecond: 1
   AttackPeriod: 1
   DistanceToFollow: 7
   DistanceToAttack: 1
   HealthBarPrefab: {fileID: 2451295412812289138, guid: 79b1e3c5f3b5b994c82b607205191356,
     type: 3}
-  TargetPointPrefab: {fileID: 5783265402372740156, guid: 312dfc20d1306c846a6b2f12843d9686,
+  TargetPointPrefab: {fileID: 5783265402372740156, guid: 2a161253dcc23c543a5787b5f9885ea5,
     type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   _selectionSound: {fileID: 8300000, guid: c440ef10ebef3d34f833e91bd400fcb2, type: 3}
   _damageEffect: {fileID: 6837061768053742934, guid: c041548ad5f52014d8ae27de23cf2764,
     type: 3}
@@ -226,7 +229,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

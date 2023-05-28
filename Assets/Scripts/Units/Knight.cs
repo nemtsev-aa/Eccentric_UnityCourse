@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-public enum UnitState {
-    Idle,
-    EnemyAttack,
-    WalkToPoint,
-    WalkToEnemy
-}
+
 public enum KnightType {
     Standart,
     Light,
@@ -19,11 +14,11 @@ public class Knight : Unit
     [Space(10)]
     public KnightType KnightType;
     
-    private float _timer;
+   
 
     public override void Start() {
         base.Start();
-        SetState(UnitState.WalkToEnemy);
+        SetState(UnitState.Idle);
     }
 
     private void Update() {
@@ -32,7 +27,7 @@ public class Knight : Unit
             case UnitState.Idle:
                 _animator.SetTrigger("Idle");
                 if (TargetEnemy == null) {
-                    FindClosestEnemy();
+                    FindClosestEnemy(this);
                 }
                 break;
             case UnitState.WalkToPoint:
@@ -48,7 +43,7 @@ public class Knight : Unit
                         }
                     }
                 }
-                FindClosestEnemy();
+                FindClosestEnemy(this);
                 
                 break;
             case UnitState.WalkToEnemy:
@@ -89,7 +84,7 @@ public class Knight : Unit
         }
     }
 
-    public void SetState(UnitState UnitState) {
+    public override void SetState(UnitState UnitState) {
         CurrentUnitState = UnitState;
         switch (CurrentUnitState) {
             case UnitState.Idle:
@@ -101,7 +96,7 @@ public class Knight : Unit
                 }
                 break;
             case UnitState.WalkToEnemy:
-                FindClosestEnemy();
+                FindClosestEnemy(this);
                 if (TargetEnemy) {
                     _agent.SetDestination(TargetEnemy.transform.position);
                 } else {
@@ -115,40 +110,4 @@ public class Knight : Unit
                 break;
         }
     }
-    private void FindClosestEnemy() {
-        if (TargetEnemy == null) {
-            Collider[] allColliders = Physics.OverlapSphere(transform.position, DistanceToFollow, LayerMask.NameToLayer("Enemy"));
-            Debug.Log(allColliders.Length);
-            float minDistance = Mathf.Infinity; // Расстояние до ближайшего юнита - бесконечность
-            Enemy closestEnemy = null; // Ближайший юнит не найден
-
-            for (int i = 0; i < allColliders.Length; i++) {
-                Transform iParent = allColliders[i].gameObject.transform;
-                Enemy iEnemy = iParent.GetComponent<Enemy>();
-                if (iEnemy) {
-                    float distance = Vector3.Distance(transform.position, iEnemy.transform.position); // Расстояние до i-го юнита
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestEnemy = iEnemy;
-                    }
-                }
-            }
-
-            if (minDistance < DistanceToFollow && closestEnemy != null) {
-                TargetEnemy = closestEnemy; // Ближайший враг
-                Debug.Log("TargetEnemy: " + TargetEnemy.gameObject.name);
-                SetState(UnitState.WalkToEnemy);
-            }
-        }
-    }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected() {
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position, Vector3.up, DistanceToAttack);
-        Handles.color = Color.yellow;
-        Handles.DrawWireDisc(transform.position, Vector3.up, DistanceToFollow);
-    }
-#endif
-
 }

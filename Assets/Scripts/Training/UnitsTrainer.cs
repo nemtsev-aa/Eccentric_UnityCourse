@@ -8,12 +8,11 @@ public class UnitsTrainer : MonoBehaviour {
 
     [SerializeField] private AbstractFactory _factory;
 
-    public virtual void CreateUnit(GameObject unitPrafab) {
-        switch (unitPrafab.GetComponent<Unit>().UnitType) 
+    public virtual void CreateUnit(Unit unit) {
+        switch (unit.UnitType) 
         {
             case UnitType.Knight:
-                Knight knight = unitPrafab.GetComponent<Knight>();
-                CreateKnight(knight);
+                CreateKnight((Knight)unit);
                 break;
             case UnitType.Farmer:
                 CreateFarmer();

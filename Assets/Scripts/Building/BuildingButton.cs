@@ -5,18 +5,23 @@ using UnityEngine;
 public class BuildingButton : MonoBehaviour
 {
     public BuildingPlacer BuildingPlacer;
-    public GameObject BuildingPrefab;
+    public Building Building;
+    private Resources _resources;
+
+    private void Start() {
+       _resources = FindObjectOfType<Resources>();
+    }
 
     public void TryBuy() {
-        int price = BuildingPrefab.GetComponent<Building>().Price;
-        Resources resources = FindObjectOfType<Resources>();
-        if (resources.Money >= price) {
-            FindObjectOfType<Resources>().Money -= price;
-            BuildingPlacer.CreateBuilding(BuildingPrefab);
+        int price = Building.Price;
+        
+        if (_resources.Money >= price) {
+            _resources.Money -= price;
+            BuildingPlacer.CreateBuilding(Building);
         } else {
-            resources.NoGoldSoundEffect();
+            _resources.NoGoldSoundEffect();
             Debug.Log("Недостаточно денег!");
         }
-        resources.ShowRemainder();
+        _resources.ShowRemainder();
     }
 }

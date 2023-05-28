@@ -1,14 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelStateManager : MonoBehaviour
 {
     [Tooltip("Менеджер объектов")]
     public Management Management;
+    public Building SelectionBuilding;
+    public Unit SelectionUnit;
+    
     [Space(10)]
     [Tooltip("Состояние - Здания")]
     [SerializeField] private PanelState _buildingState;
+    [Tooltip("Состояние - Замок")]
+    [SerializeField] private PanelState _castleState;
     [Tooltip("Состояние - Ратуша")]
     [SerializeField] private PanelState _townHallState;
     [Tooltip("Состояние - Бараки")]
@@ -24,17 +27,23 @@ public class PanelStateManager : MonoBehaviour
 
     public void Init() {
         _buildingState?.Init(this);
+        _castleState?.Init(this);
         _townHallState?.Init(this);
         _barrackState?.Init(this);
         _farmState?.Init(this);
         _constructionCommandState?.Init(this);
         _attackCommandState.Init(this);
 
-        SetGameState(_buildingState);
+        SetPanelState(_buildingState);
     }
-    public void ShowBuildingPanel(GameObject selectedObject) {
 
-        switch (selectedObject.GetComponent<Building>().BuildingType) {
+    public void ShowBuildingPanel(Building building) {
+        SelectionBuilding = building;
+        switch (building.BuildingType) {
+            case BuildingType.Castle:
+                //Debug.Log("Barrack");
+                SetCastle();
+                break;
             case BuildingType.Barrack:
                 //Debug.Log("Barrack");
                 SetBarrack();
@@ -52,9 +61,9 @@ public class PanelStateManager : MonoBehaviour
         }
     }
 
-    public void ShowUnitPanel(GameObject selectedObject) {
-
-        switch (selectedObject.GetComponent<Unit>().UnitType) {
+    public void ShowUnitPanel(Unit unit) {
+        SelectionUnit = unit;
+        switch (unit.UnitType) {
             case UnitType.Knight:
                 //Debug.Log("Knight");
                 SetAttackCommand();
@@ -78,7 +87,7 @@ public class PanelStateManager : MonoBehaviour
         }
     }
 
-    private void SetGameState(PanelState PanelState) {
+    private void SetPanelState(PanelState PanelState) {
         if (_currentPanelState) {
             _currentPanelState.Exit(); //Выходим из текущего состояния
         }
@@ -88,31 +97,36 @@ public class PanelStateManager : MonoBehaviour
 
     [ContextMenu("SetBuilding")]
     public void SetBuilding() {
-        SetGameState(_buildingState);
+        SetPanelState(_buildingState);
     }
 
     [ContextMenu("SetTownHall")]
     public void SetTownHall() {
-        SetGameState(_townHallState);
+        SetPanelState(_townHallState);
+    }
+
+    [ContextMenu("SetCastle")]
+    public void SetCastle() {
+        SetPanelState(_castleState);
     }
 
     [ContextMenu("SetBarrack")]
     public void SetBarrack() {
-        SetGameState(_barrackState);
+        SetPanelState(_barrackState);
     }
 
     [ContextMenu("SetFarm")]
     public void SetFarm() {
-        SetGameState(_farmState);
+        SetPanelState(_farmState);
     }
 
     [ContextMenu("SetAttackCommand")]
     public void SetAttackCommand() {
-        SetGameState(_attackCommandState);
+        SetPanelState(_attackCommandState);
     }
 
     [ContextMenu("SetConstructionCommand")]
     public void SetConstructionCommandState() {
-        SetGameState(_constructionCommandState);
+        SetPanelState(_constructionCommandState);
     }
 }
